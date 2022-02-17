@@ -1,0 +1,11 @@
+How to call:
+
+* Windows:
+"%RobotPythonPath%/python.exe" -m pytest -k "not _Linux_" --show-capture=all --junitxml="./SessionInfo.xml" "."
+or
+"%RobotPythonPath%/python.exe" -m pytest -k "not _Linux_" --show-capture=all --junitxml="./SessionInfo.xml" "./String/test_CString.py"
+
+* Linux:
+"${RobotPythonPath}/python3" -m pytest -k "not _Windows_" --show-capture=all --junitxml="./SessionInfo.xml" "."
+or
+"${RobotPythonPath}/python3" -m pytest -k "not _Windows_" --show-capture=all --junitxml="./SessionInfo.xml" "./String/test_CString.py"
