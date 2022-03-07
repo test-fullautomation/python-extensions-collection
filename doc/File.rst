@@ -15,7 +15,7 @@
 CFile module
 ------------
 
-.. automodule:: File.CFile
+.. automodule:: PythonExtensionsCollection.File.CFile
    :members:
    :undoc-members:
    :show-inheritance:

@@ -15,7 +15,7 @@
 CString module
 --------------
 
-.. automodule:: String.CString
+.. automodule:: PythonExtensionsCollection.String.CString
    :members:
    :undoc-members:
    :show-inheritance:

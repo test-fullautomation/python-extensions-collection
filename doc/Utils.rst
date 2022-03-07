@@ -15,7 +15,7 @@
 CUtils module
 -------------
 
-.. automodule:: Utils.CUtils
+.. automodule:: PythonExtensionsCollection.Utils.CUtils
    :members:
    :undoc-members:
    :show-inheritance:
