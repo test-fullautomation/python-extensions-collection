@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 26.01.2022
+# 20.05.2022
 #
 # **************************************************************************************************************
 
@@ -33,6 +33,9 @@ from PythonExtensionsCollection.String.CString import CString
 # **************************************************************************************************************
 
 class enFileStatiType:
+   """The class ``enFileStatiType`` defines the sollowing file states: ``closed``, ``openedforwriting``,
+``openedforappending`` and ``openedforreading``.
+   """
    closed             = "closed"
    openedforwriting   = "openedforwriting"
    openedforappending = "openedforappending"
@@ -42,8 +45,6 @@ class enFileStatiType:
 
 class CFile(object):
    """
-|
-
 The class ``CFile`` provides a small set of file functions with extended parametrization (like switches
 defining if a file is allowed to be overwritten or not).
 
@@ -61,8 +62,6 @@ It is not possible to create an instance of this class with a file that is alrea
 
 It is also not possible to use ``CopyTo`` or ``MoveTo`` to overwrite files that are already in use by another instance.
 This makes the file handling more save against access violations.
-
-|
    """
    # --------------------------------------------------------------------------------------------------------------
    # TM***
@@ -97,6 +96,9 @@ This makes the file handling more save against access violations.
    # TM***
 
    def __bIsFreeToUse(self, sFile=None):
+      """
+Checks if the file ``sFile`` is free to use, that means: not used by another instance of ``CFile``.
+      """
 
       bIsFreeToUse = False # init
       if sFile is None:
@@ -115,13 +117,9 @@ This makes the file handling more save against access violations.
 
    def __OpenForWriting(self):
       """
-|
-
 Opens a text file for writing.
 
 Returns ``bSuccess`` and ``sResult`` (feedback).
-
-|
       """
 
       sMethod = "CFile::__OpenForWriting"
@@ -157,13 +155,9 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
 
    def __OpenForAppending(self):
       """
-|
-
 Opens a text file for appending.
 
 Returns ``bSuccess`` and ``sResult`` (feedback).
-
-|
       """
 
       sMethod = "CFile::__OpenForAppending"
@@ -199,13 +193,9 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
 
    def __OpenForReading(self):
       """
-|
-
 Opens a text file for reading.
 
 Returns ``bSuccess`` and ``sResult`` (feedback).
-
-|
       """
 
       sMethod = "CFile::__OpenForReading"
@@ -241,13 +231,25 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
 
    def Close(self):
       """
-|
-
 Closes the opened file.
 
-Returns ``bSuccess`` and ``sResult`` (feedback).
+**Arguments:**
 
-|
+(no args)
+
+**Returns:**
+
+* ``bSuccess``
+
+  / *Type*: bool /
+
+  Indicates if the computation of the method ``sMethod`` was successful or not.
+
+* ``sResult``
+
+  / *Type*: str /
+
+  The result of the computation of the method ``sMethod``.
       """
       sMethod = "CFile::Close"
 
@@ -277,21 +279,33 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
 
    def Delete(self, bConfirmDelete=True):
       """
-|
-
 Deletes the current file.
 
-**bConfirmDelete**
+**Arguments:**
 
-   Defines if it will be handled as error if the file does not exist.
+* ``bConfirmDelete``
 
-   If ``True``: If the file does not exist, the method indicates an error (``bSuccess = False``).
+  / *Condition*: optional / *Type*: bool / *Default*: True /
 
-   If ``False``: It doesn't matter if the file exists or not.
+  Defines if it will be handled as error if the file does not exist.
 
-Returns ``bSuccess`` and ``sResult`` (feedback).
+  If ``True``: If the file does not exist, the method indicates an error (``bSuccess = False``).
 
-|
+  If ``False``: It doesn't matter if the file exists or not.
+
+**Returns:**
+
+* ``bSuccess``
+
+  / *Type*: bool /
+
+  Indicates if the computation of the method ``sMethod`` was successful or not.
+
+* ``sResult``
+
+  / *Type*: str /
+
+  The result of the computation of the method ``sMethod``.
       """
 
       sMethod = "CFile::Delete"
@@ -334,13 +348,9 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
 
    def __PrepareOutput(self, Content=""):
       """
-|
-
 Helper for ``Write`` and ``Append`` (consideration of composite data types).
 
 Returns a list of strings (that will be written to file).
-
-|
       """
 
       listOut = []
@@ -391,20 +401,47 @@ Returns a list of strings (that will be written to file).
 
    def Write(self, Content="", nVSpaceAfter=0, sPrefix=None, bToScreen=False):
       """
-|
-
 Writes the content of a variable ``Content`` to file.
 
-If ``Content`` is not a string, the ``Write`` method resolves the data structure (therefore ``Content`` can also be of type
-``list``, ``tuple``, ``set``, ``dict``, ``dotdict``).
+**Arguments:**
 
-Adds vertical space ``nVSpaceAfter`` (= number of blank lines) after ``Content``.
+* ``Content``
 
-Prints ``Content`` also to screen in case of ``bToScreen`` is ``True`` (default: ``False``).
+  / *Condition*: required / *Type*: one of: str, list, tuple, set, dict, dotdict /
 
-Returns ``bSuccess`` and ``sResult`` (feedback).
+  If ``Content`` is not a string, the ``Write`` method resolves the data structure before writing the content to file.
 
-|
+* ``nVSpaceAfter``
+
+  / *Condition*: optional / *Type*: int / *Default*: 0 /
+
+  Adds vertical space ``nVSpaceAfter`` (= number of blank lines) after ``Content``.
+
+* ``sPrefix``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  `sPrefix`` is added to every line of output (in case of ``sPrefix`` is not ``None``).
+
+* ``bToScreen``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  Prints ``Content`` also to screen (in case of ``bToScreen`` is ``True``).
+
+**Returns:**
+
+* ``bSuccess``
+
+  / *Type*: bool /
+
+  Indicates if the computation of the method ``sMethod`` was successful or not.
+
+* ``sResult``
+
+  / *Type*: str /
+
+  The result of the computation of the method ``sMethod``.
       """
 
       sMethod = "CFile::Write"
@@ -447,22 +484,48 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
 
    def Append(self, Content="", nVSpaceAfter=0, sPrefix=None, bToScreen=False):
       """
-|
-
 Appends the content of a variable ``Content`` to file.
 
-If ``Content`` is not a string, the ``Write`` method resolves the data structure (therefore ``Content`` can also be of type
-``list``, ``tuple``, ``set``, ``dict``, ``dotdict``).
+**Arguments:**
 
-Adds vertical space ``nVSpaceAfter`` (= number of blank lines) after ``Content``.
+* ``Content``
 
-Prints ``Content`` also to screen in case of ``bToScreen`` is ``True`` (default: ``False``).
+  / *Condition*: required / *Type*: one of: str, list, tuple, set, dict, dotdict /
 
-Returns ``bSuccess`` and ``sResult`` (feedback).
+  If ``Content`` is not a string, the ``Write`` method resolves the data structure before writing the content to file.
 
-|
+* ``nVSpaceAfter``
+
+  / *Condition*: optional / *Type*: int / *Default*: 0 /
+
+  Adds vertical space ``nVSpaceAfter`` (= number of blank lines) after ``Content``.
+
+* ``sPrefix``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  `sPrefix`` is added to every line of output (in case of ``sPrefix`` is not ``None``).
+
+* ``bToScreen``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  Prints ``Content`` also to screen (in case of ``bToScreen`` is ``True``).
+
+**Returns:**
+
+* ``bSuccess``
+
+  / *Type*: bool /
+
+  Indicates if the computation of the method ``sMethod`` was successful or not.
+
+* ``sResult``
+
+  / *Type*: str /
+
+  The result of the computation of the method ``sMethod``.
       """
-
       sMethod = "CFile::Append"
 
       if self.__oFileStatus != enFileStatiType.openedforappending:
@@ -517,16 +580,113 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
                  bRStrip         = True,
                  bToScreen       = False):
       """
-|
-
 Reads content from current file. Returns an array of lines together with ``bSuccess`` and ``sResult`` (feedback).
 
 The method takes care of opening and closing the file. The complete file content is read by ``ReadLines`` in one step,
 but with the help of further parameters it is possible to reduce the content by including and excluding lines.
 
-T.B.C.
+The logical join of all filter is: ``AND``.
 
-|
+**Arguments:**
+
+* ``bCaseSensitive``
+
+  / *Condition*: optional / *Type*: bool / *Default*: True /
+
+  * If ``True``, the standard filters work case sensitive, otherwise not.
+  * This has no effect to the regular expression based filters ``sInclRegEx`` and ``sExclRegEx``.
+
+* ``bSkipBlankLines``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  If ``True``, blank lines will be skipped, otherwise not.
+
+* ``sComment``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  In case of a line starts with the string ``sComment``, this line is skipped.
+
+* ``sStartsWith``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  * The criterion of this filter is fulfilled in case of the input string starts with the string ``sStartsWith``
+  * More than one string can be provided (semicolon separated; logical join: ``OR``)
+
+* ``sEndsWith``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  * The criterion of this filter is fulfilled in case of the input string ends with the string ``sEndsWith``
+  * More than one string can be provided (semicolon separated; logical join: ``OR``)
+
+* ``sStartsNotWith``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  * The criterion of this filter is fulfilled in case of the input string starts not with the string ``sStartsNotWith``
+  * More than one string can be provided (semicolon separated; logical join: ``AND``)
+
+* ``sEndsNotWith``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  * The criterion of this filter is fulfilled in case of the input string ends not with the string ``sEndsNotWith``
+  * More than one string can be provided (semicolon separated; logical join: ``AND``)
+
+* ``sContains``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  * The criterion of this filter is fulfilled in case of the input string contains the string ``sContains`` at any position
+  * More than one string can be provided (semicolon separated; logical join: ``OR``)
+
+* ``sContainsNot``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  * The criterion of this filter is fulfilled in case of the input string does **not** contain the string ``sContainsNot`` at any position
+  * More than one string can be provided (semicolon separated; logical join: ``AND``)
+
+* ``sInclRegEx``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  * *Include* filter based on regular expressions (consider the syntax of regular expressions!)
+  * The criterion of this filter is fulfilled in case of the regular expression ``sInclRegEx`` matches the input string
+  * Leading and trailing blanks within the input string are considered
+  * ``bCaseSensitive`` has no effect
+  * A semicolon separated list of several regular expressions is **not** supported
+
+* ``sExclRegEx``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  * *Exclude* filter based on regular expressions (consider the syntax of regular expressions!)
+  * The criterion of this filter is fulfilled in case of the regular expression ``sExclRegEx`` does **not** match the input string
+  * Leading and trailing blanks within the input string are considered
+  * ``bCaseSensitive`` has no effect
+  * A semicolon separated list of several regular expressions is **not** supported
+
+* ``bLStrip``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  If ``True``, leading spaces are removed from line before the filters are used, otherwise not.
+
+* ``bRStrip``
+
+  / *Condition*: optional / *Type*: bool / *Default*: True /
+
+  If ``True``, trailing spaces are removed from line before the filters are used, otherwise not.
+
+* ``bToScreen``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  If ``True``, the content read from file is also printed to screen, otherwise not.
       """
 
       sMethod = "[CFile::ReadLines]"
@@ -603,39 +763,52 @@ T.B.C.
 
    def GetFileInfo(self):
       """
-|
+Returns the following informations about the file (encapsulated within a dictionary ``dFileInfo``):
 
-Returns the following informations about the file (encapsulated within a dictionary):
+**Returns:**
 
-Key **sFile**
+* Key ``sFile``
 
-   Path and name of current file
+  / *Type*: str /
 
-Key **bFileIsExisting**
+  Path and name of current file
 
-   ``True`` if file is existing, otherwise not
 
-Key **sFileName**
+* Key ``bFileIsExisting``
 
-   The name of the current file (incl. extension)
+  / *Type*: bool /
 
-Key **sFileExtension**
+  ``True`` if file is existing, otherwise ``False``
 
-   The extension of the current file
+* Key ``sFileName``
 
-Key **sFileNameOnly**
+  / *Type*: str /
 
-   The pure name of the current file (without extension)
+  The name of the current file (incl. extension)
 
-Key **sFilePath**
+* Key ``sFileExtension``
 
-   The the path to current file
+  / *Type*: str /
 
-Key **bFilePathIsExisting**
+  The extension of the current file
 
-   ``True`` if file path is existing, otherwise not
+* Key ``sFileNameOnly``
 
-|
+  / *Type*: str /
+
+  The pure name of the current file (without extension)
+
+* Key ``sFilePath``
+
+  / *Type*: str /
+
+  The the path to current file
+
+* Key ``bFilePathIsExisting``
+
+  / *Type*: bool /
+
+  ``True`` if file path is existing, otherwise ``False``
       """
 
       sMethod = "CFile::GetFileInfo"
@@ -682,8 +855,6 @@ Key **bFilePathIsExisting**
 
    def CopyTo(self, sDestination=None, bOverwrite=False):
       """
-|
-
 Copies the current file to ``sDestination``, that can either be a path without file name or a path together with a file name.
 
 In case of the destination file already exists and ``bOverwrite`` is ``True``, than the destination file will be overwritten.
@@ -691,11 +862,36 @@ In case of the destination file already exists and ``bOverwrite`` is ``True``, t
 In case of the destination file already exists and ``bOverwrite`` is ``False`` (default), than the destination file will not be overwritten
 and ``CopyTo`` returns ``bSuccess = False``.
 
-Returns ``bSuccess`` and ``sResult`` (feedback).
+**Arguments:**
 
-|
+* ``sDestination``
+
+  / *Condition*: required / *Type*: string /
+
+  The path to destination file (either incl. file name or without file name)
+
+* ``bOverwrite``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  * In case of the destination file already exists and ``bOverwrite`` is ``True``, than the destination file will be overwritten.
+  * In case of the destination file already exists and ``bOverwrite`` is ``False`` (default), than the destination file will not be overwritten
+    and ``CopyTo`` returns ``bSuccess = False``.
+
+**Returns:**
+
+* ``bSuccess``
+
+  / *Type*: bool /
+
+  Indicates if the computation of the method ``sMethod`` was successful or not.
+
+* ``sResult``
+
+  / *Type*: str /
+
+  The result of the computation of the method ``sMethod``.
       """
-
       sMethod = "CFile::CopyTo"
 
       if self.__sFile is None:
@@ -805,20 +1001,38 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
 
    def MoveTo(self, sDestination=None, bOverwrite=False):
       """
-|
-
 Moves the current file to ``sDestination``, that can either be a path without file name or a path together with a file name.
 
-In case of the destination file already exists and ``bOverwrite`` is ``True``, than the destination file will be overwritten.
+**Arguments:**
 
-In case of the destination file already exists and ``bOverwrite`` is ``False`` (default), than the destination file will not be overwritten
-and ``CopyTo`` returns ``bSuccess = False``.
+* ``sDestination``
 
-Returns ``bSuccess`` and ``sResult`` (feedback).
+  / *Condition*: required / *Type*: string /
 
-|
+  The path to destination file (either incl. file name or without file name)
+
+* ``bOverwrite``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  * In case of the destination file already exists and ``bOverwrite`` is ``True``, than the destination file will be overwritten.
+  * In case of the destination file already exists and ``bOverwrite`` is ``False`` (default), than the destination file will not be overwritten
+    and ``MoveTo`` returns ``bSuccess = False``.
+
+**Returns:**
+
+* ``bSuccess``
+
+  / *Type*: bool /
+
+  Indicates if the computation was successful or not
+
+* ``sResult``
+
+  / *Type*: str /
+
+  Contains details about what happens during computation
       """
-
       sMethod = "CFile::MoveTo"
 
       bSuccess, sResult = self.CopyTo(sDestination, bOverwrite)

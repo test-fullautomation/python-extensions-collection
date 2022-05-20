@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 26.01.2022
+# 20.05.2022
 #
 # **************************************************************************************************************
 
@@ -30,57 +30,66 @@ import os, ntpath, re
 # **************************************************************************************************************
 
 class CString(object):
-   """Contains some string computation methods like e.g. normalizing a path."""
+   """
+The class ``CString`` contains some string computation methods like e.g. normalizing a path.
+   """
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
 
    def NormalizePath(sPath=None, bWin=False, sReferencePathAbs=None, bConsiderBlanks=False, bExpandEnvVars=True, bMask=True):
       """
-|
+Normalizes local paths, paths to local network resources and internet addresses
 
-**Method:**
+**Arguments:**
 
-**NormalizePath**
+* ``sPath``
 
-   Normalizes local paths, paths to local network resources and internet addresses
+  / *Condition*: required / *Type*: str /
 
-**Args:**
+  The path to be normalized
 
-**sPath** (*string*)
+* ``bWin``
 
-   The path to be normalized
+  / *Condition*: optional / *Type*: bool / *Default*: False /
 
-**bWin** (*boolean; optional; default: False*)
+  If ``True`` then returned path contains masked backslashes as separator, otherwise slashes
 
-   If ``True`` then returned path contains masked backslashes as separator, otherwise slashes
+* ``sReferencePathAbs``
 
-**sReferencePathAbs** (*string, optional*)
+  / *Condition*: optional / *Type*: str / *Default*: None /
 
-   In case of ``sPath`` is relative and ``sReferencePathAbs`` (expected to be absolute) is given, then
-   the returned absolute path is a join of both input paths
+  In case of ``sPath`` is relative and ``sReferencePathAbs`` (expected to be absolute) is given, then
+  the returned absolute path is a join of both input paths
 
-**bConsiderBlanks** (*boolean; optional; default: False*)
+* ``bConsiderBlanks``
 
-   If ``True`` then the returned path is encapsulated in quotes - in case of the path contains blanks
+  / *Condition*: optional / *Type*: bool / *Default*: False /
 
-**bExpandEnvVars** (*boolean; optional; default: True*)
+  If ``True`` then the returned path is encapsulated in quotes - in case of the path contains blanks
+
+* ``bExpandEnvVars``
+
+  / *Condition*: optional / *Type*: bool / *Default*: True /
 
    If ``True`` then in the returned path environment variables are resolved, otherwise not.
 
-**bMask** (*boolean; optional; default: True; requires bWin=True*)
+* ``bMask``
 
-   If ``bWin`` is ``True`` and ``bMask`` is ``True`` then the returned path contains masked backslashes as separator.
-   If ``bWin`` is ``True`` and ``bMask`` is ``False`` then the returned path contains single backslashes only - this might be
-   required for applications, that are not able to handle masked backslashes. In case of ``bWin`` is ``False`` ``bMask`` has no effect.
+  / *Condition*: optional / *Type*: bool / *Default*: True (requires ``bWin=True``)/
+
+  * If ``bWin`` is ``True`` and ``bMask`` is ``True`` then the returned path contains masked backslashes as separator.
+  * If ``bWin`` is ``True`` and ``bMask`` is ``False`` then the returned path contains single backslashes only - this might be
+    required for applications, that are not able to handle masked backslashes.
+  * In case of ``bWin`` is ``False`` ``bMask`` has no effect.
 
 **Returns:**
 
-**sPath** (*string*)
+* ``sPath``
 
-   The normalized path (is ``None`` in case of ``sPath`` is ``None``)
+  / *Type*: str /
 
-|
+  The normalized path (is ``None`` in case of ``sPath`` is ``None``)
       """
 
       if sPath is not None:
@@ -212,60 +221,69 @@ class CString(object):
 
    def DetectParentPath(sStartPath=None, sFolderName=None, sFileName=None):
       """
-|
+Computes the path to any parent folder inside a given path. Optionally DetectParentPath is able
+to search for files inside the parent folder.
 
-**Method:**
+**Arguments:**
 
-**DetectParentPath**
+* ``sStartPath``
 
-   Computes the path to any parent folder inside a given path. Optionally DetectParentPath is able
-   to search for files inside the parent folder.
+  / *Condition*: required / *Type*: str /
 
-**Args:**
+  The path in which to search for a parent folder
 
-**sStartPath** (*string*)
+* ``sFolderName``
 
-   The path in which to search for a parent folder
+  / *Condition*: required / *Type*: str /
 
-**sFolderName** (*string*)
+  The name of the folder to search for within ``sStartPath``. It is possible to provide more than one folder name separated by semicolon
 
-   The name of the folder to search for within ``sStartPath``. It is possible to provide more than one folder name separated by semicolon
+* ``sFileName``
 
-**sFileName** (*string, optional*)
+  / *Condition*: optional / *Type*: str / *Default*: None /
 
-   The name of a file to search within the detected parent folder
+  The name of a file to search within the detected parent folder
 
 **Returns:**
 
-**sDestPath** (*string*)
+* ``sDestPath``
 
-   Path and name of parent folder found inside ``sStartPath``, ``None`` in case of ``sFolderName`` is not found inside ``sStartPath``.
-   In case of more than one parent folder is found ``sDestPath`` contains the first result and ``listDestPaths`` contains all results.
+  / *Type*: str /
 
-**listDestPaths** (*list*)
+  Path and name of parent folder found inside ``sStartPath``, ``None`` in case of ``sFolderName`` is not found inside ``sStartPath``.
+  In case of more than one parent folder is found ``sDestPath`` contains the first result and ``listDestPaths`` contains all results.
 
-   If ``sFolderName`` contains a single folder name this list contains only one element that is ``sDestPath``.
-   In case of ``FolderName`` contains a semicolon separated list of several folder names this list contains all found paths of the given folder names.
-   ``listDestPaths`` is ``None`` (and not an empty list!) in case of ``sFolderName`` is not found inside ``sStartPath``.
+* ``listDestPaths``
 
-**sDestFile** (*string*)
+  / *Type*: list /
 
-   Path and name of ``sFileName``, in case of ``sFileName`` is given and found inside ``listDestPaths``.
-   In case of more than one file is found ``sDestFile`` contains the first result and ``listDestFiles`` contains all results.
-   ``sDestFile`` is ``None`` in case of ``sFileName`` is ``None`` and also in case of ``sFileName`` is not found inside ``listDestPaths``
-   (and therefore also in case of ``sFolderName`` is not found inside ``sStartPath``).
+  If ``sFolderName`` contains a single folder name this list contains only one element that is ``sDestPath``.
+  In case of ``FolderName`` contains a semicolon separated list of several folder names this list contains all found paths of the given folder names.
+  ``listDestPaths`` is ``None`` (and not an empty list!) in case of ``sFolderName`` is not found inside ``sStartPath``.
 
-**listDestFiles** (*list*)
+* ``sDestFile``
 
-   Contains all positions of ``sFileName`` found inside ``listDestPaths``.
-   ``listDestFiles`` is ``None`` (and not an empty list!) in case of ``sFileName`` is ``None`` and also in case of ``sFileName``
-   is not found inside ``listDestPaths`` (and therefore also in case of ``sFolderName`` is not found inside ``sStartPath``).
+  / *Type*: str /
 
-**sDestPathParent** (*string*)
+  Path and name of ``sFileName``, in case of ``sFileName`` is given and found inside ``listDestPaths``.
+  In case of more than one file is found ``sDestFile`` contains the first result and ``listDestFiles`` contains all results.
+  ``sDestFile`` is ``None`` in case of ``sFileName`` is ``None`` and also in case of ``sFileName`` is not found inside ``listDestPaths``
+  (and therefore also in case of ``sFolderName`` is not found inside ``sStartPath``).
 
-   The parent folder of ``sDestPath``, ``None`` in case of ``sFolderName`` is not found inside ``sStartPath`` (``sDestPath`` is ``None``).
+* ``listDestFiles``
 
-|
+  / *Type*: list /
+
+  Contains all positions of ``sFileName`` found inside ``listDestPaths``.
+
+  ``listDestFiles`` is ``None`` (and not an empty list!) in case of ``sFileName`` is ``None`` and also in case of ``sFileName``
+  is not found inside ``listDestPaths`` (and therefore also in case of ``sFolderName`` is not found inside ``sStartPath``).
+
+* ``sDestPathParent``
+
+  / *Type*: str /
+
+  The parent folder of ``sDestPath``, ``None`` in case of ``sFolderName`` is not found inside ``sStartPath`` (``sDestPath`` is ``None``).
       """
 
       sDestPath       = None
@@ -376,8 +394,6 @@ class CString(object):
                     sExclRegEx        = None,
                     bDebug            = False):
       """
-|
-
 During the computation of strings there might occur the need to get to know if this string fulfils certain criteria or not.
 Such a criterion can e.g. be that the string contains a certain substring. Also an inverse logic might be required:
 In this case the criterion is that the string does **not** contain this substring.
@@ -429,8 +445,8 @@ Summarized:
 * Filters are used to define *criteria*
 * The return value of this method provides the *conclusion* - indicating if all criteria are fulfilled or not
 
-
-*The following filters are available:*
+The following filters are available:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **bSkipBlankStrings**
 
@@ -504,214 +520,229 @@ Summarized:
    * ``bCaseSensitive`` has no effect
    * A semicolon separated list of several regular expressions is **not** supported
 
-*Further parameter:*
+**Further arguments:**
 
-**sString**
+* ``sString``
+
+  / *Condition*: required / *Type*: str /
 
   The input string that has to be investigated. 
 
-**bCaseSensitive** (*boolean, optional, default*: ``True``)
+* ``bCaseSensitive``
+
+  / *Condition*: optional / *Type*: bool / *Default*: True /
 
   If ``True``, the standard filters work case sensitive, otherwise not.
 
-**bDebug** (*boolean, optional, default*: ``False``)
+* ``bDebug``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
 
   If ``True``, additional output is printed to console (e.g. the decision of every single filter), otherwise not.
 
-*Examples:*
+**Returns:**
 
-Returns ``True``:
+* ``bAck``
 
-.. code::
+  / *Type*: bool /
 
-   bAck = CString.StringFilter(sString           = "Speed is 25 beats per minute",
-                               bCaseSensitive    = True,
-                               bSkipBlankStrings = True,
-                               sComment          = None,
-                               sStartsWith       = "Sp",
-                               sEndsWith         = None,
-                               sStartsNotWith    = None,
-                               sEndsNotWith      = None,
-                               sContains         = "beats",
-                               sContainsNot      = None,
-                               sInclRegEx        = None,
-                               sExclRegEx        = None)
+  Final statement about the input string ``sString`` after filter compotation
 
-Returns ``False``:
+Examples:
+~~~~~~~~~
 
-.. code::
+1. Returns ``True``:
 
-   bAck = CString.StringFilter(sString           = "Speed is 25 beats per minute",
-                               bCaseSensitive    = True,
-                               bSkipBlankStrings = True,
-                               sComment          = None,
-                               sStartsWith       = "Sp",
-                               sEndsWith         = None,
-                               sStartsNotWith    = None,
-                               sEndsNotWith      = "minute",
-                               sContains         = "beats",
-                               sContainsNot      = None,
-                               sInclRegEx        = None,
-                               sExclRegEx        = None)
+.. code:: python
 
-Returns ``True``:
+   StringFilter(sString           = "Speed is 25 beats per minute",
+                bCaseSensitive    = True,
+                bSkipBlankStrings = True,
+                sComment          = None,
+                sStartsWith       = "Sp",
+                sEndsWith         = None,
+                sStartsNotWith    = None,
+                sEndsNotWith      = None,
+                sContains         = "beats",
+                sContainsNot      = None,
+                sInclRegEx        = None,
+                sExclRegEx        = None)
 
-.. code::
+2. Returns ``False``:
 
-   bAck = CString.StringFilter(sString           = "Speed is 25 beats per minute",
-                               bCaseSensitive    = True,
-                               bSkipBlankStrings = True,
-                               sComment          = None,
-                               sStartsWith       = None,
-                               sEndsWith         = None,
-                               sStartsNotWith    = None,
-                               sEndsNotWith      = None,
-                               sContains         = None,
-                               sContainsNot      = "Beats",
-                               sInclRegEx        = None,
-                               sExclRegEx        = None)
+.. code:: python
 
-Returns ``True``:
+   StringFilter(sString           = "Speed is 25 beats per minute",
+                bCaseSensitive    = True,
+                bSkipBlankStrings = True,
+                sComment          = None,
+                sStartsWith       = "Sp",
+                sEndsWith         = None,
+                sStartsNotWith    = None,
+                sEndsNotWith      = "minute",
+                sContains         = "beats",
+                sContainsNot      = None,
+                sInclRegEx        = None,
+                sExclRegEx        = None)
 
-.. code::
+3. Returns ``True``:
 
-   bAck = CString.StringFilter(sString           = "Speed is 25 beats per minute",
-                               bCaseSensitive    = True,
-                               bSkipBlankStrings = True,
-                               sComment          = None,
-                               sStartsWith       = None,
-                               sEndsWith         = None,
-                               sStartsNotWith    = None,
-                               sEndsNotWith      = None,
-                               sContains         = None,
-                               sContainsNot      = None,
-                               sInclRegEx        = r"\d{2}",
-                               sExclRegEx        = None)
+.. code:: python
 
-Returns ``False``:
+   StringFilter(sString           = "Speed is 25 beats per minute",
+                bCaseSensitive    = True,
+                bSkipBlankStrings = True,
+                sComment          = None,
+                sStartsWith       = None,
+                sEndsWith         = None,
+                sStartsNotWith    = None,
+                sEndsNotWith      = None,
+                sContains         = None,
+                sContainsNot      = "Beats",
+                sInclRegEx        = None,
+                sExclRegEx        = None)
 
-.. code::
+4. Returns ``True``:
 
-   bAck = CString.StringFilter(sString           = "Speed is 25 beats per minute",
-                               bCaseSensitive    = True,
-                               bSkipBlankStrings = True,
-                               sComment          = None,
-                               sStartsWith       = "Speed",
-                               sEndsWith         = None,
-                               sStartsNotWith    = None,
-                               sEndsNotWith      = None,
-                               sContains         = None,
-                               sContainsNot      = None,
-                               sInclRegEx        = r"\d{3}",
-                               sExclRegEx        = None)
+.. code:: python
 
-Returns ``False``:
+   StringFilter(sString           = "Speed is 25 beats per minute",
+                bCaseSensitive    = True,
+                bSkipBlankStrings = True,
+                sComment          = None,
+                sStartsWith       = None,
+                sEndsWith         = None,
+                sStartsNotWith    = None,
+                sEndsNotWith      = None,
+                sContains         = None,
+                sContainsNot      = None,
+                sInclRegEx        = r"\d{2}",
+                sExclRegEx        = None)
 
-.. code::
+5. Returns ``False``:
 
-   bAck = CString.StringFilter(sString           = "Speed is 25 beats per minute",
-                               bCaseSensitive    = True,
-                               bSkipBlankStrings = True,
-                               sComment          = None,
-                               sStartsWith       = "Speed",
-                               sEndsWith         = "minute",
-                               sStartsNotWith    = "speed",
-                               sEndsNotWith      = None,
-                               sContains         = "beats",
-                               sContainsNot      = None,
-                               sInclRegEx        = r"\d{2}",
-                               sExclRegEx        = r"\d{2}")
+.. code:: python
 
-Returns ``False``:
+   StringFilter(sString           = "Speed is 25 beats per minute",
+                bCaseSensitive    = True,
+                bSkipBlankStrings = True,
+                sComment          = None,
+                sStartsWith       = "Speed",
+                sEndsWith         = None,
+                sStartsNotWith    = None,
+                sEndsNotWith      = None,
+                sContains         = None,
+                sContainsNot      = None,
+                sInclRegEx        = r"\d{3}",
+                sExclRegEx        = None)
 
-.. code::
+6. Returns ``False``:
 
-   bAck = CString.StringFilter(sString           = "     ",
-                               bCaseSensitive    = True,
-                               bSkipBlankStrings = True,
-                               sComment          = None,
-                               sStartsWith       = None,
-                               sEndsWith         = None,
-                               sStartsNotWith    = None,
-                               sEndsNotWith      = None,
-                               sContains         = None,
-                               sContainsNot      = None,
-                               sInclRegEx        = None,
-                               sExclRegEx        = None)
+.. code:: python
 
-Returns ``False``:
+   StringFilter(sString           = "Speed is 25 beats per minute",
+                bCaseSensitive    = True,
+                bSkipBlankStrings = True,
+                sComment          = None,
+                sStartsWith       = "Speed",
+                sEndsWith         = "minute",
+                sStartsNotWith    = "speed",
+                sEndsNotWith      = None,
+                sContains         = "beats",
+                sContainsNot      = None,
+                sInclRegEx        = r"\d{2}",
+                sExclRegEx        = r"\d{2}")
 
-.. code::
+7. Returns ``False``:
 
-   bAck = CString.StringFilter(sString           = "# Speed is 25 beats per minute",
-                               bCaseSensitive    = True,
-                               bSkipBlankStrings = True,
-                               sComment          = "#",
-                               sStartsWith       = None,
-                               sEndsWith         = None,
-                               sStartsNotWith    = None,
-                               sEndsNotWith      = None,
-                               sContains         = "beats",
-                               sContainsNot      = None,
-                               sInclRegEx        = None,
-                               sExclRegEx        = None)
+.. code:: python
+
+   StringFilter(sString           = "     ",
+                bCaseSensitive    = True,
+                bSkipBlankStrings = True,
+                sComment          = None,
+                sStartsWith       = None,
+                sEndsWith         = None,
+                sStartsNotWith    = None,
+                sEndsNotWith      = None,
+                sContains         = None,
+                sContainsNot      = None,
+                sInclRegEx        = None,
+                sExclRegEx        = None)
+
+8. Returns ``False``:
+
+.. code:: python
+
+   StringFilter(sString           = "# Speed is 25 beats per minute",
+                bCaseSensitive    = True,
+                bSkipBlankStrings = True,
+                sComment          = "#",
+                sStartsWith       = None,
+                sEndsWith         = None,
+                sStartsNotWith    = None,
+                sEndsNotWith      = None,
+                sContains         = "beats",
+                sContainsNot      = None,
+                sInclRegEx        = None,
+                sExclRegEx        = None)
 
 
-Returns ``False``:
+9. Returns ``False``:
 
-.. code::
+.. code:: python
 
-   bAck = CString.StringFilter(sString           = "   Alpha is not beta; and beta is not gamma  ",
-                               bCaseSensitive    = True,
-                               bSkipBlankStrings = True,
-                               sComment          = None,
-                               sStartsWith       = None,
-                               sEndsWith         = None,
-                               sStartsNotWith    = None,
-                               sEndsNotWith      = None,
-                               sContains         = "   Alpha ",
-                               sContainsNot      = None,
-                               sInclRegEx        = None,
-                               sExclRegEx        = None)
+   StringFilter(sString           = "   Alpha is not beta; and beta is not gamma  ",
+                bCaseSensitive    = True,
+                bSkipBlankStrings = True,
+                sComment          = None,
+                sStartsWith       = None,
+                sEndsWith         = None,
+                sStartsNotWith    = None,
+                sEndsNotWith      = None,
+                sContains         = "   Alpha ",
+                sContainsNot      = None,
+                sInclRegEx        = None,
+                sExclRegEx        = None)
 
 Because blanks around search strings (here ``"   Alpha "``) are considered, whereas the blanks around the input string are removed before computation.
 Therefore ``"   Alpha "`` cannot be found within the (shortened) input string.
 
 
-This alternative solution returns ``True``:
+10. This alternative solution returns ``True``:
 
-.. code::
+.. code:: python
 
-   bAck = CString.StringFilter(sString           = "   Alpha is not beta; and beta is not gamma  ",
-                               bCaseSensitive    = True,
-                               bSkipBlankStrings = True,
-                               sComment          = None,
-                               sStartsWith       = None,
-                               sEndsWith         = None,
-                               sStartsNotWith    = None,
-                               sEndsNotWith      = None,
-                               sContains         = None,
-                               sContainsNot      = None,
-                               sInclRegEx        = r"\s{3}Alpha",
-                               sExclRegEx        = None)
+   StringFilter(sString           = "   Alpha is not beta; and beta is not gamma  ",
+                bCaseSensitive    = True,
+                bSkipBlankStrings = True,
+                sComment          = None,
+                sStartsWith       = None,
+                sEndsWith         = None,
+                sStartsNotWith    = None,
+                sEndsNotWith      = None,
+                sContains         = None,
+                sContainsNot      = None,
+                sInclRegEx        = r"\s{3}Alpha",
+                sExclRegEx        = None)
 
 
-Returns ``True``:
+11. Returns ``True``:
 
-.. code::
+.. code:: python
 
-   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
-                               bCaseSensitive    = True,
-                               bSkipBlankStrings = True,
-                               sComment          = None,
-                               sStartsWith       = None,
-                               sEndsWith         = None,
-                               sStartsNotWith    = None,
-                               sEndsNotWith      = None,
-                               sContains         = "beta; and",
-                               sContainsNot      = None,
-                               sInclRegEx        = None,
-                               sExclRegEx        = None)
+   StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                bCaseSensitive    = True,
+                bSkipBlankStrings = True,
+                sComment          = None,
+                sStartsWith       = None,
+                sEndsWith         = None,
+                sStartsNotWith    = None,
+                sEndsNotWith      = None,
+                sContains         = "beta; and",
+                sContainsNot      = None,
+                sInclRegEx        = None,
+                sExclRegEx        = None)
 
 The meaning of ``"beta; and"`` is: The criterion is fulfilled in case of either ``"beta"`` or ``" and"`` can be found. That's ``True`` in this example - but this
 has nothing to do with the fact, that also this string ``"beta; and"`` can be found. A semicolon that shall be part of the search, has to be masked!
@@ -720,22 +751,20 @@ The meaning of ``"beta\; not"`` in the following example is: The criterion is fu
 
 That's **not** ``True``. Therefore the method returns ``False``:
 
-.. code::
+.. code:: python
 
-   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
-                               bCaseSensitive    = True,
-                               bSkipBlankStrings = True,
-                               sComment          = None,
-                               sStartsWith       = None,
-                               sEndsWith         = None,
-                               sStartsNotWith    = None,
-                               sEndsNotWith      = None,
-                               sContains         = r"beta\; not",
-                               sContainsNot      = None,
-                               sInclRegEx        = None,
-                               sExclRegEx        = None)
-
-|
+   StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                bCaseSensitive    = True,
+                bSkipBlankStrings = True,
+                sComment          = None,
+                sStartsWith       = None,
+                sEndsWith         = None,
+                sStartsNotWith    = None,
+                sEndsNotWith      = None,
+                sContains         = r"beta\; not",
+                sContainsNot      = None,
+                sInclRegEx        = None,
+                sExclRegEx        = None)
       """
 
       if sString is None:
@@ -1055,24 +1084,42 @@ That's **not** ``True``. Therefore the method returns ``False``:
 
    def FormatResult(sMethod="", bSuccess=True, sResult=""):
       """
-|
+Formats the result string ``sResult`` depending on ``bSuccess``:
 
-**Method:**
+* ``bSuccess`` is ``True`` indicates *success*
+* ``bSuccess`` is ``False`` indicates an *error*
+* ``bSuccess`` is ``None`` indicates an *exception*
 
-**FormatResult**
+Additionally the name of the method that causes the result, can be provided (*optional*).
+This is useful for debugging.
 
-   Formats the result string ``sResult`` depending on ``bSuccess``:
+**Arguments:**
 
-   * ``bSuccess`` is ``True`` indicates *success*
-   * ``bSuccess`` is ``False`` indicates an *error*
-   * ``bSuccess`` is ``None`` indicates an *exception*
+* ``sMethod``
 
-   Additionally the name of the method that causes the result, can be provided (*optional*).
-   This is useful for debugging.
+  / *Condition*: optional / *Type*: str / *Default*: (empty string) /
 
-   Returns the formatted result string.
+  Name of the method that causes the result.
 
-|
+* ``bSuccess``
+
+  / *Condition*: optional / *Type*: bool / *Default*: True /
+
+  Indicates if the computation of the method ``sMethod`` was successful or not.
+
+* ``sResult``
+
+  / *Condition*: optional / *Type*: str / *Default*: (empty string) /
+
+  The result of the computation of the method ``sMethod``.
+
+**Returns:**
+
+* ``sResult``
+
+  / *Type*: str /
+
+  The formatted result string.
       """
 
       if sMethod is None:
