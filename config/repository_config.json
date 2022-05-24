@@ -1,8 +1,6 @@
 {
    "REPOSITORYNAME" : "python-extensions-collection",
    "PACKAGENAME" : "PythonExtensionsCollection",
-   "PACKAGEVERSION" : "0.3.1",
-   "PACKAGEDATE" : "20.05.2022",
    "AUTHOR" : "Holger Queckenstedt",
    "AUTHOREMAIL" : "Holger.Queckenstedt@de.bosch.com",
    "DESCRIPTION" : "Additional Python functions",
@@ -16,5 +14,6 @@
    "INTENDEDAUDIENCE" : "Intended Audience :: Developers",
    "TOPIC" : "Topic :: Software Development",
    "INSTALLREQUIRES" : ["pypandoc","colorama","GenPackageDoc"],
+   "PACKAGEDATA" : ["*.pdf"],
    "PACKAGEDOC" : "./packagedoc"
 }

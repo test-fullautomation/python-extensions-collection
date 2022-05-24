@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 20.05.2022
+# 24.05.2022
 #
 # **************************************************************************************************************
 
@@ -33,8 +33,13 @@ from PythonExtensionsCollection.String.CString import CString
 # **************************************************************************************************************
 
 class enFileStatiType:
-   """The class ``enFileStatiType`` defines the sollowing file states: ``closed``, ``openedforwriting``,
-``openedforappending`` and ``openedforreading``.
+   """
+The class ``enFileStatiType`` defines the sollowing file states:
+
+* ``closed``
+* ``openedforwriting``
+* ``openedforappending``
+* ``openedforreading``
    """
    closed             = "closed"
    openedforwriting   = "openedforwriting"
