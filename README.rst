@@ -1,4 +1,4 @@
-.. Copyright 2020-2022 Robert Bosch Car Multimedia GmbH
+.. Copyright 2020-2022 Robert Bosch GmbH
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,10 +15,7 @@
 Package Description
 ===================
 
-Getting Started
----------------
-
-The Python Extensions Collection package extends the functionality of Python by some useful functions
+The *Python Extensions Collection* package extends the functionality of Python by some useful functions
 that are not available in Python immediately.
 
 How to install
@@ -26,34 +23,35 @@ How to install
 
 Firstly clone the **python-extensions-collection** repository to your machine.
 
-`Python Extensions Collection <https://github.com/test-fullautomation/python-extensions-collection>`_
+.. code::
 
-Use the following two common commands to build or install this package:
+   git clone https://github.com/test-fullautomation/python-extensions-collection.git
 
-.. code-block::
+Use the following command to install this package:
 
-    setup.py build      will build the package underneath 'build/'
-    setup.py install    will install the package
+.. code::
 
-After the build processes is completed, the package is located in 'build/', and the generated 
-package documentation is located in 'doc/_build/'.
+    setup.py install
+
 
 Package Documentation
 ---------------------
 
-A detailed documentation of the Python Extensions Collection package can be found here:
-`Python-Extensions-Collection.pdf <https://github.com/test-fullautomation/python-extensions-collection/blob/develop/doc/_build/latex/Python-Extensions-Collection.pdf>`_
+A detailed documentation of the *Python Extensions Collection* package can be found here:
+`PythonExtensionsCollection.pdf <https://github.com/test-fullautomation/python-extensions-collection/blob/develop/PythonExtensionsCollection/PythonExtensionsCollection.pdf>`_
+
 
 Feedback
 --------
 
 To give us a feedback, you can send an email to `Thomas Pollerspöck <mailto:Thomas.Pollerspoeck@de.bosch.com>`_ 
 
-In case you want to report a bug or request any interesting feature, please don't 
-hesitate to raise a ticket.
+In case you want to report a bug or request any interesting feature, please don't hesitate to raise a ticket.
 
 Maintainers
 -----------
+
+`Holger Queckenstedt <mailto:Holger.Queckenstedt@de.bosch.com>`_
 
 `Thomas Pollerspöck <mailto:Thomas.Pollerspoeck@de.bosch.com>`_
 
@@ -61,6 +59,8 @@ Contributors
 ------------
 
 `Holger Queckenstedt <mailto:Holger.Queckenstedt@de.bosch.com>`_
+
+`Thomas Pollerspöck <mailto:Thomas.Pollerspoeck@de.bosch.com>`_
 
 License
 -------

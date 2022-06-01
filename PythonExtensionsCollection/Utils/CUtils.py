@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 26.01.2022
+# 20.05.2022
 #
 # **************************************************************************************************************
 
@@ -33,95 +33,107 @@ from dotdict import dotdict
 
 def PrettyPrint(oData=None, hOutputFile=None, bToConsole=True, nIndent=0, sPrefix=None, bHexFormat=False):
    """
-|
+Wrapper function to create and use a ``CTypePrint`` object. This wrapper function is responsible for
+printing out the content to console and to a file (depending on input parameter).
 
-**Function:**
+The content itself is prepared by the method ``TypePrint`` of class ``CTypePrint``. This happens ``PrettyPrint`` internally.
 
-**PrettyPrint**
+The idea behind the ``PrettyPrint`` function is to resolve also the content of composite data types and provide for every parameter inside:
 
-   Wrapper function to create and use a ``CTypePrint`` object. This wrapper function is responsible for
-   printing out the content to console and to a file (depending on input parameter).
+* the type
+* the total number of elements inside (e.g. the number of keys inside a dictionary)
+* the counter number of the current element
+* the value
 
-   The content itself is prepared by the method ``TypePrint`` of class ``CTypePrint``. This happens ``PrettyPrint`` internally.
+Example call:
 
-   The idea behind the ``PrettyPrint`` function is to resolve also the content of composite data types and provide for every parameter inside:
+.. code:: python
 
-   * the type
-   * the total number of elements inside (e.g. the number of keys inside a dictionary)
-   * the counter number of the current element
-   * the value
+   PrettyPrint(oData)
 
-   Example call:
+(*with oData is a Python variable of any type*)
 
-   ``PrettyPrint(oData)`` (*with oData is a Python variable of any type*)
+The output can e.g. look like this:
 
-   The output can e.g. look like this:
+.. code:: python
 
-   .. code:: python
+   [DICT] (3/1) > {K1} [STR]  :  'Val1'
+   [DICT] (3/2) > {K2} [LIST] (4/1) > [INT]  :  1
+   [DICT] (3/2) > {K2} [LIST] (4/2) > [STR]  :  'A'
+   [DICT] (3/2) > {K2} [LIST] (4/3) > [INT]  :  2
+   [DICT] (3/2) > {K2} [LIST] (4/4) > [TUPLE] (2/1) > [INT]  :  9
+   [DICT] (3/2) > {K2} [LIST] (4/4) > [TUPLE] (2/2) > [STR]  :  'Z'
+   [DICT] (3/3) > {K3} [INT]  :  5
 
-      [DICT] (3/1) > {K1} [STR]  :  'Val1'
-      [DICT] (3/2) > {K2} [LIST] (4/1) > [INT]  :  1
-      [DICT] (3/2) > {K2} [LIST] (4/2) > [STR]  :  'A'
-      [DICT] (3/2) > {K2} [LIST] (4/3) > [INT]  :  2
-      [DICT] (3/2) > {K2} [LIST] (4/4) > [TUPLE] (2/1) > [INT]  :  9
-      [DICT] (3/2) > {K2} [LIST] (4/4) > [TUPLE] (2/2) > [STR]  :  'Z'
-      [DICT] (3/3) > {K3} [INT]  :  5
+Every line of output has to be interpreted strictly from left to right.
 
-   Every line of output has to be interpreted strictly from left to right.
+For example the meaning of the fifth line of output
 
-   For example the meaning of the fifth line of output
+.. code:: python
 
-   ``[DICT] (3/2) > {K2} [LIST] (4/4) > [TUPLE] (2/1) > [INT]  :  9``
+   [DICT] (3/2) > {K2} [LIST] (4/4) > [TUPLE] (2/1) > [INT]  :  9
 
-   is:
+is:
 
-   * The type of input parameter (``oData``) is ``dict``
-   * The dictionary contains 3 keys
-   * The current line gives information about the second key of the dictionary
-   * The name of the second key is 'K2'
-   * The value of the second key is of type ``list``
-   * The list contains 4 elements
-   * The current line gives information about the fourth element of the list
-   * The fourth element of the list is of type ``tuple``
-   * The tuple contains 2 elements
-   * The current line gives information about the first element of the tuple
-   * The first element of the tuple is of type ``int`` and has the value 9
+* The type of input parameter (``oData``) is ``dict``
+* The dictionary contains 3 keys
+* The current line gives information about the second key of the dictionary
+* The name of the second key is 'K2'
+* The value of the second key is of type ``list``
+* The list contains 4 elements
+* The current line gives information about the fourth element of the list
+* The fourth element of the list is of type ``tuple``
+* The tuple contains 2 elements
+* The current line gives information about the first element of the tuple
+* The first element of the tuple is of type ``int`` and has the value 9
 
-   Types are encapsulated in square brackets, counter in round brackets and key names are encapsulated in curly brackets.
+Types are encapsulated in square brackets, counter in round brackets and key names are encapsulated in curly brackets.
 
-**Args:**
+**Arguments:**
 
-**oData** (*any Python data type*)
+* ``oData``
 
-   A variable of any Python data type.
+  / *Condition*: required / *Type*: (*any Python data type*) /
 
-**hOutputFile** (*handle to a file opened for writing or appending; optional; default None*)
+  A variable of any Python data type.
 
-   If handle is not ``None`` the content is written to this file, otherwise not.
+* ``hOutputFile``
 
-**bToConsole** (*bool; optional; default: True*)
+  / *Condition*: optional / *Type*: file handle / *Default*: None /
 
-   If ``True`` the content is written to console, otherwise not.
+  If handle is not ``None`` the content is written to this file, otherwise not.
 
-**nIndent** (*int; optional; default: 0*)
+* ``bToConsole``
 
-   Sets the number of additional blanks at the beginning of every line of output (indentation).
+  / *Condition*: optional / *Type*: bool / *Default*: True /
 
-**sPrefix** (*str; optional; default: None*)
+  If ``True`` the content is written to console, otherwise not.
 
-   Sets a prefix string that is added at the beginning of every line of output.
+* ``nIndent``
 
-**bHexFormat** (*bool; optional; default: False*)
+  / *Condition*: optional / *Type*: int / *Default*: 0 /
 
-   If ``True`` the output is printed in hexadecimal format (but strings only).
+  Sets the number of additional blanks at the beginning of every line of output (indentation).
+
+* ``sPrefix``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  Sets a prefix string that is added at the beginning of every line of output.
+
+* ``bHexFormat``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  If ``True`` the output is printed in hexadecimal format (but valid for strings only).
 
 **Returns:**
 
-**listOutLines** (*list*)
+* ``listOutLines`` (*list*)
 
-   List of lines containing the prepared output
+  / *Type*: list /
 
-|
+  List of lines containing the prepared output
    """
 
    oTypePrint   = CTypePrint()
@@ -149,8 +161,19 @@ def PrettyPrint(oData=None, hOutputFile=None, bToConsole=True, nIndent=0, sPrefi
 # --------------------------------------------------------------------------------------------------------------
 # TM***
 
-class CTypePrint():
+class CTypePrint(object):
+   """
+The class ``CTypePrint`` provides a method (``TypePrint``) to compute the following data:
 
+* the type
+* the total number of elements inside (e.g. the number of keys inside a dictionary)
+* the counter number of the current element
+* the value
+
+of simple and composite data types.
+
+The call of this method is encapsulated within the function ``PrettyPrint`` inside this module.
+   """
    def __init__(self):
       self.listGlobalPrefixes = []
       self.listOutLines       = []
@@ -168,6 +191,31 @@ class CTypePrint():
       return sStringHex
 
    def TypePrint(self, oData=None, bHexFormat=False):
+      """
+The method ``TypePrint`` computes details about the input variable ``oData``.
+
+**Arguments:**
+
+* ``oData``
+
+  / *Condition*: required / *Type*: any Python data type /
+
+  Python variable of any data type.
+
+* ``bHexFormat``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  If ``True`` the output is provide in hexadecimal format.
+
+**Returns:**
+
+* ``listOutLines``
+
+  / *Type*: list /
+
+  List of lines containing the resolved content of ``oData``.
+      """
 
       if oData is None:
          sLocalPrefix = "[NONE]"
