@@ -21,10 +21,10 @@
 # Contains parameter to control the application behavior in general.
 
    "CONTROL" : {
-                # if false: private methods are skipped, otherwise they are included in documentation
+                # if 'INCLUDEPRIVATE' is false: private methods are skipped, otherwise they are included in documentation
                 "INCLUDEPRIVATE"      : false,
-                # if true: also classes and methods without docstring are listed in the documentation (together with a hint
-                # that information is not available), otherwise they are skipped
+                # if 'INCLUDEUNDOCUMENTED' is true: also classes and methods without docstring are listed in the documentation;
+                # otherwise they are skipped
                 "INCLUDEUNDOCUMENTED" : true,
                 # if 'STRICT' is true: missing LaTeX compiler causes an error; otherwise PDF generation is handled as option
                 # and a missing LaTeX compiler does not cause an error
@@ -35,6 +35,8 @@
 # --------------
 # Defines the content of the PDF document (= the order of the chapters).
 # A chapter can be represented by an additional text file in rst format. Every rst file is a separate chapter
+# within the resulting PDF document.
+# A chapter can also be represented by an additional tex file. Every tex file is a separate chapter
 # within the resulting PDF document.
 # In case of Python modules are involved, every Python module is a chapter.
 # Class and function definitions within a Python module are subchapters. Methods of classes are subsubchapters.
@@ -111,7 +113,6 @@
 # GenPackageDoc needs to know where to find LaTeX. Because the path to the LaTeX interpreter depends
 # on the operating system, this path has to be defined separately for every supported operating system
 # (currently "WINDOWS" and "LINUX").
-# In opposite to the previous statement these paths have to be absolute (recommended: usage of environment variables).
 # Example:
 
    "TEX" : {
