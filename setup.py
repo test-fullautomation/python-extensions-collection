@@ -60,7 +60,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 24.05.2022
+# 08.06.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -194,7 +194,8 @@ setuptools.setup(
     packages = [str(oRepositoryConfig.Get('PACKAGENAME')),
                 str(oRepositoryConfig.Get('PACKAGENAME')) + ".String",
                 str(oRepositoryConfig.Get('PACKAGENAME')) + ".Utils",
-                str(oRepositoryConfig.Get('PACKAGENAME')) + ".File"],
+                str(oRepositoryConfig.Get('PACKAGENAME')) + ".File",
+                str(oRepositoryConfig.Get('PACKAGENAME')) + ".Folder"],
     classifiers = [
         str(oRepositoryConfig.Get('PROGRAMMINGLANGUAGE')),
         str(oRepositoryConfig.Get('LICENCE')),

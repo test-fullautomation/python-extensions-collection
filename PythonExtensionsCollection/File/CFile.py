@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 24.05.2022
+# 08.06.2022
 #
 # **************************************************************************************************************
 
@@ -248,13 +248,13 @@ Closes the opened file.
 
   / *Type*: bool /
 
-  Indicates if the computation of the method ``sMethod`` was successful or not.
+  Indicates if the computation of the method was successful or not.
 
 * ``sResult``
 
   / *Type*: str /
 
-  The result of the computation of the method ``sMethod``.
+  The result of the computation of the method.
       """
       sMethod = "CFile::Close"
 
@@ -304,13 +304,13 @@ Deletes the current file.
 
   / *Type*: bool /
 
-  Indicates if the computation of the method ``sMethod`` was successful or not.
+  Indicates if the computation of the method was successful or not.
 
 * ``sResult``
 
   / *Type*: str /
 
-  The result of the computation of the method ``sMethod``.
+  The result of the computation of the method.
       """
 
       sMethod = "CFile::Delete"
@@ -440,13 +440,13 @@ Writes the content of a variable ``Content`` to file.
 
   / *Type*: bool /
 
-  Indicates if the computation of the method ``sMethod`` was successful or not.
+  Indicates if the computation of the method was successful or not.
 
 * ``sResult``
 
   / *Type*: str /
 
-  The result of the computation of the method ``sMethod``.
+  The result of the computation of the method.
       """
 
       sMethod = "CFile::Write"
@@ -523,13 +523,13 @@ Appends the content of a variable ``Content`` to file.
 
   / *Type*: bool /
 
-  Indicates if the computation of the method ``sMethod`` was successful or not.
+  Indicates if the computation of the method was successful or not.
 
 * ``sResult``
 
   / *Type*: str /
 
-  The result of the computation of the method ``sMethod``.
+  The result of the computation of the method.
       """
       sMethod = "CFile::Append"
 
@@ -889,13 +889,13 @@ and ``CopyTo`` returns ``bSuccess = False``.
 
   / *Type*: bool /
 
-  Indicates if the computation of the method ``sMethod`` was successful or not.
+  Indicates if the computation of the method was successful or not.
 
 * ``sResult``
 
   / *Type*: str /
 
-  The result of the computation of the method ``sMethod``.
+  The result of the computation of the method.
       """
       sMethod = "CFile::CopyTo"
 
