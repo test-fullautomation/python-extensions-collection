@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 08.06.2022
+# 10.06.2022
 #
 # **************************************************************************************************************
 
@@ -149,8 +149,8 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
          self.Close()
          bSuccess = None
          sResult  = f"Not possible to open file '{self.__sFile}' for writing.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def __OpenForWriting(self):
@@ -187,8 +187,8 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
          self.Close()
          bSuccess = None
          sResult  = f"Not possible to open file '{self.__sFile}' for appending.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def __OpenForAppending(self):
@@ -225,8 +225,8 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
          self.Close()
          bSuccess = None
          sResult  = f"Not possible to open file '{self.__sFile}' for reading.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def __OpenForReading(self):
@@ -267,6 +267,7 @@ Closes the opened file.
          except Exception as reason:
             bSuccess = None
             sResult  = f"Exception while closing file '{self.__sFile}'.\nReason: " + str(reason)
+            sResult = CString.FormatResult(sMethod, bSuccess, sResult)
          self.__oFileHandle = None
       else:
          bSuccess = True
@@ -274,7 +275,6 @@ Closes the opened file.
 
       self.__oFileStatus = enFileStatiType.closed
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def Close(self):
@@ -327,7 +327,6 @@ Deletes the current file.
          else:
             bSuccess = True
          sResult = f"Nothing to delete. The file '{self.__sFile}' does not exist."
-         sResult = CString.FormatResult(sMethod, bSuccess, sResult)
          return bSuccess, sResult
 
       bSuccess, sResult = self.Close()
@@ -342,8 +341,8 @@ Deletes the current file.
       except Exception as reason:
          bSuccess = None
          sResult  = f"Exception while deleting file '{self.__sFile}'.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def Delete(self, bConfirmDelete=True):
@@ -478,8 +477,8 @@ Writes the content of a variable ``Content`` to file.
       except Exception as reason:
          bSuccess = None
          sResult  = f"Not possible to write to file '{self.__sFile}'.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def Write(self, Content="", nVSpaceAfter=0, sPrefix=None, bToScreen=False):
@@ -560,8 +559,8 @@ Appends the content of a variable ``Content`` to file.
       except Exception as reason:
          bSuccess = None
          sResult  = f"Not possible to append to file '{self.__sFile}'.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def Append(self, Content="", nVSpaceAfter=0, sPrefix=None, bToScreen=False):
@@ -694,7 +693,7 @@ The logical join of all filter is: ``AND``.
   If ``True``, the content read from file is also printed to screen, otherwise not.
       """
 
-      sMethod = "[CFile::ReadLines]"
+      sMethod = "CFile::ReadLines"
 
       listLines = []
 
@@ -758,7 +757,6 @@ The logical join of all filter is: ``AND``.
 
       bSuccess = True
       sResult  = f"Read {nNrOfLines} lines from '{self.__sFile}'."
-      sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
       return listLines, bSuccess, sResult
 
    # eof def ReadLines(...)
@@ -995,8 +993,8 @@ and ``CopyTo`` returns ``bSuccess = False``.
       except Exception as reason:
          bSuccess = None
          sResult  = f"Exception while copying file '{self.__sFile}' to '{sDestFile}'.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def CopyTo(self, sDestination=None, bOverwrite=False):
@@ -1059,7 +1057,6 @@ Moves the current file to ``sDestination``, that can either be a path without fi
 
       bSuccess = True
       sResult  = f"File moved from '{self.__sFile}' to '{self.__sLastDestination}'"
-      sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def MoveTo(self, sDestination=None, bOverwrite=False):
