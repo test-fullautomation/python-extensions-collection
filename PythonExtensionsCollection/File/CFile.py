@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 10.06.2022
+# 17.06.2022
 #
 # **************************************************************************************************************
 
@@ -127,7 +127,7 @@ Opens a text file for writing.
 Returns ``bSuccess`` and ``sResult`` (feedback).
       """
 
-      sMethod = "CFile::__OpenForWriting"
+      sMethod = "CFile.__OpenForWriting"
 
       if self.__sFile is None:
          bSuccess = False
@@ -165,7 +165,7 @@ Opens a text file for appending.
 Returns ``bSuccess`` and ``sResult`` (feedback).
       """
 
-      sMethod = "CFile::__OpenForAppending"
+      sMethod = "CFile.__OpenForAppending"
 
       if self.__sFile is None:
          bSuccess = False
@@ -203,7 +203,7 @@ Opens a text file for reading.
 Returns ``bSuccess`` and ``sResult`` (feedback).
       """
 
-      sMethod = "CFile::__OpenForReading"
+      sMethod = "CFile.__OpenForReading"
 
       if self.__sFile is None:
          bSuccess = False
@@ -256,7 +256,7 @@ Closes the opened file.
 
   The result of the computation of the method.
       """
-      sMethod = "CFile::Close"
+      sMethod = "CFile.Close"
 
       if self.__oFileHandle is not None:
          try:
@@ -313,7 +313,7 @@ Deletes the current file.
   The result of the computation of the method.
       """
 
-      sMethod = "CFile::Delete"
+      sMethod = "CFile.Delete"
 
       if self.__sFile is None:
          bSuccess = False
@@ -448,7 +448,7 @@ Writes the content of a variable ``Content`` to file.
   The result of the computation of the method.
       """
 
-      sMethod = "CFile::Write"
+      sMethod = "CFile.Write"
 
       if self.__oFileStatus != enFileStatiType.openedforwriting:
          bSuccess, sResult = self.__OpenForWriting()
@@ -530,7 +530,7 @@ Appends the content of a variable ``Content`` to file.
 
   The result of the computation of the method.
       """
-      sMethod = "CFile::Append"
+      sMethod = "CFile.Append"
 
       if self.__oFileStatus != enFileStatiType.openedforappending:
          bSuccess, sResult = self.__OpenForAppending()
@@ -693,7 +693,7 @@ The logical join of all filter is: ``AND``.
   If ``True``, the content read from file is also printed to screen, otherwise not.
       """
 
-      sMethod = "CFile::ReadLines"
+      sMethod = "CFile.ReadLines"
 
       listLines = []
 
@@ -814,7 +814,7 @@ Returns the following informations about the file (encapsulated within a diction
   ``True`` if file path is existing, otherwise ``False``
       """
 
-      sMethod = "CFile::GetFileInfo"
+      sMethod = "CFile.GetFileInfo"
 
       dFileInfo = {}
       dFileInfo['sFile']               = None
@@ -895,7 +895,7 @@ and ``CopyTo`` returns ``bSuccess = False``.
 
   The result of the computation of the method.
       """
-      sMethod = "CFile::CopyTo"
+      sMethod = "CFile.CopyTo"
 
       if self.__sFile is None:
          bSuccess = False
@@ -1036,7 +1036,7 @@ Moves the current file to ``sDestination``, that can either be a path without fi
 
   Contains details about what happens during computation
       """
-      sMethod = "CFile::MoveTo"
+      sMethod = "CFile.MoveTo"
 
       bSuccess, sResult = self.CopyTo(sDestination, bOverwrite)
       if bSuccess is not True:

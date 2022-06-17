@@ -67,6 +67,7 @@
 # In second case the key name has to be encapsulated within three hashes '#'. The same notation can be used in rst files and doctrings
 # of Python modules (for example adding an additional hint within a doctring of a class: ###additional_hint###).
 # This mechanism is limited to strings!
+# This key is optional. In case of own parameters are not needed, this key can be removed or set to null.
 
    # "PARAMS" : {
                  # "" : "",
@@ -91,6 +92,8 @@
 # Additional rst files may import pictures. GenPackageDoc needs to know where to find them.
 # To keep the relative paths to possibly imported pictures valid also within the created tex files,
 # this pictures folder will be copied into the output folder defined by key "OUTPUT".
+# This key is optional. In case of there are no pictures needed in this package description,
+# this key can be removed or set to null.
 
    "PICTURES" : "./additional_docs/pictures",
 
@@ -104,6 +107,8 @@
 # -----------------
 # Defines the path to a folder in which the PDF file will be copied after creation
 # (the "OUTPUT" folder in which the LaTeX compiler creates the PDF file, is not really a proper destination finally)
+# This key is optional. In case of it is not required to copy the PDF file to another location,
+# this key can be removed or set to null.
 
    "PDFDEST" : "../###PACKAGENAME###",
 

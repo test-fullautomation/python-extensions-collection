@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 10.06.2022
+# 17.06.2022
 #
 # **************************************************************************************************************
 
@@ -141,7 +141,7 @@ Deletes the current folder ``sFolder``.
 
   The result of the computation of the method.
       """
-      sMethod = "CFolder::Delete"
+      sMethod = "CFolder.Delete"
 
       if self.__sFolder is None:
          bSuccess = False
@@ -229,7 +229,7 @@ Creates the current folder ``sFolder``.
 
   The result of the computation of the method.
       """
-      sMethod = "CFolder::Create"
+      sMethod = "CFolder.Create"
 
       if self.__sFolder is None:
          bSuccess = False
