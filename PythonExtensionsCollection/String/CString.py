@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 24.05.2022
+# 02.06.2022
 #
 # **************************************************************************************************************
 
@@ -546,7 +546,7 @@ The following filters are available:
 
   / *Type*: bool /
 
-  Final statement about the input string ``sString`` after filter compotation
+  Final statement about the input string ``sString`` after filter computation
 
 Examples:
 ~~~~~~~~~
