@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 17.06.2022
+# 21.06.2022
 #
 # **************************************************************************************************************
 
@@ -168,6 +168,7 @@ Deletes the current folder ``sFolder``.
       while nCntTries <= nTriesMax:
          try:
             print(f"Trying to delete '{self.__sFolder}'")
+            print()
             shutil.rmtree(self.__sFolder, ignore_errors=False, onerror=rm_dir_readonly)
          except Exception as reason:
             listResults.append(str(reason))
@@ -263,6 +264,7 @@ Creates the current folder ``sFolder``.
          while nCntTries <= nTriesMax:
             try:
                print(f"Trying to create '{self.__sFolder}'")
+               print()
                if bRecursive is True:
                   os.makedirs(self.__sFolder)
                else:

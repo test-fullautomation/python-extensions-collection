@@ -18,6 +18,6 @@
 #
 # Version and date of PythonExtensionsCollection
 #
-VERSION      = "0.7.2"
-VERSION_DATE = "17.06.2022"
+VERSION      = "0.7.3"
+VERSION_DATE = "24.06.2022"
 
