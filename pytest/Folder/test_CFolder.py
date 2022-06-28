@@ -17,7 +17,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 10.06.2022
+# 28.06.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -43,12 +43,17 @@ class Test_CFolder:
    )
    def test_CFolder_1(self, Description):
       """pytest 'CFolder'"""
-      sFolder = None
+      sFolder  = None
+      sLogfile = None
       sPlatformSystem = platform.system()
       if sPlatformSystem == "Windows":
          sFolder = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
+         sLogfile = os.path.expandvars(r"%TMP%\CFolder_Test.log")
       elif sPlatformSystem == "Linux":
          sFolder = r"/tmp/CFolder_TestFolder"
+         sLogfile = r"/tmp/CFolder_Test.log"
+
+      oLogfile = CFile(sLogfile)
 
       # test file for test folder
       sTestFile = f"{sFolder}/CFolder_TestFile.txt"
@@ -56,6 +61,7 @@ class Test_CFolder:
       # initial test folder creation with bOverwrite=True
       oFolder = CFolder(sFolder)
       bSuccess, sResult = oFolder.Create(bOverwrite=True, bRecursive=False)
+      oLogfile.Write(sResult)
       assert bSuccess is True
 
       # expected: folder exists
@@ -67,8 +73,10 @@ class Test_CFolder:
       # create test file within test folder
       oTestFile = CFile(sTestFile)
       bSuccess, sResult = oTestFile.Write(sTestFile)
+      oLogfile.Append(sResult)
       assert bSuccess is True
       bSuccess, sResult = oTestFile.Close()
+      oLogfile.Append(sResult)
       assert bSuccess is True
       del oTestFile
 
@@ -77,6 +85,7 @@ class Test_CFolder:
 
       # test folder creation with bOverwrite=False
       bSuccess, sResult = oFolder.Create(bOverwrite=False, bRecursive=False)
+      oLogfile.Append(sResult)
       assert bSuccess is True
 
       # expected: folder still exists
@@ -87,6 +96,7 @@ class Test_CFolder:
 
       # tidying up
       del oFolder
+      del oLogfile
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -474,6 +484,388 @@ class Test_CFolder:
 
       # tidying up
       del oFolder
+
+   # --------------------------------------------------------------------------------------------------------------
+   #TM***
+
+   @pytest.mark.parametrize(
+      "Description", ["Copy a folder",]
+   )
+   def test_CFolder_7(self, Description):
+      """pytest 'CFolder'"""
+      sFolder         = None
+      sDestFolder     = None
+      sExpectedFolder = None
+
+      sPlatformSystem = platform.system()
+      if sPlatformSystem == "Windows":
+         sFolder         = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
+         sDestFolder     = os.path.expandvars(r"%TMP%\copy")
+         sExpectedFolder = os.path.expandvars(r"%TMP%\copy\CFolder_TestFolder")
+      elif sPlatformSystem == "Linux":
+         sFolder         = r"/tmp/CFolder_TestFolder"
+         sDestFolder     = r"/tmp/copy"
+         sExpectedFolder = r"/tmp/copy/CFolder_TestFolder"
+
+      sTestFile         = f"{sFolder}/TestFile.txt"
+      sExpectedTestFile = f"{sExpectedFolder}/TestFile.txt"
+
+      # initial destination folder creation with bOverwrite=True
+      oDestFolder = CFolder(sDestFolder)
+      bSuccess, sResult = oDestFolder.Create(bOverwrite=True, bRecursive=True)
+      del oDestFolder
+      assert bSuccess is True
+
+      # initial test folder creation with bOverwrite=True
+      oFolder = CFolder(sFolder)
+      bSuccess, sResult = oFolder.Create(bOverwrite=True, bRecursive=True)
+      assert bSuccess is True
+
+      # expected: folder exists
+      assert os.path.isdir(sFolder) is True
+      assert os.path.isdir(sDestFolder) is True
+
+      # test file creation
+      oTestFile = CFile(sTestFile)
+      bSuccess, sResult = oTestFile.Write(sTestFile)
+      assert bSuccess is True
+      del oTestFile
+      assert os.path.isfile(sTestFile) is True
+
+      # copy the folder
+      bSuccess, sResult = oFolder.CopyTo(sDestFolder)
+      assert bSuccess is True
+
+      # expected: folder exists
+      assert os.path.isdir(sExpectedFolder) is True
+
+      # expected: file exists
+      assert os.path.isfile(sExpectedTestFile) is True
+
+      # tidying up
+      del oFolder
+
+   # --------------------------------------------------------------------------------------------------------------
+   #TM***
+
+   @pytest.mark.parametrize(
+      "Description", ["Copy a folder, destination folder already exists",]
+   )
+   def test_CFolder_8(self, Description):
+      """pytest 'CFolder'"""
+      sFolder         = None
+      sDestFolder     = None
+      sExpectedFolder = None
+
+      sPlatformSystem = platform.system()
+      if sPlatformSystem == "Windows":
+         sFolder         = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
+         sDestFolder     = os.path.expandvars(r"%TMP%\copy")
+         sExpectedFolder = os.path.expandvars(r"%TMP%\copy\CFolder_TestFolder")
+      elif sPlatformSystem == "Linux":
+         sFolder         = r"/tmp/CFolder_TestFolder"
+         sDestFolder     = r"/tmp/copy"
+         sExpectedFolder = r"/tmp/copy/CFolder_TestFolder"
+
+      sTestFile         = f"{sFolder}/TestFile.txt"
+      sExpectedTestFile = f"{sExpectedFolder}/TestFile.txt"
+
+      # initial destination folder creation with bOverwrite=True
+      oDestFolder = CFolder(sDestFolder)
+      bSuccess, sResult = oDestFolder.Create(bOverwrite=True, bRecursive=True)
+      del oDestFolder
+      assert bSuccess is True
+
+      # create also the expected destination folder
+      oExpectedFolder = CFolder(sExpectedFolder)
+      bSuccess, sResult = oExpectedFolder.Create(bOverwrite=True, bRecursive=True)
+      del oExpectedFolder
+      assert bSuccess is True
+
+      # initial test folder creation with bOverwrite=True
+      oFolder = CFolder(sFolder)
+      bSuccess, sResult = oFolder.Create(bOverwrite=True, bRecursive=True)
+      assert bSuccess is True
+
+      # expected: folder exists
+      assert os.path.isdir(sFolder) is True
+      assert os.path.isdir(sDestFolder) is True
+      assert os.path.isdir(sExpectedFolder) is True
+
+      # test file creation
+      oTestFile = CFile(sTestFile)
+      bSuccess, sResult = oTestFile.Write(sTestFile)
+      assert bSuccess is True
+      del oTestFile
+      assert os.path.isfile(sTestFile) is True
+
+      # copy the folder
+      bSuccess, sResult = oFolder.CopyTo(sDestFolder) # with default bOverwrite=False
+      assert bSuccess is False
+
+      # expected: folder exists
+      assert os.path.isdir(sExpectedFolder) is True
+
+      # expected: file not exists
+      assert os.path.isfile(sExpectedTestFile) is False
+
+      # try again to copy the folder (with bOverwrite=True)
+      bSuccess, sResult = oFolder.CopyTo(sDestFolder, bOverwrite=True)
+      assert bSuccess is True
+
+      # expected: folder exists
+      assert os.path.isdir(sExpectedFolder) is True
+
+      # expected: file exists
+      assert os.path.isfile(sExpectedTestFile) is True
+
+      # tidying up
+      del oFolder
+
+   # --------------------------------------------------------------------------------------------------------------
+   #TM***
+
+   @pytest.mark.parametrize(
+      "Description", ["Copy a folder, source and destination are same folder",]
+   )
+   def test_CFolder_9(self, Description):
+      """pytest 'CFolder'"""
+      sFolder         = None
+      sDestFolder     = None
+
+      sLogfile = None
+
+      sPlatformSystem = platform.system()
+      if sPlatformSystem == "Windows":
+         sFolder         = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
+         sDestFolder     = os.path.expandvars(r"%TMP%")
+         sLogfile        = os.path.expandvars(r"%TMP%\CFolder_Test_9.log")
+      elif sPlatformSystem == "Linux":
+         sFolder         = r"/tmp/CFolder_TestFolder"
+         sDestFolder     = r"/tmp"
+         sLogfile        = r"/tmp/CFolder_Test_9.log"
+
+      sTestFile = f"{sFolder}/TestFile.txt"
+
+      oLogfile = CFile(sLogfile)
+
+      # initial test folder creation with bOverwrite=True
+      oFolder = CFolder(sFolder)
+      bSuccess, sResult = oFolder.Create(bOverwrite=True, bRecursive=True)
+      oLogfile.Write(sResult)
+      assert bSuccess is True
+
+      # expected: folder exists
+      assert os.path.isdir(sFolder) is True
+
+      # test file creation
+      oTestFile = CFile(sTestFile)
+      bSuccess, sResult = oTestFile.Write(sTestFile)
+      oLogfile.Write(sResult)
+      assert bSuccess is True
+      del oTestFile
+      assert os.path.isfile(sTestFile) is True
+
+      # copy the folder
+      bSuccess, sResult = oFolder.CopyTo(sDestFolder) # with default bOverwrite=False
+      oLogfile.Write(sResult)
+      assert bSuccess is False
+
+      # expected: folder exists
+      assert os.path.isdir(sFolder) is True
+
+      # copy the folder
+      bSuccess, sResult = oFolder.CopyTo(sDestFolder, bOverwrite=True)
+      oLogfile.Write(sResult)
+      assert bSuccess is False
+
+      # expected: folder exists
+      assert os.path.isdir(sFolder) is True
+
+      # expected: file exists
+      assert os.path.isfile(sTestFile) is True
+
+      # tidying up
+      del oFolder
+      del oLogfile
+
+   # --------------------------------------------------------------------------------------------------------------
+   #TM***
+
+   @pytest.mark.parametrize(
+      "Description", ["Copy a folder, destination folder does not exist",]
+   )
+   def test_CFolder_10(self, Description):
+      """pytest 'CFolder'"""
+      sFolder            = None
+      sDestFolder        = None
+      sNotExpectedFolder = None
+
+      sLogfile = None
+
+      sPlatformSystem = platform.system()
+      if sPlatformSystem == "Windows":
+         sFolder            = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
+         sDestFolder        = os.path.expandvars(r"%TMP%\I\Am\Not\Existing")
+         sNotExpectedFolder = os.path.expandvars(r"%TMP%\I\Am\Not\Existing\CFolder_TestFolder")
+         sLogfile           = os.path.expandvars(r"%TMP%\CFolder_Test_10.log")
+      elif sPlatformSystem == "Linux":
+         sFolder            = r"/tmp/CFolder_TestFolder"
+         sDestFolder        = r"/tmp/I/Am/Not/Existing"
+         sNotExpectedFolder = r"/tmp/I/Am/Not/Existing/CFolder_TestFolder"
+         sLogfile           = r"/tmp/CFolder_Test_10.log"
+
+      oLogfile = CFile(sLogfile)
+
+      # initial test folder creation with bOverwrite=True
+      oFolder = CFolder(sFolder)
+      bSuccess, sResult = oFolder.Create(bOverwrite=True, bRecursive=True)
+      oLogfile.Write(sResult)
+      assert bSuccess is True
+
+      # expected: folder exists
+      assert os.path.isdir(sFolder) is True
+
+      # copy the folder
+      bSuccess, sResult = oFolder.CopyTo(sDestFolder) # with default bOverwrite=False
+      oLogfile.Write(sResult)
+      assert bSuccess is False
+
+      # expected: folder not exists
+      assert os.path.isdir(sDestFolder) is False
+      assert os.path.isdir(sNotExpectedFolder) is False
+
+      # copy the folder
+      bSuccess, sResult = oFolder.CopyTo(sDestFolder, bOverwrite=True)
+      oLogfile.Write(sResult)
+      assert bSuccess is False
+
+      # expected: folder not exists
+      assert os.path.isdir(sDestFolder) is False
+      assert os.path.isdir(sNotExpectedFolder) is False
+
+      # tidying up
+      del oFolder
+      del oLogfile
+
+   # --------------------------------------------------------------------------------------------------------------
+   #TM***
+
+   @pytest.mark.parametrize(
+      "Description", ["Copy a folder, destination folder already in use",]
+   )
+   def test_CFolder_11(self, Description):
+      """pytest 'CFolder'"""
+      sFolder            = None
+      sDestFolder        = None
+      sNotExpectedFolder = None
+
+      sLogfile = None
+
+      sPlatformSystem = platform.system()
+      if sPlatformSystem == "Windows":
+         sFolder         = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
+         sDestFolder     = os.path.expandvars(r"%TMP%\copy")
+         sExpectedFolder = os.path.expandvars(r"%TMP%\copy\CFolder_TestFolder")
+         sLogfile        = os.path.expandvars(r"%TMP%\CFolder_Test_11.log")
+      elif sPlatformSystem == "Linux":
+         sFolder         = r"/tmp/CFolder_TestFolder"
+         sDestFolder     = r"/tmp/copy"
+         sExpectedFolder = r"/tmp/copy/CFolder_TestFolder"
+         sLogfile        = r"/tmp/CFolder_Test_11.log"
+
+      oLogfile = CFile(sLogfile)
+
+      # initial test folder creation with bOverwrite=True
+      oFolder = CFolder(sFolder)
+      bSuccess, sResult = oFolder.Create(bOverwrite=True, bRecursive=True)
+      oLogfile.Write(sResult)
+      assert bSuccess is True
+
+      # expected: folder exists
+      assert os.path.isdir(sFolder) is True
+
+      # destination folder creation with bOverwrite=True
+      oDestFolder = CFolder(sDestFolder)
+      bSuccess, sResult = oDestFolder.Create(bOverwrite=True, bRecursive=True)
+      oLogfile.Write(sResult)
+      del oDestFolder
+      assert bSuccess is True
+
+      # expected: folder exists
+      assert os.path.isdir(sDestFolder) is True
+
+      # make instance of expected folder
+      oExpectedFolder = CFolder(sExpectedFolder)
+
+      # copy the folder
+      bSuccess, sResult = oFolder.CopyTo(sDestFolder) # with default bOverwrite=False
+      oLogfile.Write(sResult)
+      assert bSuccess is False
+
+      # copy the folder
+      bSuccess, sResult = oFolder.CopyTo(sDestFolder, bOverwrite=True)
+      oLogfile.Write(sResult)
+      assert bSuccess is False
+
+      # delete instance of expected folder
+      del oExpectedFolder
+
+      # copy the folder
+      bSuccess, sResult = oFolder.CopyTo(sDestFolder) # with default bOverwrite=False
+      oLogfile.Write(sResult)
+      assert bSuccess is True
+
+      # expected: folder exists
+      assert os.path.isdir(sExpectedFolder) is True
+
+      # tidying up
+      del oFolder
+      del oLogfile
+
+   # --------------------------------------------------------------------------------------------------------------
+   #TM***
+
+   @pytest.mark.parametrize(
+      "Description", ["Copy a folder, source folder does not exist",]
+   )
+   def test_CFolder_12(self, Description):
+      """pytest 'CFolder'"""
+      sFolder            = None
+      sDestFolder        = None
+      sNotExpectedFolder = None
+
+      sLogfile = None
+
+      sPlatformSystem = platform.system()
+      if sPlatformSystem == "Windows":
+         sFolder         = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
+         sDestFolder     = os.path.expandvars(r"%TMP%\copy")
+         sLogfile        = os.path.expandvars(r"%TMP%\CFolder_Test_12.log")
+      elif sPlatformSystem == "Linux":
+         sFolder         = r"/tmp/CFolder_TestFolder"
+         sDestFolder     = r"/tmp/copy"
+         sLogfile        = r"/tmp/CFolder_Test_12.log"
+
+      oLogfile = CFile(sLogfile)
+
+      # make sure that test folder does not exist
+      oFolder = CFolder(sFolder)
+      bSuccess, sResult = oFolder.Delete(bConfirmDelete=False)
+      oLogfile.Write(sResult)
+      assert bSuccess is True
+
+      # expected: folder not exists
+      assert os.path.isdir(sFolder) is False
+
+      # copy the (not existing) folder
+      bSuccess, sResult = oFolder.CopyTo(sDestFolder) # with default bOverwrite=False
+      oLogfile.Write(sResult)
+      assert bSuccess is False
+
+      # tidying up
+      del oFolder
+      del oLogfile
 
    # --------------------------------------------------------------------------------------------------------------
 
