@@ -10,7 +10,6 @@
 # to native line endings on checkout.
 *.c text
 *.h text
-*.py text
 *.ini text
 *.json text
 *.txt text
