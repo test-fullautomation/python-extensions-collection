@@ -13,6 +13,7 @@
 *.py text
 *.ini text
 *.json text
+*.txt text
 *.rst text
 
 # Declare files that will always have CRLF line endings on checkout.
