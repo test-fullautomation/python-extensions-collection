@@ -21,8 +21,6 @@ for parent directories within a path.
 The Python Extensions Collection contains several Python modules and every module has to be imported separately
 in case of the functions inside are needed.
 
-TEST
-
 **Module import**
 
 The modules of the Python Extension Collection and their methods can be accessed in the following ways:
