@@ -129,8 +129,8 @@ nReturn = ERROR
 try:
    nReturn = subprocess.call(listCmdLineParts)
    print(f"[{sThisScriptName}] : Subprocess returned {nReturn}")
-   print()
 except Exception as ex:
+   print()
    printexception(str(ex))
    print()
    sys.exit(ERROR)
