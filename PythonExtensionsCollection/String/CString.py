@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 02.06.2022
+# 27.09.2022
 #
 # **************************************************************************************************************
 
@@ -940,7 +940,6 @@ That's **not** ``True``. Therefore the method returns ``False``:
                listParts = sContainsModified.split(";")
                for sPart in listParts:
                   sPart = sPart.replace(sSeparatorSubstitute , ";") # recover the original version
-                  print(f"- Part: '{sPart}'")
                   listContains.append(sPart)
             else:
                sContainsModified = sContains.replace(r"\;", ";") # convert to unmasked version
