@@ -25,7 +25,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 26.09.2022
+# 30.09.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -135,15 +135,21 @@ except Exception as ex:
    print()
    sys.exit(ERROR)
 print()
-if nReturn != SUCCESS:
-   printerror(f"Subprocess has not returned expected value {SUCCESS}")
-   print()
-else:
+
+if nReturn == SUCCESS:
    print(f"Test results in '{sLogFile}'")
    print()
+   print(COLBG + f"{sThisScriptName} done")
+else:
+   printerror(f"[{sThisScriptName}] : Subprocess has not returned expected value {SUCCESS}")
+   nReturn = -nReturn
 
-print(COLBG + f"{sThisScriptName} done")
 print()
+
+# nReturn:
+# > 0  : internal error of this script
+# < 0  : return value (!= 0) from subprocess
+# == 0 : no internal error of this script and no error from subprocess
 
 sys.exit(nReturn)
 
