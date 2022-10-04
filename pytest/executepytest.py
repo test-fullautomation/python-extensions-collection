@@ -22,10 +22,11 @@
 #
 # Executes pytest recursively in current folder.
 # Log file can be set in command line. If not, default log is written.
+# Additional command line for involved framework can also be set in command line (of this script).
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 30.09.2022
+# 04.10.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -86,20 +87,27 @@ print()
 # -- parse the command line of this script (optional path and name of pytest xml log file)
 
 oCmdLineParser = argparse.ArgumentParser()
-oCmdLineParser.add_argument('--logfile', type=str, help='Path and name of XML log file.')
+oCmdLineParser.add_argument('--logfile', type=str, help='Path and name of XML log file (optional).')
+oCmdLineParser.add_argument('--pytestcommandline', type=str, help='Command line for Python pytest module (optional).')
 oCmdLineArgs = oCmdLineParser.parse_args()
+
 sLogFile = None
 if oCmdLineArgs.logfile is not None:
    sLogFile = CString.NormalizePath(oCmdLineArgs.logfile, sReferencePathAbs=sThisScriptPath)
 else:
+   # default log
    sLogFile = f"{sThisScriptPath}/logfiles/PyTestLog.xml"
+
+sPytestCommandLine = None
+if oCmdLineArgs.pytestcommandline is not None:
+   sPytestCommandLine = oCmdLineArgs.pytestcommandline
 
 # -- create the log file folder
 
-sLogFilesPath = os.path.dirname(sLogFile)
-oLogFilesPath = CFolder(sLogFilesPath)
-bSuccess, sResult = oLogFilesPath.Create(bOverwrite=False, bRecursive=True)
-del oLogFilesPath
+sLogFilePath = os.path.dirname(sLogFile)
+oLogFilePath = CFolder(sLogFilePath)
+bSuccess, sResult = oLogFilePath.Create(bOverwrite=False, bRecursive=True)
+del oLogFilePath
 if bSuccess is not True:
    printerror(CString.FormatResult(sThisScriptName, bSuccess, sResult))
    sys.exit(ERROR)
@@ -111,8 +119,12 @@ print()
 listCmdLineParts = []
 listCmdLineParts.append(f"\"{sPython}\"")
 listCmdLineParts.append("-m pytest")
-if sFilter is not None:
-   listCmdLineParts.append(f"-k \"{sFilter}\"")
+# pytest command line overrules local operating system dependend filter setting
+if sPytestCommandLine is None:
+   if sFilter is not None:
+      listCmdLineParts.append(f"-k \"{sFilter}\"")
+else:
+   listCmdLineParts.append(f"{sPytestCommandLine}")
 listCmdLineParts.append("--show-capture=all")
 listCmdLineParts.append(f"--junitxml=\"{sLogFile}\"")
 listCmdLineParts.append(f"\"{sThisScriptPath}\"")
@@ -121,14 +133,16 @@ del listCmdLineParts
 
 # -- execute the tests
 
-listCmdLineParts = shlex.split(sCmdLine)
-sCmdLine = " ".join(listCmdLineParts)
 print(f"Now executing command line:\n{sCmdLine}")
 print()
+
+listCmdLineParts = shlex.split(sCmdLine)
+
 nReturn = ERROR
 try:
    nReturn = subprocess.call(listCmdLineParts)
-   print(f"[{sThisScriptName}] : Subprocess returned {nReturn}")
+   print()
+   print(f"[{sThisScriptName}] : Subprocess PYTEST returned {nReturn}")
 except Exception as ex:
    print()
    printexception(str(ex))
@@ -141,7 +155,7 @@ if nReturn == SUCCESS:
    print()
    print(COLBG + f"{sThisScriptName} done")
 else:
-   printerror(f"[{sThisScriptName}] : Subprocess has not returned expected value {SUCCESS}")
+   printerror(f"[{sThisScriptName}] : Subprocess PYTEST has not returned expected value {SUCCESS}")
    nReturn = -nReturn
 
 print()
@@ -153,3 +167,4 @@ print()
 
 sys.exit(nReturn)
 
+# --------------------------------------------------------------------------------------------------------------
