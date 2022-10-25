@@ -60,7 +60,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 24.06.2022
+# 25.10.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -194,6 +194,7 @@ setuptools.setup(
     long_description_content_type = str(oRepositoryConfig.Get('LONGDESCRIPTIONCONTENTTYPE')),
     url = str(oRepositoryConfig.Get('URL')),
     packages = [str(oRepositoryConfig.Get('PACKAGENAME')),
+                str(oRepositoryConfig.Get('PACKAGENAME')) + ".Comparison",
                 str(oRepositoryConfig.Get('PACKAGENAME')) + ".String",
                 str(oRepositoryConfig.Get('PACKAGENAME')) + ".Utils",
                 str(oRepositoryConfig.Get('PACKAGENAME')) + ".File",
