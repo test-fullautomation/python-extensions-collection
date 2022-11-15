@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 27.09.2022
+# 14.11.2022
 #
 # **************************************************************************************************************
 
@@ -222,7 +222,7 @@ Normalizes local paths, paths to local network resources and internet addresses
    def DetectParentPath(sStartPath=None, sFolderName=None, sFileName=None):
       """
 Computes the path to any parent folder inside a given path. Optionally DetectParentPath is able
-to search for files inside the parent folder.
+to search for files inside the identified parent folder.
 
 **Arguments:**
 
@@ -342,7 +342,7 @@ to search for files inside the parent folder.
       if len(listDestPaths) > 0:
          # -- returning sDestPath and sDestPathParent related to first entry in list; just to return anything else than None
          sDestPath = listDestPaths[0]
-         sDestPathParent = CString.NormalizePath(os.path.dirname(sDestPath))
+         sDestPathParent = os.path.dirname(sDestPath)
 
       # -- optionally searching also for a single file
       # Input: file name
@@ -356,7 +356,8 @@ to search for files inside the parent folder.
                for sFileNameTmp in listFileNames:
                   if sFileNameTmp == sFileName:
                      sFile = CString.NormalizePath(os.path.join(sLocalRootPath, sFileName))
-                     listDestFiles.append(sFile)
+                     if sFile not in listDestFiles:
+                        listDestFiles.append(sFile)
             # eof for sLocalRootPath, listFolderNames, listFileNames in os.walk(sDestPathToWalk):
          # eof for sDestPathToWalk in listDestPaths:
       # eof if ( (sFileName is not None) and (len(listDestPaths) > 0) ):
@@ -394,63 +395,16 @@ to search for files inside the parent folder.
                     sExclRegEx        = None,
                     bDebug            = False):
       """
-During the computation of strings there might occur the need to get to know if this string fulfils certain criteria or not.
-Such a criterion can e.g. be that the string contains a certain substring. Also an inverse logic might be required:
-In this case the criterion is that the string does **not** contain this substring.
-
-It might also be required to combine several criteria to a final conclusion if in total the criterion for a string is fulfilled or not.
-For example: The string must start with the string *prefix* and must also contain either the string *substring1* or the string *substring2*
-but must also **not** end with the string *suffix*.
-
 This method provides a bunch of predefined filters that can be used singly or combined to come to a final conclusion if the string fulfils all criteria or not.
 
-The filters are divided into three different types:
+These filters can be e.g. used to select or exclude lines while reading from a text file. Or they can be used to select or exclude files or folders
+while walking through the file system.
 
-1. Filters that are interpreted as raw strings (called 'standard filters'; no wild cards supported)
-2. Filters that are interpreted as regular expressions (called 'regular expression based filters'; the syntax of regular expressions has to be considered)
-3. Boolean switches (e.g. indicating if also an empty string is accepted or not)
-
-The input string might contain leading and trailing blanks and tabs. This kind of horizontal space is removed from the input string
-before the standard filters start their work (except the regular expression based filters).
-
-The regular expression based filters consider the original input string (including the leading and trailing space). 
-
-The outcome is that in case of the leading and trailing space shall be part of the criterion, the regular expression based filters can be used only.
-
-It is possible to decide if the standard filters shall work case sensitive or not. This decision has no effect on the regular expression based filters.
-
-The regular expression based filters always work with the original input string that is not modified in any way.
-
-Except the regular expression based filters it is possible to provide more than one string for every standard filter (must be a semikolon separated list in this case).
-A semicolon that shall be part of the search string, has to be masked in this way: ``\;``.
-
-This method returns a boolean value that is ``True`` in case of all criteria are fulfilled, and ``False`` in case of some or all of them are not fulfilled.
-
-The default value for all filters is ``None`` (except ``bSkipBlankStrings``). In case of a filter value is ``None`` this filter has no influence on the result.
-
-In case of all filters are ``None`` (default) the return value is ``True`` (except the string itself is ``None``
-or the string is empty and ``bSkipBlankStrings`` is ``True``).
-
-In case of the string is ``None``, the return value is ``False``, because nothing concrete can be done with ``None`` strings.
-
-Internally every filter has his own individual acknowledge that indicates if the criterion of this filter is fulfilled or not.
-
-The meaning of *criterion fulfilled* of a filter is that the filter supports the final return value ``bAck`` of this method with ``True``.
-
-The final return value ``bAck`` of this method is a logical join (``AND``) of all individual acknowledges (except ``bSkipBlankStrings`` and ``sComment``;
-in case of their criteria are **not** fulfilled, immediately ``False`` is returned).
-
-Summarized:
-
-* Filters are used to define *criteria*
-* The return value of this method provides the *conclusion* - indicating if all criteria are fulfilled or not
-
-The following filters are available:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**The following filters are available:**
 
 **bSkipBlankStrings**
 
-   * Like already mentioned above leading and trailing spaces are removed from the input string at the beginning
+   * Leading and trailing spaces are removed from the input string at the beginning
    * In case of the result is an empty string and ``bSkipBlankStrings`` is ``True``, the method immediately returns ``False``
      and all other filters are ignored
 
@@ -548,225 +502,7 @@ The following filters are available:
 
   Final statement about the input string ``sString`` after filter computation
 
-Examples:
-~~~~~~~~~
-
-1. Returns ``True``:
-
-.. code:: python
-
-   StringFilter(sString           = "Speed is 25 beats per minute",
-                bCaseSensitive    = True,
-                bSkipBlankStrings = True,
-                sComment          = None,
-                sStartsWith       = "Sp",
-                sEndsWith         = None,
-                sStartsNotWith    = None,
-                sEndsNotWith      = None,
-                sContains         = "beats",
-                sContainsNot      = None,
-                sInclRegEx        = None,
-                sExclRegEx        = None)
-
-2. Returns ``False``:
-
-.. code:: python
-
-   StringFilter(sString           = "Speed is 25 beats per minute",
-                bCaseSensitive    = True,
-                bSkipBlankStrings = True,
-                sComment          = None,
-                sStartsWith       = "Sp",
-                sEndsWith         = None,
-                sStartsNotWith    = None,
-                sEndsNotWith      = "minute",
-                sContains         = "beats",
-                sContainsNot      = None,
-                sInclRegEx        = None,
-                sExclRegEx        = None)
-
-3. Returns ``True``:
-
-.. code:: python
-
-   StringFilter(sString           = "Speed is 25 beats per minute",
-                bCaseSensitive    = True,
-                bSkipBlankStrings = True,
-                sComment          = None,
-                sStartsWith       = None,
-                sEndsWith         = None,
-                sStartsNotWith    = None,
-                sEndsNotWith      = None,
-                sContains         = None,
-                sContainsNot      = "Beats",
-                sInclRegEx        = None,
-                sExclRegEx        = None)
-
-4. Returns ``True``:
-
-.. code:: python
-
-   StringFilter(sString           = "Speed is 25 beats per minute",
-                bCaseSensitive    = True,
-                bSkipBlankStrings = True,
-                sComment          = None,
-                sStartsWith       = None,
-                sEndsWith         = None,
-                sStartsNotWith    = None,
-                sEndsNotWith      = None,
-                sContains         = None,
-                sContainsNot      = None,
-                sInclRegEx        = r"\d{2}",
-                sExclRegEx        = None)
-
-5. Returns ``False``:
-
-.. code:: python
-
-   StringFilter(sString           = "Speed is 25 beats per minute",
-                bCaseSensitive    = True,
-                bSkipBlankStrings = True,
-                sComment          = None,
-                sStartsWith       = "Speed",
-                sEndsWith         = None,
-                sStartsNotWith    = None,
-                sEndsNotWith      = None,
-                sContains         = None,
-                sContainsNot      = None,
-                sInclRegEx        = r"\d{3}",
-                sExclRegEx        = None)
-
-6. Returns ``False``:
-
-.. code:: python
-
-   StringFilter(sString           = "Speed is 25 beats per minute",
-                bCaseSensitive    = True,
-                bSkipBlankStrings = True,
-                sComment          = None,
-                sStartsWith       = "Speed",
-                sEndsWith         = "minute",
-                sStartsNotWith    = "speed",
-                sEndsNotWith      = None,
-                sContains         = "beats",
-                sContainsNot      = None,
-                sInclRegEx        = r"\d{2}",
-                sExclRegEx        = r"\d{2}")
-
-7. Returns ``False``:
-
-.. code:: python
-
-   StringFilter(sString           = "     ",
-                bCaseSensitive    = True,
-                bSkipBlankStrings = True,
-                sComment          = None,
-                sStartsWith       = None,
-                sEndsWith         = None,
-                sStartsNotWith    = None,
-                sEndsNotWith      = None,
-                sContains         = None,
-                sContainsNot      = None,
-                sInclRegEx        = None,
-                sExclRegEx        = None)
-
-8. Returns ``False``:
-
-.. code:: python
-
-   StringFilter(sString           = "# Speed is 25 beats per minute",
-                bCaseSensitive    = True,
-                bSkipBlankStrings = True,
-                sComment          = "#",
-                sStartsWith       = None,
-                sEndsWith         = None,
-                sStartsNotWith    = None,
-                sEndsNotWith      = None,
-                sContains         = "beats",
-                sContainsNot      = None,
-                sInclRegEx        = None,
-                sExclRegEx        = None)
-
-
-9. Returns ``False``:
-
-.. code:: python
-
-   StringFilter(sString           = "   Alpha is not beta; and beta is not gamma  ",
-                bCaseSensitive    = True,
-                bSkipBlankStrings = True,
-                sComment          = None,
-                sStartsWith       = None,
-                sEndsWith         = None,
-                sStartsNotWith    = None,
-                sEndsNotWith      = None,
-                sContains         = "   Alpha ",
-                sContainsNot      = None,
-                sInclRegEx        = None,
-                sExclRegEx        = None)
-
-Because blanks around search strings (here ``"   Alpha "``) are considered, whereas the blanks around the input string are removed before computation.
-Therefore ``"   Alpha "`` cannot be found within the (shortened) input string.
-
-
-10. This alternative solution returns ``True``:
-
-.. code:: python
-
-   StringFilter(sString           = "   Alpha is not beta; and beta is not gamma  ",
-                bCaseSensitive    = True,
-                bSkipBlankStrings = True,
-                sComment          = None,
-                sStartsWith       = None,
-                sEndsWith         = None,
-                sStartsNotWith    = None,
-                sEndsNotWith      = None,
-                sContains         = None,
-                sContainsNot      = None,
-                sInclRegEx        = r"\s{3}Alpha",
-                sExclRegEx        = None)
-
-
-11. Returns ``True``:
-
-.. code:: python
-
-   StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
-                bCaseSensitive    = True,
-                bSkipBlankStrings = True,
-                sComment          = None,
-                sStartsWith       = None,
-                sEndsWith         = None,
-                sStartsNotWith    = None,
-                sEndsNotWith      = None,
-                sContains         = "beta; and",
-                sContainsNot      = None,
-                sInclRegEx        = None,
-                sExclRegEx        = None)
-
-The meaning of ``"beta; and"`` is: The criterion is fulfilled in case of either ``"beta"`` or ``" and"`` can be found. That's ``True`` in this example - but this
-has nothing to do with the fact, that also this string ``"beta; and"`` can be found. Here the semikolon is a separator character and therefore part of the syntax.
-
-A semicolon that shall be part of the search string, has to be masked with '``\;``'!
-
-The meaning of ``"beta\; not"`` in the following example is: The criterion is fulfilled in case of ``"beta; not"`` can be found.
-
-That's **not** ``True``. Therefore the method returns ``False``:
-
-.. code:: python
-
-   StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
-                bCaseSensitive    = True,
-                bSkipBlankStrings = True,
-                sComment          = None,
-                sStartsWith       = None,
-                sEndsWith         = None,
-                sStartsNotWith    = None,
-                sEndsNotWith      = None,
-                sContains         = r"beta\; not",
-                sContainsNot      = None,
-                sInclRegEx        = None,
-                sExclRegEx        = None)
+Further details together with codde examples can be found within chapter **Description**, subsubsection **StringFilter**.
       """
 
       if sString is None:

@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 20.05.2022
+# 15.11.2022
 #
 # **************************************************************************************************************
 
@@ -44,50 +44,6 @@ The idea behind the ``PrettyPrint`` function is to resolve also the content of c
 * the total number of elements inside (e.g. the number of keys inside a dictionary)
 * the counter number of the current element
 * the value
-
-Example call:
-
-.. code:: python
-
-   PrettyPrint(oData)
-
-(*with oData is a Python variable of any type*)
-
-The output can e.g. look like this:
-
-.. code:: python
-
-   [DICT] (3/1) > {K1} [STR]  :  'Val1'
-   [DICT] (3/2) > {K2} [LIST] (4/1) > [INT]  :  1
-   [DICT] (3/2) > {K2} [LIST] (4/2) > [STR]  :  'A'
-   [DICT] (3/2) > {K2} [LIST] (4/3) > [INT]  :  2
-   [DICT] (3/2) > {K2} [LIST] (4/4) > [TUPLE] (2/1) > [INT]  :  9
-   [DICT] (3/2) > {K2} [LIST] (4/4) > [TUPLE] (2/2) > [STR]  :  'Z'
-   [DICT] (3/3) > {K3} [INT]  :  5
-
-Every line of output has to be interpreted strictly from left to right.
-
-For example the meaning of the fifth line of output
-
-.. code:: python
-
-   [DICT] (3/2) > {K2} [LIST] (4/4) > [TUPLE] (2/1) > [INT]  :  9
-
-is:
-
-* The type of input parameter (``oData``) is ``dict``
-* The dictionary contains 3 keys
-* The current line gives information about the second key of the dictionary
-* The name of the second key is 'K2'
-* The value of the second key is of type ``list``
-* The list contains 4 elements
-* The current line gives information about the fourth element of the list
-* The fourth element of the list is of type ``tuple``
-* The tuple contains 2 elements
-* The current line gives information about the first element of the tuple
-* The first element of the tuple is of type ``int`` and has the value 9
-
-Types are encapsulated in square brackets, counter in round brackets and key names are encapsulated in curly brackets.
 
 **Arguments:**
 

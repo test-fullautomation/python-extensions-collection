@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 27.06.2022
+# 15.11.2022
 #
 # **************************************************************************************************************
 
@@ -588,6 +588,9 @@ Reads content from current file. Returns an array of lines together with ``bSucc
 
 The method takes care of opening and closing the file. The complete file content is read by ``ReadLines`` in one step,
 but with the help of further parameters it is possible to reduce the content by including and excluding lines.
+
+Internally ``ReadLines`` uses the string filter method ``StringFilter``. All filter related input parameter of
+``ReadLines`` and ``StringFilter`` are the same.
 
 The logical join of all filter is: ``AND``.
 

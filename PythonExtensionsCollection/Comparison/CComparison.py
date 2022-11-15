@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 25.10.2022
+# 08.11.2022
 #
 # **************************************************************************************************************
 
@@ -166,6 +166,7 @@ Compares two files. While reading in all files empty lines are skipped.
          sResult = CString.FormatResult(sMethod, bSuccess, sResult)
          return bIdentical, bSuccess, sResult
 
+      # -- check number of lines
       nNrOfLines_1 = len(listLines_1)
       nNrOfLines_2 = len(listLines_2)
       if nNrOfLines_1 != nNrOfLines_2:
@@ -205,39 +206,51 @@ Compares two files. While reading in all files empty lines are skipped.
             listRegEx.append(re.compile(sPattern))
          del listPatterns
          # -- apply pattern to content of file 1
-         listSubset_1 = []
+         listSubsetLines_1 = []
          for sLine in listLines_1:
             for RegEx in listRegEx:
                listPositions = RegEx.findall(sLine)
                if len(listPositions) > 0:
-                  listSubset_1.append(listPositions[0])
+                  listSubsetLines_1.append(listPositions[0])
                   break # for RegEx in listRegEx:
          # eof for sLine in listLines_1:
          del listLines_1
          # -- apply pattern to content of file 2
-         listSubset_2 = []
+         listSubsetLines_2 = []
          for sLine in listLines_2:
             for RegEx in listRegEx:
                listPositions = RegEx.findall(sLine)
                if len(listPositions) > 0:
-                  listSubset_2.append(listPositions[0])
+                  listSubsetLines_2.append(listPositions[0])
                   break # for RegEx in listRegEx:
          # eof for sLine in listLines_2:
          del listLines_2
          del listRegEx
+
+         # -- check number of lines
+         nNrOfSubsetLines_1 = len(listSubsetLines_1)
+         nNrOfSubsetLines_2 = len(listSubsetLines_2)
+         if nNrOfSubsetLines_1 != nNrOfSubsetLines_2:
+            del listSubsetLines_1
+            del listSubsetLines_2
+            bIdentical = False
+            bSuccess   = True
+            sResult    = f"The subsets of files contain different number of lines (subset 1: {nNrOfSubsetLines_1} lines, subset 2: {nNrOfSubsetLines_2} lines"
+            return bIdentical, bSuccess, sResult
+
          # -- compare subsets of content
-         for nIndex, sLine_1 in enumerate(listSubset_1):
-            sLine_2 = listSubset_2[nIndex]
+         for nIndex, sLine_1 in enumerate(listSubsetLines_1):
+            sLine_2 = listSubsetLines_2[nIndex]
             if sLine_1 != sLine_2:
-               del listSubset_1
-               del listSubset_2
+               del listSubsetLines_1
+               del listSubsetLines_2
                bIdentical = False
                bSuccess   = True
                sResult    = f"Found deviating lines\n(1) '{sLine_1}'\n(2) '{sLine_2}'"
                return bIdentical, bSuccess, sResult
-         # eof for nIndex, sLine_1 in enumerate(listSubset_1):
-         del listSubset_1
-         del listSubset_2
+         # eof for nIndex, sLine_1 in enumerate(listSubsetLines_1):
+         del listSubsetLines_1
+         del listSubsetLines_2
 
       # eof else - if sPatternFile is None:
 
