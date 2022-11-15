@@ -24,7 +24,7 @@ jobs:
           run: |
             sudo apt-get install -y pandoc
             sudo apt-get install -y texlive-latex-*
-            python -m pip install --upgrade build twine colorama pypandoc wheel dotdict
+            python -m pip install --upgrade build twine colorama pypandoc wheel dotdict genpackagedoc
 
         - name: Build source and wheel distributions
           run: |
