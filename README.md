@@ -1,47 +1,47 @@
-> Licensed under the Apache License, Version 2.0 (the \"License\"); you
-> may not use this file except in compliance with the License. You may
-> obtain a copy of the License at
->
-> <http://www.apache.org/licenses/LICENSE-2.0>
->
-> Unless required by applicable law or agreed to in writing, software
-> distributed under the License is distributed on an \"AS IS\" BASIS,
-> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-> implied. See the License for the specific language governing
-> permissions and limitations under the License.
-
 # Package Description
 
-## Getting Started
-
-The Python Extensions Collection package extends the functionality of
+The **PythonExtensionsCollection** package extends the functionality of
 Python by some useful functions that are not available in Python
 immediately.
 
 ## How to install
 
-Firstly clone the **python-extensions-collection** repository to your
-machine.
+The **PythonExtensionsCollection** can be installed in two different
+ways.
 
-[Python Extensions
-Collection](https://github.com/test-fullautomation/python-extensions-collection)
+1.  Installation via PyPi (recommended for users)
 
-Use the following two common commands to build or install this package:
+    ``` 
+    pip install PythonExtensionsCollection
+    ```
 
-``` 
-setup.py build      will build the package underneath 'build/'
-setup.py install    will install the package
-```
+    [PythonExtensionsCollection in
+    PyPi](https://pypi.org/project/PythonExtensionsCollection/)
 
-After the build processes is completed, the package is located in
-\'build/\', and the generated package documentation is located in
-\'doc/\_build/\'.
+2.  Installation via GitHub (recommended for developers)
+
+    Clone the **python-extensions-collection** repository to your
+    machine.
+
+    ``` 
+    git clone https://github.com/test-fullautomation/python-extensions-collection.git
+    ```
+
+    [PythonExtensionsCollection in
+    GitHub](https://github.com/test-fullautomation/python-extensions-collection)
+
+    Use the following command to install the
+    **PythonExtensionsCollection**:
+
+    ``` 
+    setup.py install
+    ```
 
 ## Package Documentation
 
-A detailed documentation of the Python Extensions Collection package can
-be found here:
-[Python-Extensions-Collection.pdf](https://github.com/test-fullautomation/python-extensions-collection/blob/develop/doc/_build/latex/Python-Extensions-Collection.pdf)
+A detailed documentation of the **PythonExtensionsCollection** can be
+found here:
+[PythonExtensionsCollection.pdf](https://github.com/test-fullautomation/python-extensions-collection/blob/develop/PythonExtensionsCollection/PythonExtensionsCollection.pdf)
 
 ## Feedback
 
@@ -53,11 +53,15 @@ please don\'t hesitate to raise a ticket.
 
 ## Maintainers
 
+[Holger Queckenstedt](mailto:Holger.Queckenstedt@de.bosch.com)
+
 [Thomas Pollerspöck](mailto:Thomas.Pollerspoeck@de.bosch.com)
 
 ## Contributors
 
 [Holger Queckenstedt](mailto:Holger.Queckenstedt@de.bosch.com)
+
+[Thomas Pollerspöck](mailto:Thomas.Pollerspoeck@de.bosch.com)
 
 ## License
 
