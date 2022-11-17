@@ -21,21 +21,21 @@
 The \pkg\ contains the following modules:
 
 \begin{enumerate}
-\item \texttt{CComparison}\\
+\item \pfcode{CComparison}\\
    Compare two text files based on regular expressions.\\
-   Import: \pcode{from PythonExtensionsCollection.Comparison.CComparison import CComparison}
-\item \texttt{CFile}\\
+   Import: \pfcode{from PythonExtensionsCollection.Comparison.CComparison import CComparison}
+\item \pfcode{CFile}\\
    File operations like read, write, copy, move, ...\\
-   Import: \pcode{from PythonExtensionsCollection.File.CFile import CFile}
-\item \texttt{CFolder}\\
+   Import: \pfcode{from PythonExtensionsCollection.File.CFile import CFile}
+\item \pfcode{CFolder}\\
    Folder operations like create, delete, copy, ...\\
-   Import: \pcode{from PythonExtensionsCollection.Folder.CFolder import CFolder}
-\item \texttt{CString}\\
+   Import: \pfcode{from PythonExtensionsCollection.Folder.CFolder import CFolder}
+\item \pfcode{CString}\\
    String operations like normalize a path, string filter, format results, ...\\
-   Import: \pcode{from PythonExtensionsCollection.String.CString import CString}
-\item \texttt{CUtils}\\
+   Import: \pfcode{from PythonExtensionsCollection.String.CString import CString}
+\item \pfcode{CUtils}\\
    Pretty print of Python data types\\
-   Import: \pcode{from PythonExtensionsCollection.Utils.CUtils import CTypePrint}
+   Import: \pfcode{from PythonExtensionsCollection.Utils.CUtils import CTypePrint}
 \end{enumerate}
 
 \section{Methods}
@@ -56,7 +56,7 @@ when displayed in web browsers.
 Using single backslashes within code - as content of string variables - is dangerous because the combination
 of a backslash and a letter can be interpreted as escape sequence - and this is maybe not the effect a user wants to have.
 
-To avoid unwanted escape sequences backslashes have to be masked (by the usage of two of them: \texttt{"\textbackslash\textbackslash"}).
+To avoid unwanted escape sequences backslashes have to be masked (by the usage of two of them: \pcode{"\\\\"}).
 But also this could not be the best solution because there are also applications (like the Windows explorer) that are not able to handle
 masked backslashes. They expect to get single backslashes within a path.
 
@@ -65,11 +65,11 @@ Python already provides functions to do this, but the outcome (path contains sla
 operating system. And like already mentioned above also under Windows backslashes might not be the preferred choice.
 
 It also has to be considered that redundant separators at the beginning of an address of a local network resource
-(like \texttt{\textbackslash\textbackslash}\texttt{server.com}) and or inside an internet address (like \texttt{https:\textbackslash\textbackslash}\texttt{server.com}) must \textbf{not} be collapsed!
-Unfortunately the Python function \texttt{normpath} does not consider this context.
+(like \pcode{\\\\server.com}) and or inside an internet address (like \pcode{https:\\\\server.com}) must \textbf{not} be collapsed!
+Unfortunately the Python function \pcode{normpath} does not consider this context.
 
 To give the user full control about the format of a path, independent from the operating system and independent if it's
-a local path, a path to a local network resource or an internet address, the method \texttt{NormalizePath()} provides
+a local path, a path to a local network resource or an internet address, the method \pcode{NormalizePath()} provides
 lot's of parameters to influence the result.
 
 \vspace{1ex}
@@ -141,7 +141,7 @@ http://anyserver.com/part1/part2/part3/part4
 
 \subsubsection{DetectParentPath}
 
-The method \texttt{DetectParentPath} computes the path to any parent folder inside a given path. Optionally \texttt{DetectParentPath} is able
+The method \pcode{DetectParentPath} computes the path to any parent folder inside a given path. Optionally \pcode{DetectParentPath} is able
 to search for files inside the identified parent folder.
 
 In the following examples we assume to have the following file system structure:
@@ -152,7 +152,7 @@ D:\pathtest\ABC\FILE.txt
 D:\pathtest\RST\UVW\XYZ\FILE.txt
 \end{robotlog}
 
-We are inside folder \texttt{GHI} and want to know the path to folder \texttt{ABC}.
+We are inside folder \rlog{GHI} and want to know the path to folder \rlog{ABC}.
 
 \textbf{Python code}
 
@@ -177,13 +177,13 @@ listDestFiles   = None
 sDestPathParent = D:/pathtest
 \end{robotlog}
 
-\texttt{sDestPath} contains the path to \texttt{sFolderName} within \texttt{sStartPath}.
-\texttt{sDestPathParent} contains the path to the parent folder of \texttt{sDestPath}.
+\pcode{sDestPath} contains the path to \pcode{sFolderName} within \pcode{sStartPath}.
+\pcode{sDestPathParent} contains the path to the parent folder of \pcode{sDestPath}.
 The meaning of the remaining return parameter are handled in the next examples.
 
 \textit{It is possible to search for several folders.}
 
-We are inside folder \texttt{GHI} and want to know the path to folders \texttt{ABC} and \texttt{DEF}.
+We are inside folder \rlog{GHI} and want to know the path to folders \rlog{ABC} and \rlog{DEF}.
 
 \begin{pythoncode}
 sStartPath  = r"D:\pathtest\ABC\DEF\GHI"
@@ -201,16 +201,16 @@ listDestFiles   = None
 sDestPathParent = D:/pathtest/ABC
 \end{robotlog}
 
-\texttt{sFolderName} is a semicolon separated list of folder names. Accordingly to this list of folder names \texttt{listDestPaths}
-contains the paths to these folders. \texttt{DetectParentPath} searches in the path from right to left (from bottom level up to top level).
-Therefore the folder \texttt{DEF} is the first one who is found. The order of elements in \texttt{listDestPaths} is not synchronized
-with the order of folder names in \texttt{sFolderName}!
-In every case \texttt{sDestPath} contains the first element in the list.
-\texttt{sDestPathParent} contains the path to the parent folder of \texttt{sDestPath}.
+\pcode{sFolderName} is a semicolon separated list of folder names. Accordingly to this list of folder names \pcode{listDestPaths}
+contains the paths to these folders. \pcode{DetectParentPath} searches in the path from right to left (from bottom level up to top level).
+Therefore the folder \rlog{DEF} is the first one who is found. The order of elements in \pcode{listDestPaths} is not synchronized
+with the order of folder names in \pcode{sFolderName}!
+In every case \pcode{sDestPath} contains the first element in the list.
+\pcode{sDestPathParent} contains the path to the parent folder of \pcode{sDestPath}.
 
 \textit{It is possible to search for a file.}
 
-We are inside folder \texttt{GHI} and want to know the path to folder \texttt{DEF} and within this folder we want to know the path to file \texttt{FILE.txt}.
+We are inside folder \rlog{GHI} and want to know the path to folder \rlog{DEF} and within this folder we want to know the path to file \rlog{FILE.txt}.
 
 \begin{pythoncode}
 sStartPath  = r"D:\pathtest\ABC\DEF\GHI"
@@ -229,14 +229,14 @@ listDestFiles   = ['D:/pathtest/ABC/DEF/GHI/FILE.txt']
 sDestPathParent = D:/pathtest/ABC
 \end{robotlog}
 
-\texttt{listDestPaths} contains a list of all paths to \texttt{sFolderName} within \texttt{sStartPath}.
-\texttt{sDestPath} contains the first element of \texttt{listDestPaths}.
-\texttt{listDestFiles} contains a list of all files with name \texttt{sFileName} found within \texttt{listDestPaths}.
-\texttt{sDestFile} contains the first element of \texttt{listDestFiles}.
+\pcode{listDestPaths} contains a list of all paths to \pcode{sFolderName} within \pcode{sStartPath}.
+\pcode{sDestPath} contains the first element of \pcode{listDestPaths}.
+\pcode{listDestFiles} contains a list of all files with name \pcode{sFileName} found within \pcode{listDestPaths}.
+\pcode{sDestFile} contains the first element of \pcode{listDestFiles}.
 
-A semicolon separated list of file names in \texttt{sFileName} (like for \texttt{sFolderName}) is not supported.
+A semicolon separated list of file names in \pcode{sFileName} (like for \pcode{sFolderName}) is not supported.
 
-Providing more than one folder together with a file name may cause overlapping results. But \texttt{listDestFiles} will not contain
+Providing more than one folder together with a file name may cause overlapping results. But \pcode{listDestFiles} will not contain
 any redundant paths to files.
 
 \begin{pythoncode}
@@ -256,7 +256,7 @@ listDestFiles   = ['D:/pathtest/ABC/DEF/GHI/FILE.txt', 'D:/pathtest/ABC/FILE.txt
 sDestPathParent = D:/pathtest/ABC
 \end{robotlog}
 
-In the last example we go one further level up (\texttt{pathtest}). Because of the file search is recursive, also files in parallel trees are found now.
+In the last example we go one further level up (\pcode{pathtest}). Because of the file search is recursive, also files in parallel trees are found now.
 
 \begin{pythoncode}
 sStartPath  = r"D:\pathtest\ABC\DEF\GHI"
@@ -311,24 +311,26 @@ It is possible to decide if the standard filters shall work case sensitive or no
 The regular expression based filters always work with the original input string that is not modified in any way.
 
 Except the regular expression based filters it is possible to provide more than one string for every standard filter (must be a semikolon separated list in this case).
-A semicolon that shall be part of the search string, has to be masked in this way: \texttt{"\textbackslash;"}.
+A semicolon that shall be part of the search string, has to be masked in this way: \pcode{"\;"}.
 
-This method returns a boolean value that is \texttt{True} in case of all criteria are fulfilled, and \texttt{False} in case of some or all of them are not fulfilled.
+This method returns a boolean value that is \pcode{True} in case of all criteria are fulfilled, and \pcode{False} in case of some or all of them are not fulfilled.
 
-The default value for all filters is \texttt{None} (except \texttt{bSkipBlankStrings}). In case of a filter value is \texttt{None} this filter
+The default value for all filters is \pcode{None} (except \pcode{bSkipBlankStrings}). In case of a filter value is \pcode{None} this filter
 has no influence on the result.
 
-In case of all filters are \texttt{None} (default) the return value is \texttt{True} (except the string itself is \texttt{None}
-or the string is empty and \texttt{bSkipBlankStrings} is \texttt{True}).
+In case of all filters are \pcode{None} (default) the return value is \pcode{True} (except the string itself is \pcode{None}
+or the string is empty and \pcode{bSkipBlankStrings} is \pcode{True}).
 
-In case of the string is \texttt{None}, the return value is \texttt{False}, because nothing concrete can be done with \texttt{None} strings.
+In case of the string is \pcode{None}, the return value is \pcode{False}, because nothing concrete can be done with \pcode{None} strings.
 
 Internally every filter has his own individual acknowledge that indicates if the criterion of this filter is fulfilled or not.
 
-The meaning of \textit{criterion fulfilled} of a filter is that the filter supports the final return value \texttt{bAck} of this method with \texttt{True}.
+The meaning of \textit{criterion fulfilled} of a filter is that the filter supports the final return value \pcode{bAck} of this method with \pcode{True}.
 
-The final return value \texttt{bAck} of this method is a logical join (\texttt{AND}) of all individual acknowledges (except \texttt{bSkipBlankStrings}
-and \texttt{sComment}; in case of their criteria are fulfilled, immediately \texttt{False} is returned).
+The final return value \pcode{bAck} of this method is a logical join (\texttt{AND}) of all individual acknowledges (except \pcode{bSkipBlankStrings}
+and \pcode{sComment}; in case of their criteria are fulfilled, immediately \pcode{False} is returned).
+
+\vspace{1ex}
 
 Summarized:
 
@@ -337,16 +339,16 @@ Summarized:
    \item The return value of this method provides the \textit{conclusion} - indicating if all criteria are fulfilled or not
 \end{itemize}
 
-All available filters are described in more detail in the interface description of \texttt{StringFilter}. Here we continue with some code examples.
+All available filters are described in more detail in the interface description of \pcode{StringFilter}. Here we continue with some code examples.
 
 % --------------------------------------------------------------------------------------------------------------
 \newpage
 
 \textbf{Example 1}
 
-\texttt{sString} has to start with \texttt{sStartsWith} and has to contain \texttt{sContains}.
+\pcode{sString} has to start with \pcode{sStartsWith} and has to contain \pcode{sContains}.
 
-That's true. Therefore \texttt{StringFilter} returns \texttt{True}.
+That's true. Therefore \pcode{StringFilter} returns \pcode{True}.
 
 \begin{pythoncode}
 StringFilter(sString           = "Speed is 25 beats per minute",
@@ -365,8 +367,8 @@ StringFilter(sString           = "Speed is 25 beats per minute",
 
 \textbf{Example 2}
 
-\texttt{sString} must not end with \texttt{sEndsNotWith}. But does.
-Therefore \texttt{StringFilter} returns \texttt{False} - even in case of other criterions are fulfilled.
+\pcode{sString} must not end with \pcode{sEndsNotWith}. But does.
+Therefore \pcode{StringFilter} returns \pcode{False} - even in case of other criterions are fulfilled.
 
 \begin{pythoncode}
 StringFilter(sString           = "Speed is 25 beats per minute",
@@ -385,8 +387,8 @@ StringFilter(sString           = "Speed is 25 beats per minute",
 
 \textbf{Example 3}
 
-\texttt{sString} must not contain \texttt{sContainsNot}. Because \texttt{bCaseSensitive} is \texttt{True} the spelling does not fit.
-Therefore \texttt{StringFilter} returns \texttt{True}.
+\pcode{sString} must not contain \pcode{sContainsNot}. Because \pcode{bCaseSensitive} is \pcode{True} the spelling does not fit.
+Therefore \pcode{StringFilter} returns \pcode{True}.
 
 \begin{pythoncode}
 StringFilter(sString           = "Speed is 25 beats per minute",
@@ -408,8 +410,8 @@ StringFilter(sString           = "Speed is 25 beats per minute",
 
 \textbf{Example 4}
 
-\texttt{sString} must contain exactly two digits (postulated by regular expression based \texttt{sInclRegEx}).
-That's true. Therefore \texttt{StringFilter} returns \texttt{True}.
+\pcode{sString} must contain exactly two digits (postulated by regular expression based \pcode{sInclRegEx}).
+That's true. Therefore \pcode{StringFilter} returns \pcode{True}.
 
 \begin{pythoncode}
 StringFilter(sString           = "Speed is 25 beats per minute",
@@ -428,8 +430,8 @@ StringFilter(sString           = "Speed is 25 beats per minute",
 
 \textbf{Example 5}
 
-\texttt{sString} must contain exactly three digits (postulated by regular expression based \texttt{sInclRegEx}).
-That's not true. Therefore \texttt{StringFilter} returns \texttt{False} - even in case of other criterions are fulfilled.
+\pcode{sString} must contain exactly three digits (postulated by regular expression based \pcode{sInclRegEx}).
+That's not true. Therefore \pcode{StringFilter} returns \pcode{False} - even in case of other criterions are fulfilled.
 
 \begin{pythoncode}
 StringFilter(sString           = "Speed is 25 beats per minute",
@@ -448,8 +450,8 @@ StringFilter(sString           = "Speed is 25 beats per minute",
 
 \textbf{Example 6}
 
-Leading and trailing spaces are removed from the input string \texttt{sString} at the beginning. In this example the result is an empty input string.
-\texttt{bSkipBlankStrings} is set to \texttt{True}. In this case \texttt{StringFilter} immediately returns \texttt{False}
+Leading and trailing spaces are removed from the input string \pcode{sString} at the beginning. In this example the result is an empty input string.
+\pcode{bSkipBlankStrings} is set to \pcode{True}. In this case \pcode{StringFilter} immediately returns \pcode{False}
 and all other filters are ignored.
 
 \begin{pythoncode}
@@ -472,8 +474,8 @@ StringFilter(sString           = "     ",
 
 \textbf{Example 7}
 
-The input string \texttt{sString} starts with a character that is defined to be a comment character (\texttt{sComment}).
-Therefore \texttt{StringFilter} immediately returns \texttt{False} and all other filters are ignored.
+The input string \pcode{sString} starts with a character that is defined to be a comment character (\pcode{sComment}).
+Therefore \pcode{StringFilter} immediately returns \pcode{False} and all other filters are ignored.
 
 \begin{pythoncode}
 StringFilter(sString           = "# Speed is 25 beats per minute",
@@ -492,8 +494,8 @@ StringFilter(sString           = "# Speed is 25 beats per minute",
 
 \textbf{Example 8}
 
-Blanks around search strings (here \texttt{sContains} is \texttt{"\ \ \ Alpha "}) are considered, whereas the blanks around the input string are removed before computation.
-Therefore \texttt{"\ \ \ Alpha "} cannot be found within the (shortened) input string and \texttt{StringFilter} returns \texttt{False}.
+Blanks around search strings (here \pcode{sContains} is \pcode{"\ \ \ Alpha "}) are considered, whereas the blanks around the input string are removed before computation.
+Therefore \pcode{"\ \ \ Alpha "} cannot be found within the (shortened) input string and \pcode{StringFilter} returns \pcode{False}.
 
 \begin{pythoncode}
 StringFilter(sString           = "   Alpha is not beta; and beta is not gamma  ",
@@ -512,12 +514,13 @@ StringFilter(sString           = "   Alpha is not beta; and beta is not gamma  "
 
 \textbf{Example 9}
 
-In case of blanks around search strings have to be considered, a regular expression based filter has to be used (here \texttt{sInclRegEx}).
+In case of blanks around search strings have to be considered, a regular expression based filter has to be used (here \pcode{sInclRegEx}).
 
-This is possible because the regular expression based filters \texttt{sInclRegEx} and \texttt{sExclRegEx} work \textbf{with the original value of \texttt{sString}},
-and not with the shortened version with leading and trailing blanks removed! The shortened version is applied to standard filters only.
+This is possible because the regular expression based filters \pcode{sInclRegEx} and \pcode{sExclRegEx} work \textbf{with the original value}
+of \pcode{sString}, and not with the shortened version with leading and trailing blanks removed!
+The shortened version is applied to standard filters only.
 
-In this example \texttt{StringFilter} returns \texttt{True}.
+In this example \pcode{StringFilter} returns \pcode{True}.
 
 \begin{pythoncode}
 StringFilter(sString           = "   Alpha is not beta; and beta is not gamma  ",
@@ -539,11 +542,11 @@ StringFilter(sString           = "   Alpha is not beta; and beta is not gamma  "
 
 \textbf{Example 10}
 
-The meaning of \texttt{"beta; and"} in this example is: The criterion is fulfilled in case of either \texttt{"beta"} or \texttt{" and"} can be found.
-That's true - but this has nothing to do with the fact, that also this string \texttt{"beta; and"} can be found. The semikolon is a separator
+The meaning of \pcode{"beta; and"} in this example is: The criterion is fulfilled in case of either \pcode{"beta"} or \pcode{" and"} can be found.
+That's true - but this has nothing to do with the fact, that also this string \pcode{"beta; and"} can be found. The semikolon is a separator
 character and therefore part of the syntax.
 
-Nevertheless \texttt{StringFilter} returns \texttt{True}.
+Nevertheless \pcode{StringFilter} returns \pcode{True}.
 
 \begin{pythoncode}
 StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
@@ -562,11 +565,11 @@ StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
 
 \textbf{Example 11}
 
-In this example the semicolon is masked with \texttt{"\textbackslash;"} and therefore part of the search string \texttt{sContains} - and
+In this example the semicolon is masked with \pcode{"\\;"} and therefore part of the search string \pcode{sContains} - and
 not part of the syntax any more.
 
-The meaning of \texttt{"beta\textbackslash; not"} in this example is: The criterion is fulfilled in case of \texttt{"beta; not"} can be found.
-That's \textbf{not} \texttt{True}. Therefore \texttt{StringFilter} returns \texttt{False}.
+The meaning of \pcode{"beta\\; not"} in this example is: The criterion is fulfilled in case of \pcode{"beta; not"} can be found.
+That's \textbf{not} \pcode{True}. Therefore \pcode{StringFilter} returns \pcode{False}.
 
 \begin{pythoncode}
 StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
@@ -588,10 +591,10 @@ StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
 
 \subsection{File access with CFile}
 
-The motivation for the \texttt{CFile} module contains two main topics:
+The motivation for the \pcode{CFile} module contains two main topics:
 
 \begin{enumerate}
-   \item Extended user control by introducing further parameter for file access functions. With high priority \texttt{CFile} enables the user
+   \item Extended user control by introducing further parameter for file access functions. With high priority \pcode{CFile} enables the user
          to take care about that nothing existing is overwritten accidently.
    \item Hide the file handles und use the mechanism of class variables to avoid access violations independent from
          the way different operation systems like Windows and Unix are handling this.
@@ -625,7 +628,7 @@ sFile_2 = r"/tmp/CFile_TestFile_2.txt"
 oFile_1 = CFile(sFile_1)
 \end{pythoncode}
 
-\texttt{oFile\_1} is the instance of a class - \textit{and not the file handle}. The file handle is hidden, the user has nothing to do with it.
+\pcode{oFile_1} is the instance of a class - \textit{and not the file handle}. The file handle is hidden, the user has nothing to do with it.
 
 Every class instance can work with one single file only (during the complete instance lifetime) and has exclusive access to this file.
 
@@ -645,14 +648,14 @@ except Exception as reason:
    print(str(reason))
 \end{pythoncode}
 
-For writing content to files two methods are available: \texttt{Write()} and \texttt{Append()}.
+For writing content to files two methods are available: \pcode{Write()} and \pcode{Append()}.
 
 \begin{itemize}
-   \item Using \texttt{Write()} causes the class to open the file for writing ('\texttt{w}') - in case of the file is not already opened for writing.
-   \item Using \texttt{Append()} causes the class to open the file for appending ('\texttt{a}') - in case of the file is not already opened for appending.
+   \item Using \pcode{Write()} causes the class to open the file for writing (\pcode{w}) - in case of the file is not already opened for writing.
+   \item Using \pcode{Append()} causes the class to open the file for appending (\pcode{a}) - in case of the file is not already opened for appending.
 \end{itemize}
 
-Switching between \texttt{Write()} and \texttt{Append()} causes an intermediate file handle \texttt{close()} internally!
+Switching between \pcode{Write()} and \pcode{Append()} causes an intermediate file handle \pcode{close()} internally!
 
 \textit{Write some content to file:}
 
@@ -661,19 +664,19 @@ bSuccess, sResult = oFile_1.Write("A B C")
 print(f"sResult oFile_1.Write : '{sResult}' / bSuccess : {bSuccess}")
 \end{pythoncode}
 
-Most of the functions return at least \texttt{bSuccess} and \texttt{sResult}.
+Most of the functions return at least \pcode{bSuccess} and \pcode{sResult}.
 
 \begin{itemize}
-   \item \texttt{bSuccess} is \texttt{True} in case of no error occurred.
-   \item \texttt{bSuccess} is \texttt{False} in case of an error occurred.
-   \item \texttt{bSuccess} is \texttt{None} in case of a very fatal error occurred - like an exception.
-   \item \texttt{sResult} contains details about what happens during computation.
+   \item \pcode{bSuccess} is \pcode{True} in case of no error occurred.
+   \item \pcode{bSuccess} is \pcode{False} in case of an error occurred.
+   \item \pcode{bSuccess} is \pcode{None} in case of a very fatal error occurred - like an exception.
+   \item \pcode{sResult} contains details about what happens during computation.
 \end{itemize}
 
 It is possible now to continue with using \pcode{oFile_1.Write("...")}; the content will be appended - as long as the file
 is still open for writing.
 
-Some functions close the file handle (e.g. \texttt{ReadLines()}). Therefore sequences like
+Some functions close the file handle (e.g. \pcode{ReadLines()}). Therefore sequences like
 
 \begin{pythoncode}
 oFile_1.Write("...")
@@ -681,10 +684,10 @@ oFile_1.ReadLines("...")
 oFile_1.Write("...")
 \end{pythoncode}
 
-should be avoided - because \texttt{Write()} after \texttt{ReadLines()} starts the file from scratch and the file content
-written by the previous \texttt{Write()} calls is lost.
+should be avoided - because \pcode{Write()} after \pcode{ReadLines()} starts the file from scratch and the file content
+written by the previous \pcode{Write()} calls is lost.
 
-For appending content to a file use the function \texttt{Append()}.
+For appending content to a file use the function \pcode{Append()}.
 
 \textit{Append content to file:}
 
@@ -692,7 +695,7 @@ For appending content to a file use the function \texttt{Append()}.
 bSuccess, sResult = oFile_1.Append("A B C")
 \end{pythoncode}
 
-For reading content from a file use the function \texttt{ReadLines()}.
+For reading content from a file use the function \pcode{ReadLines()}.
 
 \textit{Read from file:}
 
@@ -702,9 +705,9 @@ for sLine in listLines_1:
    print(f"{sLine}")
 \end{pythoncode}
 
-Additionally to \texttt{bSuccess} and \texttt{sResult} the function returnes a list of lines.
+Additionally to \pcode{bSuccess} and \pcode{sResult} the function returnes a list of lines.
 
-Internally \texttt{ReadLines()} takes care about:
+Internally \pcode{ReadLines()} takes care about:
 
 \begin{itemize}
    \item Closing the file - in case the file is still opened
@@ -720,24 +723,24 @@ for sLine in listLines_1:
    print(f"{sLine}")
 \end{pythoncode}
 
-it is also possible to let \texttt{ReadLines()} do this:
+it is also possible to let \pcode{ReadLines()} do this:
 
 \begin{pythoncode}
 listLines_1, bSuccess, sResult = oFile_1.ReadLines(bToScreen=True)
 \end{pythoncode}
 
-A function to read only a single line from a file is not available, but it is possible to use some filter parameter of \texttt{ReadLines()}
+A function to read only a single line from a file is not available, but it is possible to use some filter parameter of \pcode{ReadLines()}
 to reduce the amount of content already during the file is read. This prevents the user from implementing further loops.
 
-Internally \texttt{ReadLines()} uses the string filter method \texttt{StringFilter()}. All filter related input parameter of
-\texttt{ReadLines()} and \texttt{StringFilter()} are the same.
+Internally \pcode{ReadLines()} uses the string filter method \pcode{StringFilter()}. All filter related input parameter of
+\pcode{ReadLines()} and \pcode{StringFilter()} are the same.
 
 Let's assume the following:
 
 \begin{itemize}
-   \item The file \texttt{sFile\_1} contains empty lines
-   \item The file \texttt{sFile\_1} contains also lines, that are commented out (with a hash '\texttt{\#}' at the beginning)
-   \item We want \texttt{ReadLines()} to skip empty lines and lines that are commented out
+   \item The file \pcode{sFile_1} contains empty lines
+   \item The file \pcode{sFile_1} contains also lines, that are commented out (with a hash (\pcode{\#}) at the beginning)
+   \item We want \pcode{ReadLines()} to skip empty lines and lines that are commented out
 \end{itemize}
 
 This can be imlemented in the following way.
@@ -749,7 +752,7 @@ listLines_1, bSuccess, sResult = oFile_1.ReadLines(bSkipBlankLines=True,
                                                    sComment='#')
 \end{pythoncode}
 
-It is a good practice to close file handles as soon as possible. Therefore \texttt{CFile} provides the possibility to do this explicitely.
+It is a good practice to close file handles as soon as possible. Therefore \pcode{CFile} provides the possibility to do this explicitely.
 
 \textit{Close a file handle:}
 
@@ -757,7 +760,7 @@ It is a good practice to close file handles as soon as possible. Therefore \text
 bSuccess, sResult = oFile_1.Close()
 \end{pythoncode}
 
-This makes sense in case of later again access to this file is needed (the class object \texttt{oFile\_1} still exists).
+This makes sense in case of later again access to this file is needed (the class object \pcode{oFile_1} still exists).
 
 Additionally to that the file handle is closed implicitely:
 
@@ -766,7 +769,7 @@ Additionally to that the file handle is closed implicitely:
    \item in case of the class instance is destoyed.
 \end{itemize}
 
-Therefore an alternative to the \texttt{Close()} function is the deletion of the class instance:
+Therefore an alternative to the \pcode{Close()} function is the deletion of the class instance:
 
 \begin{pythoncode}
 del oFile_1
@@ -774,7 +777,7 @@ del oFile_1
 
 This makes sense in case of access to this file is not needed any more (therefore we also do not need the class object any more).
 
-It is recommended to prefer \texttt{del} (instead of \texttt{Close()}) to avoid to keep too much not used objects for a too long length of time in memory.
+It is recommended to prefer \pcode{del} (instead of \pcode{Close()}) to avoid to keep too much not used objects for a too long length of time in memory.
 
 A file can be copied to another file.
 
@@ -784,14 +787,14 @@ A file can be copied to another file.
 bSuccess, sResult = oFile_1.CopyTo(sFile_2)
 \end{pythoncode}
 
-The destination (\texttt{sFile\_2} in the example above) can either be a full path and name of a file or the path only.
+The destination (\pcode{sFile_2} in the example above) can either be a full path and name of a file or the path only.
 
-It makes a difference if the destination file exists or not. The optional parameter \texttt{bOverwrite} controls the behavior of \texttt{CopyTo()}.
+It makes a difference if the destination file exists or not. The optional parameter \pcode{bOverwrite} controls the behavior of \pcode{CopyTo()}.
 
-The default is that it is not allowed to overwrite an existing destination file: \texttt{bOverwrite} is \texttt{False}. \texttt{CopyTo()} returns
-\texttt{bSuccess = False} in this case.
+The default is that it is not allowed to overwrite an existing destination file: \pcode{bOverwrite} is \pcode{False}. \pcode{CopyTo()} returns
+\pcode{bSuccess = False} in this case.
 
-In case the user want to allow \texttt{CopyTo()} to overwrite existing destination files, it has to be coded explicitely:
+In case the user want to allow \pcode{CopyTo()} to overwrite existing destination files, it has to be coded explicitely:
 
 \begin{pythoncode}
 bSuccess, sResult = oFile_1.CopyTo(sFile_2, bOverwrite=True)
@@ -805,7 +808,7 @@ A file can be moved to another file.
 bSuccess, sResult = oFile_1.MoveTo(sFile_2)
 \end{pythoncode}
 
-Also \texttt{MoveTo()} supports \texttt{bOverwrite}. The behavior is the same as \texttt{CopyTo()}.
+Also \pcode{MoveTo()} supports \pcode{bOverwrite}. The behavior is the same as \pcode{CopyTo()}.
 
 A file can be deleted.
 
@@ -824,17 +827,17 @@ It is possible to distinguish between two different motivations to delete a file
          In this case it doesn't matter that maybe there is nothing to delete because the file already does not exist.
 \end{enumerate}
 
-The optional parameter \texttt{bConfirmDelete} controls this behavior.
+The optional parameter \pcode{bConfirmDelete} controls this behavior.
 
-Default is that \texttt{Delete()} requires an existing file to delete:
+Default is that \pcode{Delete()} requires an existing file to delete:
 
 \begin{pythoncode}
 bSuccess, sResult = oFile_1.Delete(bConfirmDelete=True)
 \end{pythoncode}
 
-In case of the file does not exist, \texttt{Delete()} returns \texttt{bSuccess = False}.
+In case of the file does not exist, \pcode{Delete()} returns \pcode{bSuccess = False}.
 
-\texttt{Delete()} also returns \texttt{bSuccess = False|None} in case of an existing file cannot be deleted (e.g. because of an access violation).
+\pcode{Delete()} also returns \pcode{bSuccess = False|None} in case of an existing file cannot be deleted (e.g. because of an access violation).
 
 If it doesn't matter it the file exists or not, it has to be coded explicitely:
 
@@ -842,17 +845,17 @@ If it doesn't matter it the file exists or not, it has to be coded explicitely:
 bSuccess, sResult = oFile_1.Delete(bConfirmDelete=False)
 \end{pythoncode}
 
-In this case \texttt{Delete()} only returns \texttt{bSuccess = False|None} in case of an existing file cannot be deleted (e.g. because of an access violation).
+In this case \pcode{Delete()} only returns \pcode{bSuccess = False|None} in case of an existing file cannot be deleted (e.g. because of an access violation).
 
 \textbf{Avoid access violations}
 
-Like already mentioned above every instance of \texttt{CFile} has an exclusive access to it's own file.
+Like already mentioned above every instance of \pcode{CFile} has an exclusive access to it's own file.
 
-Only in case of \texttt{CopyTo()} and \texttt{MoveTo()} other files are involved: the destination files.
+Only in case of \pcode{CopyTo()} and \pcode{MoveTo()} other files are involved: the destination files.
 
-To avoid access violations it is not possible to copy or move a file to another file, that is under access of another instance of \texttt{CFile}.
+To avoid access violations it is not possible to copy or move a file to another file, that is under access of another instance of \pcode{CFile}.
 
-In the following example \texttt{oFile\_1.CopyTo(sFile\_2)} returns \texttt{bSuccess = False} because \texttt{sFile\_2} is already in access by \texttt{oFile\_2}.
+In the following example \pcode{oFile_1.CopyTo(sFile_2)} returns \pcode{bSuccess = False} because \pcode{sFile_2} is already in access by \pcode{oFile_2}.
 
 \begin{pythoncode}[linebackgroundcolor=\hlcode{7}]
 oFile_1 = CFile(sFile_1)
@@ -890,7 +893,7 @@ del oFile_1
 
 \subsubsection{PrettyPrint}
 
-The idea behind the \texttt{PrettyPrint()} function is to resolve the content of composite data types and provide for every parameter inside:
+The idea behind the \pcode{PrettyPrint()} function is to resolve the content of composite data types and provide for every parameter inside:
 
 \begin{itemize}
    \item the type
@@ -901,7 +904,7 @@ The idea behind the \texttt{PrettyPrint()} function is to resolve the content of
 
 \textbf{Example}
 
-The following Python code defines a composite data type and prints the content with \texttt{PrettyPrint()}:
+The following Python code defines a composite data type and prints the content with \pcode{PrettyPrint()}:
 
 \begin{pythoncode}
 dictTest = {'K1' : 'value',
@@ -938,17 +941,17 @@ For example the meaning of the fifth line of output
 is:
 
 \begin{itemize}
-   \item The type of input parameter \texttt{oData} is \texttt{dict}
+   \item The type of input parameter \rlog{oData} is \rlog{dict}
    \item The dictionary contains 4 keys
    \item The current line gives information about the second key of the dictionary
-   \item The name of the second key is \texttt{K2}
-   \item The value of the second key is of type \texttt{list}
+   \item The name of the second key is \rlog{K2}
+   \item The value of the second key is of type \rlog{list}
    \item The list contains 4 elements
    \item The current line gives information about the fourth element of the list
-   \item The fourth element of the list is of type \texttt{tuple}
+   \item The fourth element of the list is of type \rlog{tuple}
    \item The tuple contains 2 elements
    \item The current line gives information about the first element of the tuple
-   \item The first element of the tuple is of type \texttt{int} and has the value 33
+   \item The first element of the tuple is of type \rlog{int} and has the value \rlog{33}
 \end{itemize}
 
 Types are encapsulated in square brackets, counter in round brackets and key names are encapsulated in curly brackets.
