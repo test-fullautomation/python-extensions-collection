@@ -84,9 +84,9 @@ print(path)
 
 \textbf{Result} (\textit{output contains slashes})
 
-\begin{robotlog}
+\begin{pythonlog}
 C:/subfolder3
-\end{robotlog}
+\end{pythonlog}
 
 \vspace{1ex}
 
@@ -100,9 +100,9 @@ print(path)
 
 \textbf{Result} (\textit{output contains masked backslashes})
 
-\begin{robotlog}
+\begin{pythonlog}
 C:\\subfolder3
-\end{robotlog}
+\end{pythonlog}
 
 \vspace{1ex}
 
@@ -116,9 +116,9 @@ print(path)
 
 \textbf{Result}
 
-\begin{robotlog}
+\begin{pythonlog}
 //anyserver.com/part1/part2/part3/part4
-\end{robotlog}
+\end{pythonlog}
 
 \vspace{1ex}
 
@@ -132,9 +132,9 @@ print(path)
 
 \textbf{Result}
 
-\begin{robotlog}
+\begin{pythonlog}
 http://anyserver.com/part1/part2/part3/part4
-\end{robotlog}
+\end{pythonlog}
 
 % --------------------------------------------------------------------------------------------------------------
 \newpage
@@ -146,13 +146,13 @@ to search for files inside the identified parent folder.
 
 In the following examples we assume to have the following file system structure:
 
-\begin{robotlog}
+\begin{pythonlog}
 D:\pathtest\ABC\DEF\GHI\FILE.txt
 D:\pathtest\ABC\FILE.txt
 D:\pathtest\RST\UVW\XYZ\FILE.txt
-\end{robotlog}
+\end{pythonlog}
 
-We are inside folder \rlog{GHI} and want to know the path to folder \rlog{ABC}.
+We are inside folder \plog{GHI} and want to know the path to folder \plog{ABC}.
 
 \textbf{Python code}
 
@@ -169,13 +169,13 @@ print(f"sDestPathParent = {sDestPathParent}")
 
 \textbf{Outcome}
 
-\begin{robotlog}
+\begin{pythonlog}
 sDestPath       = D:/pathtest/ABC
 listDestPaths   = ['D:/pathtest/ABC']
 sDestFile       = None
 listDestFiles   = None
 sDestPathParent = D:/pathtest
-\end{robotlog}
+\end{pythonlog}
 
 \pcode{sDestPath} contains the path to \pcode{sFolderName} within \pcode{sStartPath}.
 \pcode{sDestPathParent} contains the path to the parent folder of \pcode{sDestPath}.
@@ -183,7 +183,7 @@ The meaning of the remaining return parameter are handled in the next examples.
 
 \textit{It is possible to search for several folders.}
 
-We are inside folder \rlog{GHI} and want to know the path to folders \rlog{ABC} and \rlog{DEF}.
+We are inside folder \plog{GHI} and want to know the path to folders \plog{ABC} and \plog{DEF}.
 
 \begin{pythoncode}
 sStartPath  = r"D:\pathtest\ABC\DEF\GHI"
@@ -193,24 +193,24 @@ sDestPath, listDestPaths, sDestFile, listDestFiles, sDestPathParent = CString.De
 
 \textbf{Outcome}
 
-\begin{robotlog}
+\begin{pythonlog}
 sDestPath       = D:/pathtest/ABC/DEF
 listDestPaths   = ['D:/pathtest/ABC/DEF', 'D:/pathtest/ABC']
 sDestFile       = None
 listDestFiles   = None
 sDestPathParent = D:/pathtest/ABC
-\end{robotlog}
+\end{pythonlog}
 
 \pcode{sFolderName} is a semicolon separated list of folder names. Accordingly to this list of folder names \pcode{listDestPaths}
 contains the paths to these folders. \pcode{DetectParentPath} searches in the path from right to left (from bottom level up to top level).
-Therefore the folder \rlog{DEF} is the first one who is found. The order of elements in \pcode{listDestPaths} is not synchronized
+Therefore the folder \plog{DEF} is the first one who is found. The order of elements in \pcode{listDestPaths} is not synchronized
 with the order of folder names in \pcode{sFolderName}!
 In every case \pcode{sDestPath} contains the first element in the list.
 \pcode{sDestPathParent} contains the path to the parent folder of \pcode{sDestPath}.
 
 \textit{It is possible to search for a file.}
 
-We are inside folder \rlog{GHI} and want to know the path to folder \rlog{DEF} and within this folder we want to know the path to file \rlog{FILE.txt}.
+We are inside folder \plog{GHI} and want to know the path to folder \plog{DEF} and within this folder we want to know the path to file \plog{FILE.txt}.
 
 \begin{pythoncode}
 sStartPath  = r"D:\pathtest\ABC\DEF\GHI"
@@ -221,13 +221,13 @@ sDestPath, listDestPaths, sDestFile, listDestFiles, sDestPathParent = CString.De
 
 \textbf{Outcome}
 
-\begin{robotlog}
+\begin{pythonlog}
 sDestPath       = D:/pathtest/ABC/DEF
 listDestPaths   = ['D:/pathtest/ABC/DEF']
 sDestFile       = D:/pathtest/ABC/DEF/GHI/FILE.txt
 listDestFiles   = ['D:/pathtest/ABC/DEF/GHI/FILE.txt']
 sDestPathParent = D:/pathtest/ABC
-\end{robotlog}
+\end{pythonlog}
 
 \pcode{listDestPaths} contains a list of all paths to \pcode{sFolderName} within \pcode{sStartPath}.
 \pcode{sDestPath} contains the first element of \pcode{listDestPaths}.
@@ -248,13 +248,13 @@ sDestPath, listDestPaths, sDestFile, listDestFiles, sDestPathParent = CString.De
 
 \textbf{Outcome}
 
-\begin{robotlog}
+\begin{pythonlog}
 sDestPath       = D:/pathtest/ABC/DEF
 listDestPaths   = ['D:/pathtest/ABC/DEF', 'D:/pathtest/ABC']
 sDestFile       = D:/pathtest/ABC/DEF/GHI/FILE.txt
 listDestFiles   = ['D:/pathtest/ABC/DEF/GHI/FILE.txt', 'D:/pathtest/ABC/FILE.txt']
 sDestPathParent = D:/pathtest/ABC
-\end{robotlog}
+\end{pythonlog}
 
 In the last example we go one further level up (\pcode{pathtest}). Because of the file search is recursive, also files in parallel trees are found now.
 
@@ -267,13 +267,13 @@ sDestPath, listDestPaths, sDestFile, listDestFiles, sDestPathParent = CString.De
 
 \textbf{Outcome}
 
-\begin{robotlog}
+\begin{pythonlog}
 sDestPath       = D:/pathtest
 listDestPaths   = ['D:/pathtest']
 sDestFile       = D:/pathtest/ABC/DEF/GHI/FILE.txt
 listDestFiles   = ['D:/pathtest/ABC/DEF/GHI/FILE.txt', 'D:/pathtest/ABC/FILE.txt', 'D:/pathtest/RST/UVW/XYZ/FILE.txt']
 sDestPathParent = D:/
-\end{robotlog}
+\end{pythonlog}
 
 % --------------------------------------------------------------------------------------------------------------
 \newpage
@@ -918,7 +918,7 @@ PrettyPrint(dictTest)
 
 \textbf{Result}
 
-\begin{robotlog}
+\begin{pythonlog}
 [DICT] (4/1) > {K1} [STR]  :  'value'
 [DICT] (4/2) > {K2} [LIST] (4/1) > [STR]  :  'A'
 [DICT] (4/2) > {K2} [LIST] (4/2) > [INT]  :  22
@@ -928,30 +928,30 @@ PrettyPrint(dictTest)
 [DICT] (4/3) > {K3} [INT]  :  10
 [DICT] (4/4) > {K4} [DICT] (2/1) > {A} [INT]  :  1
 [DICT] (4/4) > {K4} [DICT] (2/2) > {B} [INT]  :  2
-\end{robotlog}
+\end{pythonlog}
 
 Every line of output has to be interpreted strictly from left to right.
 
 For example the meaning of the fifth line of output
 
-\begin{robotlog}
+\begin{pythonlog}
 [DICT] (4/2) > {K2} [LIST] (4/4) > [TUPLE] (2/1) > [INT]  :  33
-\end{robotlog}
+\end{pythonlog}
 
 is:
 
 \begin{itemize}
-   \item The type of input parameter \rlog{oData} is \rlog{dict}
+   \item The type of input parameter \plog{oData} is \plog{dict}
    \item The dictionary contains 4 keys
    \item The current line gives information about the second key of the dictionary
-   \item The name of the second key is \rlog{K2}
-   \item The value of the second key is of type \rlog{list}
+   \item The name of the second key is \plog{K2}
+   \item The value of the second key is of type \plog{list}
    \item The list contains 4 elements
    \item The current line gives information about the fourth element of the list
-   \item The fourth element of the list is of type \rlog{tuple}
+   \item The fourth element of the list is of type \plog{tuple}
    \item The tuple contains 2 elements
    \item The current line gives information about the first element of the tuple
-   \item The first element of the tuple is of type \rlog{int} and has the value \rlog{33}
+   \item The first element of the tuple is of type \plog{int} and has the value \plog{33}
 \end{itemize}
 
 Types are encapsulated in square brackets, counter in round brackets and key names are encapsulated in curly brackets.
