@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 08.11.2022
+# 23.01.2023
 #
 # **************************************************************************************************************
 
@@ -208,20 +208,36 @@ Compares two files. While reading in all files empty lines are skipped.
          # -- apply pattern to content of file 1
          listSubsetLines_1 = []
          for sLine in listLines_1:
+            listLineParts_1 = []
             for RegEx in listRegEx:
                listPositions = RegEx.findall(sLine)
                if len(listPositions) > 0:
-                  listSubsetLines_1.append(listPositions[0])
+                  for position in listPositions:
+                     if isinstance(position, (tuple, list)):
+                        for subposition in position:
+                           listLineParts_1.append(subposition)
+                     else:
+                        listLineParts_1.append(position)
+                  sLineNew_1 = " || ".join(listLineParts_1)
+                  listSubsetLines_1.append(sLineNew_1)
                   break # for RegEx in listRegEx:
          # eof for sLine in listLines_1:
          del listLines_1
          # -- apply pattern to content of file 2
          listSubsetLines_2 = []
          for sLine in listLines_2:
+            listLineParts_2 = []
             for RegEx in listRegEx:
                listPositions = RegEx.findall(sLine)
                if len(listPositions) > 0:
-                  listSubsetLines_2.append(listPositions[0])
+                  for position in listPositions:
+                     if isinstance(position, (tuple, list)):
+                        for subposition in position:
+                           listLineParts_2.append(subposition)
+                     else:
+                        listLineParts_2.append(position)
+                  sLineNew_2 = " || ".join(listLineParts_2)
+                  listSubsetLines_2.append(sLineNew_2)
                   break # for RegEx in listRegEx:
          # eof for sLine in listLines_2:
          del listLines_2
