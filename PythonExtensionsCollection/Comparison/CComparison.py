@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 23.01.2023
+# 21.02.2023
 #
 # **************************************************************************************************************
 
@@ -43,13 +43,11 @@ or based on an extract (made with regular expressions) to ensure that only relev
 
    def __init__(self):
       self.__bSkipBlankLines = True
-      self.__bToScreen       = False # content of files will be printed to screen (debug)
-   # eof def __init__(self):
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
 
-   def Compare(self, sFile_1=None, sFile_2=None, sPatternFile=None):
+   def Compare(self, sFile_1=None, sFile_2=None, sPatternFile=None, bDebug=False):
       """
 Compares two files. While reading in all files empty lines are skipped.
 
@@ -80,7 +78,7 @@ Compares two files. While reading in all files empty lines are skipped.
 
   / *Type*: bool /
 
-  Indicates if the two input files have the same content or not.
+  Indicates if the two input files (or their extracts) have the same content or not.
 
 * ``bSuccess``
 
@@ -143,22 +141,22 @@ Compares two files. While reading in all files empty lines are skipped.
             sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
             return bIdentical, bSuccess, sResult
 
-      if self.__bToScreen is True:
+      if bDebug is True:
          print()
          print("[FILE 1]")
       oFile_1 = CFile(sFile_1)
-      listLines_1, bSuccess, sResult = oFile_1.ReadLines(bSkipBlankLines=self.__bSkipBlankLines, bLStrip=True, bRStrip=True, bToScreen=self.__bToScreen)
+      listLines_1, bSuccess, sResult = oFile_1.ReadLines(bSkipBlankLines=self.__bSkipBlankLines, bLStrip=True, bRStrip=True, bToScreen=bDebug)
       del oFile_1
       if bSuccess is False:
          del listLines_1
          sResult = CString.FormatResult(sMethod, bSuccess, sResult)
          return bIdentical, bSuccess, sResult
 
-      if self.__bToScreen is True:
+      if bDebug is True:
          print()
          print("[FILE 2]")
       oFile_2 = CFile(sFile_2)
-      listLines_2, bSuccess, sResult = oFile_2.ReadLines(bSkipBlankLines=self.__bSkipBlankLines, bLStrip=True, bRStrip=True, bToScreen=self.__bToScreen)
+      listLines_2, bSuccess, sResult = oFile_2.ReadLines(bSkipBlankLines=self.__bSkipBlankLines, bLStrip=True, bRStrip=True, bToScreen=bDebug)
       del oFile_2
       if bSuccess is False:
          del listLines_1
@@ -166,19 +164,20 @@ Compares two files. While reading in all files empty lines are skipped.
          sResult = CString.FormatResult(sMethod, bSuccess, sResult)
          return bIdentical, bSuccess, sResult
 
-      # -- check number of lines
-      nNrOfLines_1 = len(listLines_1)
-      nNrOfLines_2 = len(listLines_2)
-      if nNrOfLines_1 != nNrOfLines_2:
-         del listLines_1
-         del listLines_2
-         bIdentical = False
-         bSuccess   = True
-         sResult    = f"The files contain different number of lines (file 1: {nNrOfLines_1} lines, file 2: {nNrOfLines_2} lines"
-         return bIdentical, bSuccess, sResult
-
       if sPatternFile is None:
          # no pattern given => compare the original version of the files
+
+         # -- check number of lines
+         nNrOfLines_1 = len(listLines_1)
+         nNrOfLines_2 = len(listLines_2)
+         if nNrOfLines_1 != nNrOfLines_2:
+            del listLines_1
+            del listLines_2
+            bIdentical = False
+            bSuccess   = True
+            sResult    = f"The files contain different number of lines (file 1: {nNrOfLines_1} lines, file 2: {nNrOfLines_2} lines"
+            return bIdentical, bSuccess, sResult
+
          for nIndex, sLine_1 in enumerate(listLines_1):
             sLine_2 = listLines_2[nIndex]
             if sLine_1 != sLine_2:
@@ -189,12 +188,12 @@ Compares two files. While reading in all files empty lines are skipped.
                sResult    = f"Found deviating lines\n(1) '{sLine_1}'\n(2) '{sLine_2}'"
                return bIdentical, bSuccess, sResult
       else:
-         if self.__bToScreen is True:
+         if bDebug is True:
             print()
             print("[PATTERN]")
          # -- read pattern for comparison of files
          oPatternFile = CFile(sPatternFile)
-         listPatterns, bSuccess, sResult = oPatternFile.ReadLines(bSkipBlankLines=True, bLStrip=True, bRStrip=True, bToScreen=self.__bToScreen)
+         listPatterns, bSuccess, sResult = oPatternFile.ReadLines(bSkipBlankLines=True, bLStrip=True, bRStrip=True, bToScreen=bDebug)
          del oPatternFile
          if bSuccess is False:
             del listPatterns
@@ -247,6 +246,17 @@ Compares two files. While reading in all files empty lines are skipped.
          nNrOfSubsetLines_1 = len(listSubsetLines_1)
          nNrOfSubsetLines_2 = len(listSubsetLines_2)
          if nNrOfSubsetLines_1 != nNrOfSubsetLines_2:
+            print()
+            print(120*"-")
+            print("[SUBSET 1]")
+            sSubset1 = "\n".join(listSubsetLines_1)
+            print(f"{sSubset1}")
+            print(120*"-")
+            print("[SUBSET 2]")
+            sSubset2 = "\n".join(listSubsetLines_2)
+            print(f"{sSubset2}")
+            print(120*"-")
+            print()
             del listSubsetLines_1
             del listSubsetLines_2
             bIdentical = False
@@ -260,6 +270,18 @@ Compares two files. While reading in all files empty lines are skipped.
             if sLine_1 != sLine_2:
                del listSubsetLines_1
                del listSubsetLines_2
+               if bDebug is True:
+                  print()
+                  print(120*"-")
+                  print("[SUBSET 1]")
+                  sSubset1 = "\n".join(listSubsetLines_1)
+                  print(f"{sSubset1}")
+                  print(120*"-")
+                  print("[SUBSET 2]")
+                  sSubset2 = "\n".join(listSubsetLines_2)
+                  print(f"{sSubset2}")
+                  print(120*"-")
+                  print()
                bIdentical = False
                bSuccess   = True
                sResult    = f"Found deviating lines\n(1) '{sLine_1}'\n(2) '{sLine_2}'"
