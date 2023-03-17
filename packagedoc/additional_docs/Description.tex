@@ -311,7 +311,7 @@ It is possible to decide if the standard filters shall work case sensitive or no
 The regular expression based filters always work with the original input string that is not modified in any way.
 
 Except the regular expression based filters it is possible to provide more than one string for every standard filter (must be a semikolon separated list in this case).
-A semicolon that shall be part of the search string, has to be masked in this way: \pcode{"\;"}.
+A semicolon that shall be part of the search string, has to be masked in this way: \pcode{"\\;"}.
 
 This method returns a boolean value that is \pcode{True} in case of all criteria are fulfilled, and \pcode{False} in case of some or all of them are not fulfilled.
 
