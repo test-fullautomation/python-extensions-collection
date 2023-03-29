@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 15.11.2022
+# 29.03.2023
 #
 # **************************************************************************************************************
 
@@ -179,25 +179,25 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
          sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  " + str(oData)
          self.listOutLines.append(sOut.strip())
 
-      elif type(oData) == int:
+      elif type(oData) is int:
          sLocalPrefix = "[INT]"
          sGlobalPrefix = " ".join(self.listGlobalPrefixes)
          sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  " + str(oData)
          self.listOutLines.append(sOut.strip())
 
-      elif type(oData) == float:
+      elif type(oData) is float:
          sLocalPrefix = "[FLOAT]"
          sGlobalPrefix = " ".join(self.listGlobalPrefixes)
          sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  " + str(oData)
          self.listOutLines.append(sOut.strip())
 
-      elif type(oData) == bool:
+      elif type(oData) is bool:
          sLocalPrefix = "[BOOL]"
          sGlobalPrefix = " ".join(self.listGlobalPrefixes)
          sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  " + str(oData)
          self.listOutLines.append(sOut.strip())
 
-      elif type(oData) == str:
+      elif type(oData) is str:
          sLocalPrefix = "[STR]"
          sGlobalPrefix = " ".join(self.listGlobalPrefixes)
          sData = str(oData)
@@ -206,7 +206,7 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
          sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  '" + sData + "'"
          self.listOutLines.append(sOut.strip())
 
-      elif type(oData) == list:
+      elif type(oData) is list:
          nNrOfElements = len(oData)
          if nNrOfElements == 0:
             # -- indicate empty list
@@ -226,7 +226,7 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
                del self.listGlobalPrefixes[-1]      # remove prefix count
             del self.listGlobalPrefixes[-1]         # remove prefix name
 
-      elif type(oData) == tuple:
+      elif type(oData) is tuple:
          nNrOfElements = len(oData)
          if nNrOfElements == 0:
             # -- indicate empty tuple
@@ -246,7 +246,7 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
                del self.listGlobalPrefixes[-1]      # remove prefix count
             del self.listGlobalPrefixes[-1]         # remove prefix name
 
-      elif type(oData) == set:
+      elif type(oData) is set:
          nNrOfElements = len(oData)
          if nNrOfElements == 0:
             # -- indicate empty set
@@ -266,7 +266,7 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
                del self.listGlobalPrefixes[-1]      # remove prefix count
             del self.listGlobalPrefixes[-1]         # remove prefix name
 
-      elif type(oData) == dict:
+      elif type(oData) is dict:
          nNrOfElements = len(oData)
          if nNrOfElements == 0:
             # -- indicate empty dictionary
@@ -288,8 +288,7 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
                del self.listGlobalPrefixes[-1]    # remove prefix count
             del self.listGlobalPrefixes[-1]       # remove prefix name
 
-      # elif type(oData) == dotdict:
-      elif ( (type(oData) == dotdict) or (str(type(oData)) == "<class 'robot.utils.dotdict.DotDict'>") ):
+      elif ( (type(oData) is dotdict) or (str(type(oData)) == "<class 'robot.utils.dotdict.DotDict'>") or (str(type(oData)) == "<class 'RobotFramework_TestsuitesManagement.Config.CConfig.dotdict'>") ):
          nNrOfElements = len(oData)
          if nNrOfElements == 0:
             # -- indicate empty dot dictionary
