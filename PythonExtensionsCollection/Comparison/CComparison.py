@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 21.02.2023
+# 03.04.2023
 #
 # **************************************************************************************************************
 
@@ -47,7 +47,7 @@ or based on an extract (made with regular expressions) to ensure that only relev
    # --------------------------------------------------------------------------------------------------------------
    #TM***
 
-   def Compare(self, sFile_1=None, sFile_2=None, sPatternFile=None, bDebug=False):
+   def Compare(self, sFile_1=None, sFile_2=None, sPatternFile=None, sIgnorePatternFile=None, bDebug=False):
       """
 Compares two files. While reading in all files empty lines are skipped.
 
@@ -71,6 +71,13 @@ Compares two files. While reading in all files empty lines are skipped.
 
   Pattern file containing a set of regular expressions (line by line). The regular expressions are used to make
   an extract of both input files. In this case the extracts are compared (instead of the original file content).
+
+* ``sIgnorePatternFile``
+
+  / *Condition*: optional / *Type*: str  / *Default*: None /
+
+  Pattern file containing a set of strings (**not** regular expressuions; line by line). Every line containing one
+  of the strings, is skipped.
 
 **Returns:**
 
@@ -140,12 +147,33 @@ Compares two files. While reading in all files empty lines are skipped.
             sResult  = f"The file '{sPatternFile}' does not exist"
             sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
             return bIdentical, bSuccess, sResult
+      # eof if sPatternFile is not None:
+
+      sIgnorePatterns    = None
+      listIgnorePatterns = None
+
+      if sIgnorePatternFile is not None:
+         # (optional)
+         sIgnorePatternFile = CString.NormalizePath(sIgnorePatternFile)
+         if os.path.isfile(sIgnorePatternFile) is False:
+            bSuccess = False
+            sResult  = f"The file '{sIgnorePatternFile}' does not exist"
+            sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+            return bIdentical, bSuccess, sResult
+         oIgnorePatternFile = CFile(sIgnorePatternFile)
+         listIgnorePatterns, bSuccess, sResult = oIgnorePatternFile.ReadLines()
+         del oIgnorePatternFile
+         if bSuccess is not True:
+            return bIdentical, bSuccess, CString.FormatResult(sMethod, bSuccess, sResult)
+         if listIgnorePatterns is not None:
+            sIgnorePatterns = ";".join(listIgnorePatterns)
+      # eof if sIgnorePatternFile is not None:
 
       if bDebug is True:
          print()
          print("[FILE 1]")
       oFile_1 = CFile(sFile_1)
-      listLines_1, bSuccess, sResult = oFile_1.ReadLines(bSkipBlankLines=self.__bSkipBlankLines, bLStrip=True, bRStrip=True, bToScreen=bDebug)
+      listLines_1, bSuccess, sResult = oFile_1.ReadLines(bSkipBlankLines=self.__bSkipBlankLines, sContainsNot=sIgnorePatterns, bLStrip=True, bRStrip=True, bToScreen=bDebug)
       del oFile_1
       if bSuccess is False:
          del listLines_1
@@ -156,7 +184,7 @@ Compares two files. While reading in all files empty lines are skipped.
          print()
          print("[FILE 2]")
       oFile_2 = CFile(sFile_2)
-      listLines_2, bSuccess, sResult = oFile_2.ReadLines(bSkipBlankLines=self.__bSkipBlankLines, bLStrip=True, bRStrip=True, bToScreen=bDebug)
+      listLines_2, bSuccess, sResult = oFile_2.ReadLines(bSkipBlankLines=self.__bSkipBlankLines, sContainsNot=sIgnorePatterns, bLStrip=True, bRStrip=True, bToScreen=bDebug)
       del oFile_2
       if bSuccess is False:
          del listLines_1

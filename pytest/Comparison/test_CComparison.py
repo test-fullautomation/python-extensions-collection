@@ -17,7 +17,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 25.10.2022
+# 03.04.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -289,6 +289,33 @@ class Test_CComparison:
       assert bIdentical is None
       assert bSuccess is False
    # eof def test_Compare_10(self, Description):
+
+   # --------------------------------------------------------------------------------------------------------------
+   #TM***
+   @pytest.mark.parametrize(
+      "Description", ["Compare two files (with different content; with pattern and ignore pattern)",]
+   )
+   def test_Compare_11(self, Description):
+      """pytest 'CComparison'"""
+
+      sReferencePath     = os.path.dirname(os.path.dirname(CString.NormalizePath(__file__)))
+      sFile_1            = CString.NormalizePath(f"{sReferencePath}/testfiles/Comparison/07.File_1.E.txt")
+      sFile_2            = CString.NormalizePath(f"{sReferencePath}/testfiles/Comparison/08.File_2.E.txt")
+      sPatternFile       = CString.NormalizePath(f"{sReferencePath}/testfiles/Comparison/10.PatternFile.txt")
+      sIgnorePatternFile = CString.NormalizePath(f"{sReferencePath}/testfiles/Comparison/11.IgnorePatternFile.txt")
+      print(f"sFile_1     : '{sFile_1}'")
+      print(f"sFile_2     : '{sFile_2}'")
+      print(f"sPatternFile: '{sPatternFile}'")
+
+      oComparison = CComparison()
+      bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile, sIgnorePatternFile)
+      del oComparison
+      print(f"bIdentical: '{bIdentical}'")
+      print(f"bSuccess  : '{bSuccess}'")
+      print(f"sResult   : '{sResult}'")
+      assert bIdentical is True # because the different lines are ignored
+      assert bSuccess is True
+   # eof def test_Compare_4(self, Description):
 
 # eof class Test_CComparison
 
