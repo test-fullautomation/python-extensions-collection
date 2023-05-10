@@ -1,8 +1,7 @@
 # Package Description
 
-The **PythonExtensionsCollection** package extends the functionality of
-Python by some useful functions that are not available in Python
-immediately.
+The **PythonExtensionsCollection** extends the functionality of Python
+by some useful functions that are not available in Python immediately.
 
 ## How to install
 
@@ -20,22 +19,34 @@ ways.
 
 2.  Installation via GitHub (recommended for developers)
 
-    Clone the **python-extensions-collection** repository to your
-    machine.
+    a.  Clone the **python-extensions-collection** repository to your
+        machine.
 
-    ``` 
-    git clone https://github.com/test-fullautomation/python-extensions-collection.git
-    ```
+        ``` 
+        git clone https://github.com/test-fullautomation/python-extensions-collection.git
+        ```
 
     [PythonExtensionsCollection in
     GitHub](https://github.com/test-fullautomation/python-extensions-collection)
 
-    Use the following command to install the
-    **PythonExtensionsCollection**:
+    b.  Install dependencies
 
-    ``` 
-    setup.py install
-    ```
+        **PythonExtensionsCollection** requires some additional Python
+        libraries. Before you install the cloned repository sources you
+        have to install the dependencies manually. The names of all
+        related packages you can find in the file `requirements.txt` in
+        the repository root folder. Use pip to install them:
+
+        ``` 
+        pip install -r requirements.txt
+        ```
+
+    c.  Use the following command to install the
+        **PythonExtensionsCollection**:
+
+        ``` 
+        setup.py install
+        ```
 
 ## Package Documentation
 
