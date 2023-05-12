@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 29.03.2023
+# 12.05.2023
 #
 # **************************************************************************************************************
 
@@ -288,7 +288,7 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
                del self.listGlobalPrefixes[-1]    # remove prefix count
             del self.listGlobalPrefixes[-1]       # remove prefix name
 
-      elif ( (type(oData) is dotdict) or (str(type(oData)) == "<class 'robot.utils.dotdict.DotDict'>") or (str(type(oData)) == "<class 'RobotFramework_TestsuitesManagement.Config.CConfig.dotdict'>") ):
+      elif ( (type(oData) is dotdict) or (str(type(oData)) == "<class 'robot.utils.dotdict.DotDict'>") ):
          nNrOfElements = len(oData)
          if nNrOfElements == 0:
             # -- indicate empty dot dictionary
