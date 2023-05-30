@@ -17,16 +17,18 @@
 #
 # XC-CI1/ECA3-Queckenstedt
 #
-# 15.12.2021
+# 30.05.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
 # -- import standard Python modules
-import os, sys, time, pytest
+import os, sys, platform, time, pytest
 
 # -- import own Python modules (containing the code to be tested)
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))) # to make sure to hit the package relative to this file at first
 from PythonExtensionsCollection.Utils.CUtils import *
+from PythonExtensionsCollection.File.CFile import CFile
+from PythonExtensionsCollection.String.CString import CString
 
 # --------------------------------------------------------------------------------------------------------------
 
@@ -315,5 +317,46 @@ class Test_PrettyPrint:
         assert sRet == sExp
 
 # eof class Test_PrettyPrint
+
+# --------------------------------------------------------------------------------------------------------------
+
+class Test_GetInstalledPackages:
+    """Tests of CUtils method 'GetInstalledPackages'."""
+
+    # --------------------------------------------------------------------------------------------------------------
+
+    @pytest.mark.parametrize(
+        "Description", ["'GetInstalledPackages' default usage.",]
+    )
+    def test_DefaultUsage(self, Description):
+        """pytest 'GetInstalledPackages' default usage"""
+        listofTuplesPackages, bSuccess, sResult = CUtils.GetInstalledPackages()
+        print(sResult)
+        assert bSuccess is True
+        assert len(listofTuplesPackages) > 0
+
+    @pytest.mark.parametrize(
+        "Description", ["'GetInstalledPackages' with output file.",]
+    )
+    def test_OutputFile(self, Description):
+        """pytest 'GetInstalledPackages' with output file"""
+        sOutputFile = None
+        sPlatformSystem = platform.system()
+        if sPlatformSystem == "Windows":
+           sOutputFile = r"%TMP%\CUtils_TestFile.txt"
+        elif sPlatformSystem == "Linux":
+           sOutputFile = r"/tmp/CUtils_TestFile.txt"
+        sOutputFile = CString.NormalizePath(sOutputFile)
+        oOutputFile = CFile(sOutputFile)
+        bSuccess, sResult = oOutputFile.Delete(bConfirmDelete=False)
+        print(sResult)
+        assert bSuccess is True
+        del oOutputFile
+        listofTuplesPackages, bSuccess, sResult = CUtils.GetInstalledPackages(sOutputFile)
+        print(sResult)
+        assert bSuccess is True
+        assert len(listofTuplesPackages) > 0
+        bIsFile = os.path.isfile(sOutputFile)
+        assert bIsFile is True
 
 # --------------------------------------------------------------------------------------------------------------

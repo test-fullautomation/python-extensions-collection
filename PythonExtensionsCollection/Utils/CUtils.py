@@ -20,12 +20,17 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 12.05.2023
+# 30.05.2023
 #
 # **************************************************************************************************************
 
 # -- import standard Python modules
+import os, sys, subprocess
 from dotdict import dotdict
+
+from PythonExtensionsCollection.String.CString import CString
+from PythonExtensionsCollection.File.CFile import CFile
+
 
 # **************************************************************************************************************
 # wrapper
@@ -324,6 +329,122 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
    # eof def TypePrint(...):
 
 # eof class CTypePrint():
+
+
+# --------------------------------------------------------------------------------------------------------------
+# TM***
+
+class CUtils(object):
+   """The class ``CUtils`` contains useful methods.
+   """
+
+   def GetInstalledPackages(sOutputFile=None):
+      """The method ``GetInstalledPackages`` computes a list of all installed Python packages.
+The list is returned as list of tuples containing the name and the version of the package.
+
+It is also possible to let the method dump the list to a text file.
+
+**Arguments:**
+
+* ``sOutputFile``
+
+  / *Condition*: optional / *Type*: string / *Default*: None /
+
+  Path and name of a file to dump the package list to.
+
+**Returns:**
+
+* ``listofTuplesPackages``
+
+  / *Type*: list /
+
+  List of tuples containing the name and the version of the package.
+
+* ``bSuccess``
+
+  / *Type*: bool /
+
+  Indicates if the computation of the method was successful or not.
+
+* ``sResult``
+
+  / *Type*: str /
+
+  The result of the computation of the method.
+      """
+
+      sMethod  = "GetInstalledPackages"
+      bSuccess = None
+      sResult  = "UNKNOWN"
+
+      listofTuplesPackages = []
+
+      sFreezeData = None
+      try:
+         sFreezeData = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze'], encoding="utf-8", text=True)
+      except Exception as reason:
+         bSuccess = None
+         sResult  = str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+         return listofTuplesPackages, bSuccess, sResult
+
+      if sFreezeData is None:
+         bSuccess = None
+         sResult  = "sFreezeData is None"
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+         return listofTuplesPackages, bSuccess, sResult
+
+      sFreezeData = str(sFreezeData) # to make the content 'split()' save
+
+      for sPackage in sFreezeData.split():
+         sName    = None
+         sVersion = None
+         listParts = sPackage.split('==')
+         if len(listParts) != 2:
+            sName    = sPackage
+            sVersion = "UNKNOWN"
+            # but I really would not expect this
+         else:
+            sName    = listParts[0]
+            sVersion = listParts[1]
+         listofTuplesPackages.append((sName, sVersion))
+      # eof for sPackage in sFreezeData.split():
+
+      nNrOfPackages = len(listofTuplesPackages)
+
+      if sOutputFile is not None:
+         sOutputFile = CString.NormalizePath(sOutputFile)
+         sParentDirectory = os.path.dirname(sOutputFile)
+         if not os.path.isdir(sParentDirectory):
+            bSuccess = False
+            sResult  = f"The folder to store the output file does not exist: '{sParentDirectory}'"
+            return listofTuplesPackages, bSuccess, sResult
+
+         oFile = CFile(sOutputFile)
+         for tuplePackage in listofTuplesPackages:
+            sName    = tuplePackage[0]
+            sVersion = tuplePackage[1]
+            sOut = sName.rjust(40) + " = " + sVersion
+            bSuccess, sResult = oFile.Write(sOut)
+         del oFile
+
+      # eof if sOutputFile is not None:
+
+      bSuccess = True
+      sResult  = f"Identified {nNrOfPackages} packages."
+
+      return listofTuplesPackages, bSuccess, sResult
+
+   # eof def GetInstalledPackages(sOutputFile=None):
+
+   # --------------------------------------------------------------------------------------------------------------
+   #TM***
+
+   # - make the methods static
+
+   GetInstalledPackages = staticmethod(GetInstalledPackages)
+
+# eof class CUtils(object):
 
 # **************************************************************************************************************
 
