@@ -17,7 +17,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 28.06.2022
+# 06.06.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -50,8 +50,9 @@ class Test_CFolder:
          sFolder = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
          sLogfile = os.path.expandvars(r"%TMP%\CFolder_Test.log")
       elif sPlatformSystem == "Linux":
-         sFolder = r"/tmp/CFolder_TestFolder"
-         sLogfile = r"/tmp/CFolder_Test.log"
+         sTmp = os.path.expanduser('~')
+         sFolder  = f"{sTmp}/CFolder_TestFolder"
+         sLogfile = f"{sTmp}/CFolder_Test.log"
 
       oLogfile = CFile(sLogfile)
 
@@ -111,7 +112,8 @@ class Test_CFolder:
       if sPlatformSystem == "Windows":
          sFolder = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
       elif sPlatformSystem == "Linux":
-         sFolder = r"/tmp/CFolder_TestFolder"
+         sTmp  = os.path.expanduser('~')
+         sFolder = f"{sTmp}/CFolder_TestFolder"
 
       # test file for test folder
       sTestFile = f"{sFolder}/CFolder_TestFile.txt"
@@ -164,7 +166,8 @@ class Test_CFolder:
       if sPlatformSystem == "Windows":
          sFolder = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
       elif sPlatformSystem == "Linux":
-         sFolder = r"/tmp/CFolder_TestFolder"
+         sTmp = os.path.expanduser('~')
+         sFolder = f"{sTmp}/CFolder_TestFolder"
 
       # test file for test folder
       sTestFile = f"{sFolder}/CFolder_TestFile.txt"
@@ -231,7 +234,8 @@ class Test_CFolder:
       if sPlatformSystem == "Windows":
          sFolder = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
       elif sPlatformSystem == "Linux":
-         sFolder = r"/tmp/CFolder_TestFolder"
+         sTmp = os.path.expanduser('~')
+         sFolder = f"{sTmp}/CFolder_TestFolder"
 
       # test file for test folder
       sTestFile = f"{sFolder}/CFolder_TestFile.txt"
@@ -295,7 +299,8 @@ class Test_CFolder:
       if sPlatformSystem == "Windows":
          sFolder = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
       elif sPlatformSystem == "Linux":
-         sFolder = r"/tmp/CFolder_TestFolder"
+         sTmp = os.path.expanduser('~')
+         sFolder = f"{sTmp}/CFolder_TestFolder"
 
       # first CFolder instance expected to be created without exception
       bException = False
@@ -338,7 +343,8 @@ class Test_CFolder:
       if sPlatformSystem == "Windows":
          sFolder = os.path.expandvars(r"%TMP%\CFo\ld\er_Te\st\Fol\der")
       elif sPlatformSystem == "Linux":
-         sFolder = r"/tmp/CFo/ld/er_Te/st/Fol/der"
+         sTmp = os.path.expanduser('~')
+         sFolder = f"{sTmp}/CFo/ld/er_Te/st/Fol/der"
 
       sParentFolder = os.path.dirname(sFolder)
 
@@ -414,7 +420,8 @@ class Test_CFolder:
       if sPlatformSystem == "Windows":
          sFolder = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
       elif sPlatformSystem == "Linux":
-         sFolder = r"/tmp/CFolder_TestFolder"
+         sTmp = os.path.expanduser('~')
+         sFolder = f"{sTmp}/CFolder_TestFolder"
 
       sSubFolder_1 = f"{sFolder}/sub1"
       sSubFolder_2 = f"{sFolder}/sub2"
@@ -503,9 +510,10 @@ class Test_CFolder:
          sDestFolder     = os.path.expandvars(r"%TMP%\copy")
          sExpectedFolder = os.path.expandvars(r"%TMP%\copy\CFolder_TestFolder")
       elif sPlatformSystem == "Linux":
-         sFolder         = r"/tmp/CFolder_TestFolder"
-         sDestFolder     = r"/tmp/copy"
-         sExpectedFolder = r"/tmp/copy/CFolder_TestFolder"
+         sTmp = os.path.expanduser('~')
+         sFolder         = f"{sTmp}/CFolder_TestFolder"
+         sDestFolder     = f"{sTmp}/copy"
+         sExpectedFolder = f"{sTmp}/copy/CFolder_TestFolder"
 
       sTestFile         = f"{sFolder}/TestFile.txt"
       sExpectedTestFile = f"{sExpectedFolder}/TestFile.txt"
@@ -563,9 +571,10 @@ class Test_CFolder:
          sDestFolder     = os.path.expandvars(r"%TMP%\copy")
          sExpectedFolder = os.path.expandvars(r"%TMP%\copy\CFolder_TestFolder")
       elif sPlatformSystem == "Linux":
-         sFolder         = r"/tmp/CFolder_TestFolder"
-         sDestFolder     = r"/tmp/copy"
-         sExpectedFolder = r"/tmp/copy/CFolder_TestFolder"
+         sTmp = os.path.expanduser('~')
+         sFolder         = f"{sTmp}/CFolder_TestFolder"
+         sDestFolder     = f"{sTmp}/copy"
+         sExpectedFolder = f"{sTmp}/copy/CFolder_TestFolder"
 
       sTestFile         = f"{sFolder}/TestFile.txt"
       sExpectedTestFile = f"{sExpectedFolder}/TestFile.txt"
@@ -641,9 +650,10 @@ class Test_CFolder:
          sDestFolder     = os.path.expandvars(r"%TMP%")
          sLogfile        = os.path.expandvars(r"%TMP%\CFolder_Test_9.log")
       elif sPlatformSystem == "Linux":
-         sFolder         = r"/tmp/CFolder_TestFolder"
-         sDestFolder     = r"/tmp"
-         sLogfile        = r"/tmp/CFolder_Test_9.log"
+         sTmp = os.path.expanduser('~')
+         sFolder         = f"{sTmp}/CFolder_TestFolder"
+         sDestFolder     = f"{sTmp}"
+         sLogfile        = f"{sTmp}/CFolder_Test_9.log"
 
       sTestFile = f"{sFolder}/TestFile.txt"
 
@@ -710,10 +720,11 @@ class Test_CFolder:
          sNotExpectedFolder = os.path.expandvars(r"%TMP%\I\Am\Not\Existing\CFolder_TestFolder")
          sLogfile           = os.path.expandvars(r"%TMP%\CFolder_Test_10.log")
       elif sPlatformSystem == "Linux":
-         sFolder            = r"/tmp/CFolder_TestFolder"
-         sDestFolder        = r"/tmp/I/Am/Not/Existing"
-         sNotExpectedFolder = r"/tmp/I/Am/Not/Existing/CFolder_TestFolder"
-         sLogfile           = r"/tmp/CFolder_Test_10.log"
+         sTmp = os.path.expanduser('~')
+         sFolder            = f"{sTmp}/CFolder_TestFolder"
+         sDestFolder        = f"{sTmp}/I/Am/Not/Existing"
+         sNotExpectedFolder = f"{sTmp}/I/Am/Not/Existing/CFolder_TestFolder"
+         sLogfile           = f"{sTmp}/CFolder_Test_10.log"
 
       oLogfile = CFile(sLogfile)
 
@@ -769,10 +780,11 @@ class Test_CFolder:
          sExpectedFolder = os.path.expandvars(r"%TMP%\copy\CFolder_TestFolder")
          sLogfile        = os.path.expandvars(r"%TMP%\CFolder_Test_11.log")
       elif sPlatformSystem == "Linux":
-         sFolder         = r"/tmp/CFolder_TestFolder"
-         sDestFolder     = r"/tmp/copy"
-         sExpectedFolder = r"/tmp/copy/CFolder_TestFolder"
-         sLogfile        = r"/tmp/CFolder_Test_11.log"
+         sTmp = os.path.expanduser('~')
+         sFolder         = f"{sTmp}/CFolder_TestFolder"
+         sDestFolder     = f"{sTmp}/copy"
+         sExpectedFolder = f"{sTmp}/copy/CFolder_TestFolder"
+         sLogfile        = f"{sTmp}/CFolder_Test_11.log"
 
       oLogfile = CFile(sLogfile)
 
@@ -843,9 +855,10 @@ class Test_CFolder:
          sDestFolder     = os.path.expandvars(r"%TMP%\copy")
          sLogfile        = os.path.expandvars(r"%TMP%\CFolder_Test_12.log")
       elif sPlatformSystem == "Linux":
-         sFolder         = r"/tmp/CFolder_TestFolder"
-         sDestFolder     = r"/tmp/copy"
-         sLogfile        = r"/tmp/CFolder_Test_12.log"
+         sTmp = os.path.expanduser('~')
+         sFolder         = f"{sTmp}/CFolder_TestFolder"
+         sDestFolder     = f"{sTmp}/copy"
+         sLogfile        = f"{sTmp}/CFolder_Test_12.log"
 
       oLogfile = CFile(sLogfile)
 

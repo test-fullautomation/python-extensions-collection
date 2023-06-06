@@ -17,7 +17,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 08.11.2022
+# 06.06.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -499,7 +499,8 @@ But it must be possible to go 3 levels up in the file system!"""
         if sPlatformSystem == "Windows":
            sLogfile = os.path.expandvars(r"%TMP%\CString_test_ParentPath_2.log")
         elif sPlatformSystem == "Linux":
-           sLogfile = "/tmp/CString_test_ParentPath_2.log"
+           sTmp = os.path.expanduser('~')
+           sLogfile = f"{sTmp}/CString_test_ParentPath_2.log"
 
         oLogfile = CFile(sLogfile)
 

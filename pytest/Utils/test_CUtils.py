@@ -17,7 +17,7 @@
 #
 # XC-CI1/ECA3-Queckenstedt
 #
-# 30.05.2023
+# 06.06.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -345,7 +345,8 @@ class Test_GetInstalledPackages:
         if sPlatformSystem == "Windows":
            sOutputFile = r"%TMP%\CUtils_TestFile.txt"
         elif sPlatformSystem == "Linux":
-           sOutputFile = r"/tmp/CUtils_TestFile.txt"
+           sTmp = os.path.expanduser('~')
+           sOutputFile = f"{sTmp}/CUtils_TestFile.txt"
         sOutputFile = CString.NormalizePath(sOutputFile)
         oOutputFile = CFile(sOutputFile)
         bSuccess, sResult = oOutputFile.Delete(bConfirmDelete=False)
