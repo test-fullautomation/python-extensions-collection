@@ -17,7 +17,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 06.06.2023
+# 07.06.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -62,6 +62,7 @@ class Test_CFile:
       bSuccess, sResult = oFile.Close()
       assert bSuccess is True
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -85,6 +86,7 @@ class Test_CFile:
       assert len(listLines) == 1
       assert listLines[0] == sTestString
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -142,6 +144,7 @@ class Test_CFile:
       bSuccess, sResult = oFile.Close()
       assert bSuccess is True
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -175,6 +178,7 @@ class Test_CFile:
       assert listLines[1] == sTestString_2
       assert listLines[2] == sTestString_3
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -227,6 +231,7 @@ class Test_CFile:
       assert listLines[0] == sTestString_2.rstrip()
       assert listLines[1] == sTestString_4.rstrip()
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -264,6 +269,7 @@ class Test_CFile:
       assert listLines[1] == sTestString_3.rstrip()
       assert listLines[2] == sTestString_5.rstrip()
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -311,6 +317,7 @@ class Test_CFile:
       assert len(listLines) == 1
       assert listLines[0] == sTestString_2
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -380,6 +387,7 @@ class Test_CFile:
       assert listLines[2] == "kV___3 : Val3"
 
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -458,6 +466,7 @@ class Test_CFile:
       assert listLines[4] == ""
 
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -520,6 +529,7 @@ class Test_CFile:
       bSuccess, sResult = oFile.MoveTo(sFile_move)
       assert bSuccess is False
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -624,6 +634,8 @@ class Test_CFile:
       del oFile_copy
       del oFile_move
       del oFile_invalid
+      os.remove(os.path.expandvars(sFile))
+      os.remove(os.path.expandvars(sFile_move))
 
 
    @pytest.mark.parametrize(
@@ -682,6 +694,7 @@ class Test_CFile:
       assert len(listLines) == 1
       assert listLines[0] == "A B C"
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -781,6 +794,9 @@ class Test_CFile:
          bException = True
       assert bException is True
       del oFile_1_a
+      os.remove(os.path.expandvars(sFile_1))
+      os.remove(os.path.expandvars(sFile_2))
+
 
 # eof class Test_CFile
 

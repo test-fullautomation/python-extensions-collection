@@ -17,12 +17,12 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 06.06.2023
+# 07.06.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
 # -- import standard Python modules
-import os, sys, time, platform, pytest, stat
+import os, sys, time, platform, pytest, stat, shutil
 
 # -- import own Python modules (containing the code to be tested)
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))) # to make sure to hit the package relative to this file at first
@@ -44,17 +44,12 @@ class Test_CFolder:
    def test_CFolder_1(self, Description):
       """pytest 'CFolder'"""
       sFolder  = None
-      sLogfile = None
       sPlatformSystem = platform.system()
       if sPlatformSystem == "Windows":
          sFolder = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
-         sLogfile = os.path.expandvars(r"%TMP%\CFolder_Test.log")
       elif sPlatformSystem == "Linux":
          sTmp = os.path.expanduser('~')
          sFolder  = f"{sTmp}/CFolder_TestFolder"
-         sLogfile = f"{sTmp}/CFolder_Test.log"
-
-      oLogfile = CFile(sLogfile)
 
       # test file for test folder
       sTestFile = f"{sFolder}/CFolder_TestFile.txt"
@@ -62,7 +57,6 @@ class Test_CFolder:
       # initial test folder creation with bOverwrite=True
       oFolder = CFolder(sFolder)
       bSuccess, sResult = oFolder.Create(bOverwrite=True, bRecursive=False)
-      oLogfile.Write(sResult)
       assert bSuccess is True
 
       # expected: folder exists
@@ -74,10 +68,8 @@ class Test_CFolder:
       # create test file within test folder
       oTestFile = CFile(sTestFile)
       bSuccess, sResult = oTestFile.Write(sTestFile)
-      oLogfile.Append(sResult)
       assert bSuccess is True
       bSuccess, sResult = oTestFile.Close()
-      oLogfile.Append(sResult)
       assert bSuccess is True
       del oTestFile
 
@@ -86,7 +78,6 @@ class Test_CFolder:
 
       # test folder creation with bOverwrite=False
       bSuccess, sResult = oFolder.Create(bOverwrite=False, bRecursive=False)
-      oLogfile.Append(sResult)
       assert bSuccess is True
 
       # expected: folder still exists
@@ -97,7 +88,8 @@ class Test_CFolder:
 
       # tidying up
       del oFolder
-      del oLogfile
+      os.remove(sTestFile)
+      shutil.rmtree(sFolder, ignore_errors=False)
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -152,6 +144,7 @@ class Test_CFolder:
 
       # tidying up
       del oFolder
+      shutil.rmtree(sFolder, ignore_errors=False)
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -218,8 +211,9 @@ class Test_CFolder:
       bSuccess, sResult = oTestFile.Close()
       assert bSuccess is True
       del oTestFile
-
       del oFolder
+      os.remove(sTestFile)
+      shutil.rmtree(sFolder, ignore_errors=False)
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -283,8 +277,8 @@ class Test_CFolder:
       bSuccess, sResult = oTestFile.Close()
       assert bSuccess is True
       del oTestFile
-
       del oFolder
+      shutil.rmtree(sFolder, ignore_errors=False)
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -339,12 +333,15 @@ class Test_CFolder:
    def test_CFolder_5(self, Description):
       """pytest 'CFolder'"""
       sFolder = None
+      sFolder_tobedeletedfinally = None
       sPlatformSystem = platform.system()
       if sPlatformSystem == "Windows":
          sFolder = os.path.expandvars(r"%TMP%\CFo\ld\er_Te\st\Fol\der")
+         sFolder_tobedeletedfinally = os.path.expandvars(r"%TMP%\CFo")
       elif sPlatformSystem == "Linux":
          sTmp = os.path.expanduser('~')
          sFolder = f"{sTmp}/CFo/ld/er_Te/st/Fol/der"
+         sFolder_tobedeletedfinally = f"{sTmp}/CFo"
 
       sParentFolder = os.path.dirname(sFolder)
 
@@ -406,6 +403,7 @@ class Test_CFolder:
 
       # tidying up
       del oFolder
+      shutil.rmtree(sFolder_tobedeletedfinally, ignore_errors=False)
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -507,13 +505,13 @@ class Test_CFolder:
       sPlatformSystem = platform.system()
       if sPlatformSystem == "Windows":
          sFolder         = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
-         sDestFolder     = os.path.expandvars(r"%TMP%\copy")
-         sExpectedFolder = os.path.expandvars(r"%TMP%\copy\CFolder_TestFolder")
+         sDestFolder     = os.path.expandvars(r"%TMP%\CFolder_copy")
+         sExpectedFolder = os.path.expandvars(r"%TMP%\CFolder_copy\CFolder_TestFolder")
       elif sPlatformSystem == "Linux":
          sTmp = os.path.expanduser('~')
          sFolder         = f"{sTmp}/CFolder_TestFolder"
-         sDestFolder     = f"{sTmp}/copy"
-         sExpectedFolder = f"{sTmp}/copy/CFolder_TestFolder"
+         sDestFolder     = f"{sTmp}/CFolder_copy"
+         sExpectedFolder = f"{sTmp}/CFolder_copy/CFolder_TestFolder"
 
       sTestFile         = f"{sFolder}/TestFile.txt"
       sExpectedTestFile = f"{sExpectedFolder}/TestFile.txt"
@@ -552,6 +550,11 @@ class Test_CFolder:
 
       # tidying up
       del oFolder
+      os.remove(sTestFile)
+      os.remove(sExpectedTestFile)
+      shutil.rmtree(sFolder, ignore_errors=False)
+      shutil.rmtree(sExpectedFolder, ignore_errors=False)
+      shutil.rmtree(sDestFolder, ignore_errors=False)
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -568,13 +571,13 @@ class Test_CFolder:
       sPlatformSystem = platform.system()
       if sPlatformSystem == "Windows":
          sFolder         = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
-         sDestFolder     = os.path.expandvars(r"%TMP%\copy")
-         sExpectedFolder = os.path.expandvars(r"%TMP%\copy\CFolder_TestFolder")
+         sDestFolder     = os.path.expandvars(r"%TMP%\CFolder_copy")
+         sExpectedFolder = os.path.expandvars(r"%TMP%\CFolder_copy\CFolder_TestFolder")
       elif sPlatformSystem == "Linux":
          sTmp = os.path.expanduser('~')
          sFolder         = f"{sTmp}/CFolder_TestFolder"
-         sDestFolder     = f"{sTmp}/copy"
-         sExpectedFolder = f"{sTmp}/copy/CFolder_TestFolder"
+         sDestFolder     = f"{sTmp}/CFolder_copy"
+         sExpectedFolder = f"{sTmp}/CFolder_copy/CFolder_TestFolder"
 
       sTestFile         = f"{sFolder}/TestFile.txt"
       sExpectedTestFile = f"{sExpectedFolder}/TestFile.txt"
@@ -630,6 +633,12 @@ class Test_CFolder:
 
       # tidying up
       del oFolder
+      os.remove(sTestFile)
+      os.remove(sExpectedTestFile)
+      shutil.rmtree(sFolder, ignore_errors=False)
+      shutil.rmtree(sExpectedFolder, ignore_errors=False)
+      shutil.rmtree(sDestFolder, ignore_errors=False)
+
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -642,27 +651,20 @@ class Test_CFolder:
       sFolder         = None
       sDestFolder     = None
 
-      sLogfile = None
-
       sPlatformSystem = platform.system()
       if sPlatformSystem == "Windows":
          sFolder         = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
          sDestFolder     = os.path.expandvars(r"%TMP%")
-         sLogfile        = os.path.expandvars(r"%TMP%\CFolder_Test_9.log")
       elif sPlatformSystem == "Linux":
          sTmp = os.path.expanduser('~')
          sFolder         = f"{sTmp}/CFolder_TestFolder"
          sDestFolder     = f"{sTmp}"
-         sLogfile        = f"{sTmp}/CFolder_Test_9.log"
 
       sTestFile = f"{sFolder}/TestFile.txt"
-
-      oLogfile = CFile(sLogfile)
 
       # initial test folder creation with bOverwrite=True
       oFolder = CFolder(sFolder)
       bSuccess, sResult = oFolder.Create(bOverwrite=True, bRecursive=True)
-      oLogfile.Write(sResult)
       assert bSuccess is True
 
       # expected: folder exists
@@ -671,14 +673,12 @@ class Test_CFolder:
       # test file creation
       oTestFile = CFile(sTestFile)
       bSuccess, sResult = oTestFile.Write(sTestFile)
-      oLogfile.Write(sResult)
       assert bSuccess is True
       del oTestFile
       assert os.path.isfile(sTestFile) is True
 
       # copy the folder
       bSuccess, sResult = oFolder.CopyTo(sDestFolder) # with default bOverwrite=False
-      oLogfile.Write(sResult)
       assert bSuccess is False
 
       # expected: folder exists
@@ -686,7 +686,6 @@ class Test_CFolder:
 
       # copy the folder
       bSuccess, sResult = oFolder.CopyTo(sDestFolder, bOverwrite=True)
-      oLogfile.Write(sResult)
       assert bSuccess is False
 
       # expected: folder exists
@@ -697,7 +696,9 @@ class Test_CFolder:
 
       # tidying up
       del oFolder
-      del oLogfile
+      os.remove(sTestFile)
+      shutil.rmtree(sFolder, ignore_errors=False)
+
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -711,27 +712,20 @@ class Test_CFolder:
       sDestFolder        = None
       sNotExpectedFolder = None
 
-      sLogfile = None
-
       sPlatformSystem = platform.system()
       if sPlatformSystem == "Windows":
          sFolder            = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
          sDestFolder        = os.path.expandvars(r"%TMP%\I\Am\Not\Existing")
          sNotExpectedFolder = os.path.expandvars(r"%TMP%\I\Am\Not\Existing\CFolder_TestFolder")
-         sLogfile           = os.path.expandvars(r"%TMP%\CFolder_Test_10.log")
       elif sPlatformSystem == "Linux":
          sTmp = os.path.expanduser('~')
          sFolder            = f"{sTmp}/CFolder_TestFolder"
          sDestFolder        = f"{sTmp}/I/Am/Not/Existing"
          sNotExpectedFolder = f"{sTmp}/I/Am/Not/Existing/CFolder_TestFolder"
-         sLogfile           = f"{sTmp}/CFolder_Test_10.log"
-
-      oLogfile = CFile(sLogfile)
 
       # initial test folder creation with bOverwrite=True
       oFolder = CFolder(sFolder)
       bSuccess, sResult = oFolder.Create(bOverwrite=True, bRecursive=True)
-      oLogfile.Write(sResult)
       assert bSuccess is True
 
       # expected: folder exists
@@ -739,7 +733,6 @@ class Test_CFolder:
 
       # copy the folder
       bSuccess, sResult = oFolder.CopyTo(sDestFolder) # with default bOverwrite=False
-      oLogfile.Write(sResult)
       assert bSuccess is False
 
       # expected: folder not exists
@@ -748,7 +741,6 @@ class Test_CFolder:
 
       # copy the folder
       bSuccess, sResult = oFolder.CopyTo(sDestFolder, bOverwrite=True)
-      oLogfile.Write(sResult)
       assert bSuccess is False
 
       # expected: folder not exists
@@ -757,7 +749,7 @@ class Test_CFolder:
 
       # tidying up
       del oFolder
-      del oLogfile
+      shutil.rmtree(sFolder, ignore_errors=False)
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -771,27 +763,20 @@ class Test_CFolder:
       sDestFolder        = None
       sNotExpectedFolder = None
 
-      sLogfile = None
-
       sPlatformSystem = platform.system()
       if sPlatformSystem == "Windows":
          sFolder         = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
-         sDestFolder     = os.path.expandvars(r"%TMP%\copy")
-         sExpectedFolder = os.path.expandvars(r"%TMP%\copy\CFolder_TestFolder")
-         sLogfile        = os.path.expandvars(r"%TMP%\CFolder_Test_11.log")
+         sDestFolder     = os.path.expandvars(r"%TMP%\CFolder_copy")
+         sExpectedFolder = os.path.expandvars(r"%TMP%\CFolder_copy\CFolder_TestFolder")
       elif sPlatformSystem == "Linux":
          sTmp = os.path.expanduser('~')
          sFolder         = f"{sTmp}/CFolder_TestFolder"
-         sDestFolder     = f"{sTmp}/copy"
-         sExpectedFolder = f"{sTmp}/copy/CFolder_TestFolder"
-         sLogfile        = f"{sTmp}/CFolder_Test_11.log"
-
-      oLogfile = CFile(sLogfile)
+         sDestFolder     = f"{sTmp}/CFolder_copy"
+         sExpectedFolder = f"{sTmp}/CFolder_copy/CFolder_TestFolder"
 
       # initial test folder creation with bOverwrite=True
       oFolder = CFolder(sFolder)
       bSuccess, sResult = oFolder.Create(bOverwrite=True, bRecursive=True)
-      oLogfile.Write(sResult)
       assert bSuccess is True
 
       # expected: folder exists
@@ -800,7 +785,6 @@ class Test_CFolder:
       # destination folder creation with bOverwrite=True
       oDestFolder = CFolder(sDestFolder)
       bSuccess, sResult = oDestFolder.Create(bOverwrite=True, bRecursive=True)
-      oLogfile.Write(sResult)
       del oDestFolder
       assert bSuccess is True
 
@@ -812,12 +796,10 @@ class Test_CFolder:
 
       # copy the folder
       bSuccess, sResult = oFolder.CopyTo(sDestFolder) # with default bOverwrite=False
-      oLogfile.Write(sResult)
       assert bSuccess is False
 
       # copy the folder
       bSuccess, sResult = oFolder.CopyTo(sDestFolder, bOverwrite=True)
-      oLogfile.Write(sResult)
       assert bSuccess is False
 
       # delete instance of expected folder
@@ -825,7 +807,6 @@ class Test_CFolder:
 
       # copy the folder
       bSuccess, sResult = oFolder.CopyTo(sDestFolder) # with default bOverwrite=False
-      oLogfile.Write(sResult)
       assert bSuccess is True
 
       # expected: folder exists
@@ -833,7 +814,9 @@ class Test_CFolder:
 
       # tidying up
       del oFolder
-      del oLogfile
+      shutil.rmtree(sFolder, ignore_errors=False)
+      shutil.rmtree(sExpectedFolder, ignore_errors=False)
+      shutil.rmtree(sDestFolder, ignore_errors=False)
 
    # --------------------------------------------------------------------------------------------------------------
    #TM***
@@ -847,25 +830,18 @@ class Test_CFolder:
       sDestFolder        = None
       sNotExpectedFolder = None
 
-      sLogfile = None
-
       sPlatformSystem = platform.system()
       if sPlatformSystem == "Windows":
          sFolder         = os.path.expandvars(r"%TMP%\CFolder_TestFolder")
          sDestFolder     = os.path.expandvars(r"%TMP%\copy")
-         sLogfile        = os.path.expandvars(r"%TMP%\CFolder_Test_12.log")
       elif sPlatformSystem == "Linux":
          sTmp = os.path.expanduser('~')
          sFolder         = f"{sTmp}/CFolder_TestFolder"
          sDestFolder     = f"{sTmp}/copy"
-         sLogfile        = f"{sTmp}/CFolder_Test_12.log"
-
-      oLogfile = CFile(sLogfile)
 
       # make sure that test folder does not exist
       oFolder = CFolder(sFolder)
       bSuccess, sResult = oFolder.Delete(bConfirmDelete=False)
-      oLogfile.Write(sResult)
       assert bSuccess is True
 
       # expected: folder not exists
@@ -873,12 +849,10 @@ class Test_CFolder:
 
       # copy the (not existing) folder
       bSuccess, sResult = oFolder.CopyTo(sDestFolder) # with default bOverwrite=False
-      oLogfile.Write(sResult)
       assert bSuccess is False
 
       # tidying up
       del oFolder
-      del oLogfile
 
    # --------------------------------------------------------------------------------------------------------------
 

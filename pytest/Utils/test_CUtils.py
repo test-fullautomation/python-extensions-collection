@@ -359,5 +359,6 @@ class Test_GetInstalledPackages:
         assert len(listofTuplesPackages) > 0
         bIsFile = os.path.isfile(sOutputFile)
         assert bIsFile is True
+        os.remove(sOutputFile)
 
 # --------------------------------------------------------------------------------------------------------------
