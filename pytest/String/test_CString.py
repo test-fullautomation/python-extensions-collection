@@ -17,7 +17,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 08.11.2022
+# 07.06.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -494,14 +494,6 @@ But it must be possible to go 3 levels up in the file system!"""
     )
     def test_ParentPath_2(self, Description):
         """pytest 'DetectParentPath'"""
-        sLogfile = None
-        sPlatformSystem = platform.system()
-        if sPlatformSystem == "Windows":
-           sLogfile = os.path.expandvars(r"%TMP%\CString_test_ParentPath_2.log")
-        elif sPlatformSystem == "Linux":
-           sLogfile = "/tmp/CString_test_ParentPath_2.log"
-
-        oLogfile = CFile(sLogfile)
 
         sIn_StartPath           = CString.NormalizePath(__file__)
         sParentParentPath       = CString.NormalizePath(os.path.dirname(os.path.dirname(sIn_StartPath)))
@@ -511,21 +503,6 @@ But it must be possible to go 3 levels up in the file system!"""
         sIn_Foldername          = f"{sIn_Foldername_1};{sIn_Foldername_2}"
         sExp_DestPathParent = CString.NormalizePath(os.path.dirname(sParentParentPath))
         sRet_DestPath, listRet_DestPaths, sRet_DestFile, listRet_DestFiles, sRet_DestPathParent = CString.DetectParentPath(sIn_StartPath, sIn_Foldername)
-
-        oLogfile.Write(f"===== test_ParentPath_2")
-        oLogfile.Write(f"sIn_StartPath           : {sIn_StartPath}")
-        oLogfile.Write(f"sParentParentPath       : {sParentParentPath}")
-        oLogfile.Write(f"sIn_Foldername_1        : {sIn_Foldername_1}")
-        oLogfile.Write(f"sParentParentParentPath : {sParentParentParentPath}")
-        oLogfile.Write(f"sIn_Foldername_2        : {sIn_Foldername_2}")
-        oLogfile.Write(f"sIn_Foldername          : {sIn_Foldername}")
-        oLogfile.Write(f"sExp_DestPathParent     : {sExp_DestPathParent}")
-        oLogfile.Write(f"sRet_DestPath           : {sRet_DestPath}")
-        oLogfile.Write(f"listRet_DestPaths       : {listRet_DestPaths}")
-        oLogfile.Write(f"sRet_DestFile           : {sRet_DestFile}")
-        oLogfile.Write(f"listRet_DestFiles       : {listRet_DestFiles}")
-        oLogfile.Write(f"sRet_DestPathParent     : {sRet_DestPathParent}")
-        del oLogfile
 
         assert sRet_DestPath == sParentParentPath
         assert len(listRet_DestPaths) == 2

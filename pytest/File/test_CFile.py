@@ -17,7 +17,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 26.01.2022
+# 07.06.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -47,7 +47,8 @@ class Test_CFile:
       if sPlatformSystem == "Windows":
          sFile = r"%TMP%\CFile_TestFile.txt"
       elif sPlatformSystem == "Linux":
-         sFile = r"/tmp/CFile_TestFile.txt"
+         sTmp = os.path.expanduser('~')
+         sFile = f"{sTmp}/CFile_TestFile.txt"
       oFile = CFile(sFile)
       sTestString = "Teststring-1"
       bSuccess, sResult = oFile.Write(sTestString)
@@ -61,6 +62,7 @@ class Test_CFile:
       bSuccess, sResult = oFile.Close()
       assert bSuccess is True
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -73,7 +75,8 @@ class Test_CFile:
       if sPlatformSystem == "Windows":
          sFile = r"%TMP%\CFile_TestFile.txt"
       elif sPlatformSystem == "Linux":
-         sFile = r"/tmp/CFile_TestFile.txt"
+         sTmp = os.path.expanduser('~')
+         sFile = f"{sTmp}/CFile_TestFile.txt"
       oFile = CFile(sFile)
       sTestString = "Teststring-2"
       bSuccess, sResult = oFile.Write(sTestString)
@@ -83,6 +86,7 @@ class Test_CFile:
       assert len(listLines) == 1
       assert listLines[0] == sTestString
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -95,7 +99,8 @@ class Test_CFile:
       if sPlatformSystem == "Windows":
          sFile = r"%TMP%\CFile_TestFile.txt"
       elif sPlatformSystem == "Linux":
-         sFile = r"/tmp/CFile_TestFile.txt"
+         sTmp = os.path.expanduser('~')
+         sFile = f"{sTmp}/CFile_TestFile.txt"
       oFile = CFile(sFile)
       bSuccess, sResult = oFile.Write("Dummy")
       assert bSuccess is True
@@ -114,7 +119,8 @@ class Test_CFile:
       if sPlatformSystem == "Windows":
          sFile = r"%TMP%\CFile_TestFile.txt"
       elif sPlatformSystem == "Linux":
-         sFile = r"/tmp/CFile_TestFile.txt"
+         sTmp = os.path.expanduser('~')
+         sFile = f"{sTmp}/CFile_TestFile.txt"
       oFile = CFile(sFile)
       bSuccess, sResult = oFile.Delete(bConfirmDelete=False) # no matter if file exists from previous test run or not; only making sure that file does not exist (precondition)
       assert bSuccess is True
@@ -138,6 +144,7 @@ class Test_CFile:
       bSuccess, sResult = oFile.Close()
       assert bSuccess is True
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -150,7 +157,8 @@ class Test_CFile:
       if sPlatformSystem == "Windows":
          sFile = r"%TMP%\CFile_TestFile.txt"
       elif sPlatformSystem == "Linux":
-         sFile = r"/tmp/CFile_TestFile.txt"
+         sTmp = os.path.expanduser('~')
+         sFile = f"{sTmp}/CFile_TestFile.txt"
       oFile = CFile(sFile)
       sTestString_1 = "Teststring_1_ABC"
       sTestString_2 = "Teststring_2_MNO"
@@ -170,6 +178,7 @@ class Test_CFile:
       assert listLines[1] == sTestString_2
       assert listLines[2] == sTestString_3
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -182,7 +191,8 @@ class Test_CFile:
       if sPlatformSystem == "Windows":
          sFile = r"%TMP%\CFile_TestFile.txt"
       elif sPlatformSystem == "Linux":
-         sFile = r"/tmp/CFile_TestFile.txt"
+         sTmp = os.path.expanduser('~')
+         sFile = f"{sTmp}/CFile_TestFile.txt"
       oFile = CFile(sFile)
       sTestString_1 = " # ABC 1 test line (a)  "
       sTestString_2 = "  = BCD 22 test line (b)  "
@@ -221,6 +231,7 @@ class Test_CFile:
       assert listLines[0] == sTestString_2.rstrip()
       assert listLines[1] == sTestString_4.rstrip()
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -233,7 +244,8 @@ class Test_CFile:
       if sPlatformSystem == "Windows":
          sFile = r"%TMP%\CFile_TestFile.txt"
       elif sPlatformSystem == "Linux":
-         sFile = r"/tmp/CFile_TestFile.txt"
+         sTmp = os.path.expanduser('~')
+         sFile = f"{sTmp}/CFile_TestFile.txt"
       oFile = CFile(sFile)
       sTestString_1 = "  ABC  "
       sTestString_2 = ""
@@ -257,6 +269,7 @@ class Test_CFile:
       assert listLines[1] == sTestString_3.rstrip()
       assert listLines[2] == sTestString_5.rstrip()
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -269,7 +282,8 @@ class Test_CFile:
       if sPlatformSystem == "Windows":
          sFile = r"%TMP%\CFile_TestFile.txt"
       elif sPlatformSystem == "Linux":
-         sFile = r"/tmp/CFile_TestFile.txt"
+         sTmp = os.path.expanduser('~')
+         sFile = f"{sTmp}/CFile_TestFile.txt"
       oFile = CFile(sFile)
       sTestString_1 = "ABC"
       sTestString_2 = "DEF"
@@ -303,6 +317,7 @@ class Test_CFile:
       assert len(listLines) == 1
       assert listLines[0] == sTestString_2
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -315,7 +330,8 @@ class Test_CFile:
       if sPlatformSystem == "Windows":
          sFile = r"%TMP%\CFile_TestFile.txt"
       elif sPlatformSystem == "Linux":
-         sFile = r"/tmp/CFile_TestFile.txt"
+         sTmp = os.path.expanduser('~')
+         sFile = f"{sTmp}/CFile_TestFile.txt"
 
       oFile = CFile(sFile)
 
@@ -371,6 +387,7 @@ class Test_CFile:
       assert listLines[2] == "kV___3 : Val3"
 
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -383,7 +400,8 @@ class Test_CFile:
       if sPlatformSystem == "Windows":
          sFile = r"%TMP%\CFile_TestFile.txt"
       elif sPlatformSystem == "Linux":
-         sFile = r"/tmp/CFile_TestFile.txt"
+         sTmp = os.path.expanduser('~')
+         sFile = f"{sTmp}/CFile_TestFile.txt"
 
       oFile = CFile(sFile)
 
@@ -448,6 +466,7 @@ class Test_CFile:
       assert listLines[4] == ""
 
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -464,9 +483,10 @@ class Test_CFile:
          sFile_copy = r"%TMP%\CFile_TestFile_copied.txt"
          sFile_move = r"%TMP%\CFile_TestFile_moved.txt"
       elif sPlatformSystem == "Linux":
-         sFile      = r"/tmp/IAmNotExisting/IAmNotExisting.txt"
-         sFile_copy = r"/tmp/CFile_TestFile_copied.txt"
-         sFile_move = r"/tmp/CFile_TestFile_moved.txt"
+         sTmp = os.path.expanduser('~')
+         sFile      = f"{sTmp}/IAmNotExisting/IAmNotExisting.txt"
+         sFile_copy = f"{sTmp}/CFile_TestFile_copied.txt"
+         sFile_move = f"{sTmp}/CFile_TestFile_moved.txt"
 
       oFile = CFile(sFile)
       bSuccess, sResult = oFile.Write("A B C")
@@ -496,9 +516,10 @@ class Test_CFile:
          sFile_copy = r"%TMP%\IAmNotExisting\CFile_TestFile_copied.txt"
          sFile_move = r"%TMP%\IAmNotExisting\CFile_TestFile_moved.txt"
       elif sPlatformSystem == "Linux":
-         sFile      = r"/tmp/CFile_TestFile.txt"
-         sFile_copy = r"/tmp/IAmNotExisting/CFile_TestFile_copied.txt"
-         sFile_move = r"/tmp/IAmNotExisting/CFile_TestFile_moved.txt"
+         sTmp = os.path.expanduser('~')
+         sFile      = f"{sTmp}/CFile_TestFile.txt"
+         sFile_copy = f"{sTmp}/IAmNotExisting/CFile_TestFile_copied.txt"
+         sFile_move = f"{sTmp}/IAmNotExisting/CFile_TestFile_moved.txt"
 
       oFile = CFile(sFile)
       bSuccess, sResult = oFile.Write("A B C")
@@ -508,6 +529,7 @@ class Test_CFile:
       bSuccess, sResult = oFile.MoveTo(sFile_move)
       assert bSuccess is False
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -528,11 +550,12 @@ class Test_CFile:
          sFile_invalid = r"%TMP%\IAmNotExisting\IAmNotExisting.txt"
          sFilePath     = "%TMP%"
       elif sPlatformSystem == "Linux":
-         sFile         = r"/tmp/CFile_TestFile.txt"
-         sFile_copy    = r"/tmp/CFile_TestFile_copy.txt"
-         sFile_move    = r"/tmp/CFile_TestFile_move.txt"
-         sFile_invalid = r"/tmp/IAmNotExisting/IAmNotExisting.txt"
-         sFilePath     = "/tmp"
+         sTmp = os.path.expanduser('~')
+         sFile         = f"{sTmp}/CFile_TestFile.txt"
+         sFile_copy    = f"{sTmp}/CFile_TestFile_copy.txt"
+         sFile_move    = f"{sTmp}/CFile_TestFile_move.txt"
+         sFile_invalid = f"{sTmp}/IAmNotExisting/IAmNotExisting.txt"
+         sFilePath     = f"{sTmp}"
 
       sFile_expected          = CString.NormalizePath(sFile)
       sFileName_expected      = "CFile_TestFile.txt"
@@ -611,6 +634,8 @@ class Test_CFile:
       del oFile_copy
       del oFile_move
       del oFile_invalid
+      os.remove(os.path.expandvars(sFile))
+      os.remove(os.path.expandvars(sFile_move))
 
 
    @pytest.mark.parametrize(
@@ -623,7 +648,8 @@ class Test_CFile:
       if sPlatformSystem == "Windows":
          sFile = r"%TMP%\CFile_TestFile.txt"
       elif sPlatformSystem == "Linux":
-         sFile = r"/tmp/CFile_TestFile.txt"
+         sTmp  = os.path.expanduser('~')
+         sFile = f"{sTmp}/CFile_TestFile.txt"
       oFile = CFile(sFile)
       bSuccess, sResult = oFile.Write("A B C")
       assert bSuccess is True
@@ -650,7 +676,8 @@ class Test_CFile:
       if sPlatformSystem == "Windows":
          sFile = r"%TMP%\CFile_TestFile.txt"
       elif sPlatformSystem == "Linux":
-         sFile = r"/tmp/CFile_TestFile.txt"
+         sTmp  = os.path.expanduser('~')
+         sFile = f"{sTmp}/CFile_TestFile.txt"
       oFile = CFile(sFile)
       bSuccess, sResult = oFile.Write("A B C")
       assert bSuccess is True
@@ -667,6 +694,7 @@ class Test_CFile:
       assert len(listLines) == 1
       assert listLines[0] == "A B C"
       del oFile
+      os.remove(os.path.expandvars(sFile))
 
 
    @pytest.mark.parametrize(
@@ -681,8 +709,9 @@ class Test_CFile:
          sFile_1 = r"%TMP%\CFile_TestFile_1.txt"
          sFile_2 = r"%TMP%\CFile_TestFile_2.txt"
       elif sPlatformSystem == "Linux":
-         sFile_1 = r"/tmp/CFile_TestFile_1.txt"
-         sFile_2 = r"/tmp/CFile_TestFile_2.txt"
+         sTmp    = os.path.expanduser('~')
+         sFile_1 = f"{sTmp}/CFile_TestFile_1.txt"
+         sFile_2 = f"{sTmp}/CFile_TestFile_2.txt"
       oFile_1 = CFile(sFile_1)
       oFile_2 = CFile(sFile_2)
       bSuccess, sResult = oFile_1.Write("A B C")
@@ -765,6 +794,9 @@ class Test_CFile:
          bException = True
       assert bException is True
       del oFile_1_a
+      os.remove(os.path.expandvars(sFile_1))
+      os.remove(os.path.expandvars(sFile_2))
+
 
 # eof class Test_CFile
 
