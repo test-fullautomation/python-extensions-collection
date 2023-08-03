@@ -1,0 +1,4 @@
+sep=|
+TESTID|SECTION|SUBSECTION|DESCRIPTION
+PEC_0001|CFILE|GOODCASE|Write and Read with explicit Close
+PEC_0002|CFILE|GOODCASE|Write and Read without explicit Close
