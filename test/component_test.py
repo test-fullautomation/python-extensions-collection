@@ -23,26 +23,24 @@
 # --------------------------------------------------------------------------------------------------------------
 #
 VERSION      = "0.1.0"
-VERSION_DATE = "03.08.2023"
+VERSION_DATE = "07.08.2023"
 #
 # --------------------------------------------------------------------------------------------------------------
 #
 # This self test is partially contradictory. The system under test is the PythonExtensionCollection.
 # But additionally to this the PythonExtensionCollection is also used in code, that executes the test.
-# Therefore we have no strict separation of test and system under test. This should not happen.
+# Therefore we have no strict separation of test and system under test. This should not happen and
+# I tried to avoid this as much as possible. But it's not avoided completely.
 #
-# But nevertheless this test is realized in this way. Why? Because of the PythonExtensionCollection
-# is a collection of very useful functions and this means they are also useful in the code of this test.
-#
-# To avoid to use some PythonExtensionCollection functions also within this test would cause additional effort,
-# that I want to avoid. Also parts of the code are taken over from other applications (reuse). I do not want to
-# rework all, only to separate the test from the system under test.
+# To avoid to use some PythonExtensionCollection functions also within this test, would cause additional effort.
+# Parts of the code are taken over from other applications (reuse). I do not want to rework all, only to
+# separate the test from the system under test completely.
 #
 # The paradigm is: The entire code must work! Independent from the position (test or system under test).
 # The test must fit to the system under test. In case of any errors, they will be detected, no matter if the
 # error occurs in the system under test or in the test itself.
 #
-# This belongs only to a few functions, not to all functions available in the PythonExtensionCollection.
+# But this belongs only to a few functions, not to all functions available in the PythonExtensionCollection.
 # --------------------------------------------------------------------------------------------------------------
 
 #TM***
@@ -90,6 +88,13 @@ def printerror(sMsg, prefix=None):
    else:
       sError = COLBR + f"{prefix}:\n{sMsg}\n\n"
    sys.stderr.write(sError)
+
+def printunknown(sMsg, prefix=None):
+   if prefix is None:
+      sUnknown = COLBB + f"{sMsg}\n\n"
+   else:
+      sUnknown = COLBB + f"{prefix}:\n{sMsg}\n\n"
+   sys.stderr.write(sUnknown)
 
 # --------------------------------------------------------------------------------------------------------------
 # [TESTCONFIG]
@@ -286,6 +291,7 @@ for dictUsecase in listofdictUsecases:
    sOut = f"====== [START OF TEST] : '{TESTFULLNAME}' / ({nCntUsecases}/{nNrOfUsecases})"
    print(COLBY + sOut)
    print()
+   oSelfTestLogFile.Write(122*"-", 1)
    oSelfTestLogFile.Write(sOut, 1)
    sOut = f"[DESCRIPTION] : {DESCRIPTION}"
    print(COLBY + sOut)
@@ -320,6 +326,20 @@ for dictUsecase in listofdictUsecases:
       print()
       oSelfTestLogFile.Write(sResult, 1)
 
+   # --------------------------------------------------------------------------------------------------------------
+   # # debug
+   # print()
+   # print(f"============== (exec) bSuccess: {bSuccess}")
+   # print(f"============== (exec) sResult : {sResult}")
+   # print()
+   #
+   # TODO: if bDebug:
+   # oSelfTestLogFile.Write(100*"-")
+   oSelfTestLogFile.Write("Testflow:", 1)
+   oSelfTestLogFile.Write(sResult, 1)
+   # oSelfTestLogFile.Write(100*"-", 1)
+   # --------------------------------------------------------------------------------------------------------------
+
    if bSuccess is True:
       nCntPassedUsecases = nCntPassedUsecases + 1
       sOut = f"    Test '{TESTFULLNAME}' PASSED"
@@ -331,16 +351,20 @@ for dictUsecase in listofdictUsecases:
       listTestsNotPassed.append(TESTFULLNAME)
       nCntFailedUsecases = nCntFailedUsecases + 1
       print()
-      printerror(f"Test '{TESTFULLNAME}' FAILED\n\n[DESCRIPTION]: {DESCRIPTION}\n[EXPECTATION]: {EXPECTATION}")
+      printerror(f"Error: {sResult}")
       print()
-      oSelfTestLogFile.Write("\n" + f"    Test '{TESTFULLNAME}' FAILED", 1)
+      printerror(f"Test '{TESTFULLNAME}' FAILED\n")
+      print()
+      oSelfTestLogFile.Write(f"\nError: {sResult}\n\n" + f"    Test '{TESTFULLNAME}' FAILED", 1)
    else:
       listTestsNotPassed.append(TESTFULLNAME)
       nCntUnknownUsecases = nCntUnknownUsecases + 1
       print()
-      printerror(f"Test '{TESTFULLNAME}' UNKNOWN\n\n[DESCRIPTION]: {DESCRIPTION}\n[EXPECTATION]: {EXPECTATION}")
+      printerror(f"Error: {sResult}")
       print()
-      oSelfTestLogFile.Write("\n" + f"    Test '{TESTFULLNAME}' UNKNOWN", 1)
+      printunknown(f"Test '{TESTFULLNAME}' UNKNOWN\n")
+      print()
+      oSelfTestLogFile.Write(f"\nInternal error: {sResult}\n\n" + f"    Test '{TESTFULLNAME}' UNKNOWN", 1)
 
 # eof for dictUsecase in listofdictUsecases:
 
@@ -349,32 +373,38 @@ del listofdictUsecases
 # --------------------------------------------------------------------------------------------------------------
 # paranoia check
 if ( (nCntPassedUsecases + nCntFailedUsecases + nCntUnknownUsecases != nCntUsecases) or (nNrOfUsecases != nCntUsecases) ):
+   oSelfTestLogFile.Write(122*"-", 1)
    print()
    sOut = CString.FormatResult(THISSCRIPTNAME, bSuccess=None, sResult="Internal counter mismatch")
-   printerror(sOut)
+   printunknown(sOut)
    oSelfTestLogFile.Write(sOut)
    sOut = f"Defined  : {nNrOfUsecases}"
-   printerror(sOut)
+   printunknown(sOut)
    oSelfTestLogFile.Write(sOut)
    sOut = f"Executed : {nCntUsecases}"
-   printerror(sOut)
+   printunknown(sOut)
    oSelfTestLogFile.Write(sOut)
    sOut = f"PASSED   : {nCntPassedUsecases}"
-   printerror(sOut)
+   printunknown(sOut)
    oSelfTestLogFile.Write(sOut)
    sOut = f"FAILED   : {nCntFailedUsecases}"
-   printerror(sOut)
+   printunknown(sOut)
    oSelfTestLogFile.Write(sOut)
    sOut = f"UNKNOWN  : {nCntUnknownUsecases}"
-   printerror(sOut)
-   oSelfTestLogFile.Write(sOut)
+   printunknown(sOut)
+   oSelfTestLogFile.Write(sOut, 1)
    print()
+   sOut = f"Component test UNKNOWN"
+   oSelfTestLogFile.Write(sOut, 1)
+   printunknown(sOut)
    del oSelfTestLogFile
    sys.exit(ERROR)
 
 # --------------------------------------------------------------------------------------------------------------
 
 # -- component test result (over all test cases)
+
+oSelfTestLogFile.Write(122*"-", 1)
 
 if len(listTestsNotPassed) > 0:
    # print()

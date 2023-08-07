@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 03.08.2023
+# 07.08.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -148,8 +148,12 @@ class CConfig():
 
       # -- configuration: test files
 
-      self.__dictConfig['CFILE_TESTFILE'] = f"{TMPFILESFOLDER}/CFile_TestFile.txt"
-
+      self.__dictConfig['CFILE_TESTFILE']                 = f"{TMPFILESFOLDER}/CFile_TestFile.txt"
+      self.__dictConfig['CFILE_TESTFILE_1']               = f"{TMPFILESFOLDER}/CFile_TestFile_1.txt"
+      self.__dictConfig['CFILE_TESTFILE_2']               = f"{TMPFILESFOLDER}/CFile_TestFile_2.txt"
+      self.__dictConfig['CFILE_TESTFILE_COPIED']          = f"{TMPFILESFOLDER}/CFile_TestFile_copied.txt"
+      self.__dictConfig['CFILE_TESTFILE_MOVED']           = f"{TMPFILESFOLDER}/CFile_TestFile_moved.txt"
+      self.__dictConfig['CFILE_TESTFILE_NOTEXISTINGPATH'] = f"{TMPFILESFOLDER}/IAmNotExisting/IAmNotExisting.txt"
 
       # dump of basic configuration parameters to console
       # self.DumpConfig() # done in main script now!
@@ -166,7 +170,7 @@ class CConfig():
       print()
       # PrettyPrint(self.__dictConfig, sPrefix="Config")
       for key, value in self.__dictConfig.items():
-         sLine = key.rjust(30, ' ') + " : " + str(value)
+         sLine = key.rjust(32, ' ') + " : " + str(value)
          print(sLine)
          listFormattedOutputLines.append(sLine)
       print()
