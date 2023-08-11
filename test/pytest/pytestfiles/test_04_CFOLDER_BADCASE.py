@@ -14,7 +14,7 @@
 #  limitations under the License.
 # --------------------------------------------------------------------------------------------------------------
 #
-# test_02_CFILE_BADCASE.py
+# test_04_CFOLDER_BADCASE.py
 #
 # XC-CT/ECA3-Queckenstedt
 #
@@ -27,38 +27,54 @@ from pytestlibs.CExecute import CExecute
 
 # --------------------------------------------------------------------------------------------------------------
 
-class Test_CFILE_BADCASE:
+class Test_CFOLDER_BADCASE:
 
 # --------------------------------------------------------------------------------------------------------------
-   # Expected: Source file not written, not deleted, not copied, not moved
+   # Expected: Nothing is copied; error message
    @pytest.mark.parametrize(
-      "Description", ["Path to source file does not exist",]
+      "Description", ["Copy a folder, source and destination are same folder",]
    )
-   def test_PEC_0050(self, Description):
-      nReturn = CExecute.Execute("PEC_0050")
+   def test_PEC_0150(self, Description):
+      nReturn = CExecute.Execute("PEC_0150")
       assert nReturn == 0
 # --------------------------------------------------------------------------------------------------------------
-   # Expected: Source file not copied and not moved to destination
+   # Expected: Nothing is copied; error message
    @pytest.mark.parametrize(
-      "Description", ["Path to destination file does not exist",]
+      "Description", ["Copy a folder, destination path does not exist",]
    )
-   def test_PEC_0051(self, Description):
-      nReturn = CExecute.Execute("PEC_0051")
+   def test_PEC_0151(self, Description):
+      nReturn = CExecute.Execute("PEC_0151")
       assert nReturn == 0
 # --------------------------------------------------------------------------------------------------------------
-   # Expected: Source file not copied and not moved to destination
+   # Expected: Nothing is copied; error message
    @pytest.mark.parametrize(
-      "Description", ["source file == destination file",]
+      "Description", ["Copy a folder, destination folder already in use by another instance",]
    )
-   def test_PEC_0052(self, Description):
-      nReturn = CExecute.Execute("PEC_0052")
+   def test_PEC_0152(self, Description):
+      nReturn = CExecute.Execute("PEC_0152")
       assert nReturn == 0
 # --------------------------------------------------------------------------------------------------------------
-   # Expected: Existing files are not overwritten, if not allowed; no multiple class instances pointing to the same file
+   # Expected: Nothing is copied; error message
    @pytest.mark.parametrize(
-      "Description", ["bOverwrite and access violations",]
+      "Description", ["Copy a folder, source folder does not exist",]
    )
-   def test_PEC_0053(self, Description):
-      nReturn = CExecute.Execute("PEC_0053")
+   def test_PEC_0153(self, Description):
+      nReturn = CExecute.Execute("PEC_0153")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Windows: Access violation; not possible to delete the folder (BADCASE) / Linux: Folder is deleted (GOODCASE)
+   @pytest.mark.parametrize(
+      "Description", ["Create a folder, bOverwrite=True, open file handle",]
+   )
+   def test_PEC_0154(self, Description):
+      nReturn = CExecute.Execute("PEC_0154")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Error message
+   @pytest.mark.parametrize(
+      "Description", ["Multiple CFolder instances of same folder",]
+   )
+   def test_PEC_0155(self, Description):
+      nReturn = CExecute.Execute("PEC_0155")
       assert nReturn == 0
 # --------------------------------------------------------------------------------------------------------------

@@ -22,11 +22,11 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 07.08.2023
+# 11.08.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
-import os, sys, platform
+import os, sys, platform, stat, shutil
 from dotdict import dotdict
 import colorama as col
 
@@ -85,6 +85,40 @@ def compare(valuepairs = [], prefix=None):
 
 # --------------------------------------------------------------------------------------------------------------
 
+def is_file(sFile=None):
+   bSuccess = None
+   sResult  = "UNKNOWN"
+   if sFile is None:
+      bSuccess = None
+      sResult  = "sFile is None"
+   elif os.path.isfile(sFile) is True:
+      bSuccess = True
+      sResult  = f"File '{sFile}' exists"
+   else:
+      bSuccess = False
+      sResult  = f"File '{sFile}' does not exist"
+   return bSuccess, sResult
+# eof def is_file(sFile=None):
+
+# --------------------------------------------------------------------------------------------------------------
+
+def is_folder(sFolder=None):
+   bSuccess = None
+   sResult  = "UNKNOWN"
+   if sFolder is None:
+      bSuccess = None
+      sResult  = "sFolder is None"
+   elif os.path.isdir(sFolder) is True:
+      bSuccess = True
+      sResult  = f"Folder '{sFolder}' exists"
+   else:
+      bSuccess = False
+      sResult  = f"Folder '{sFolder}' does not exist"
+   return bSuccess, sResult
+# eof def is_folder(sFolder=None):
+
+# --------------------------------------------------------------------------------------------------------------
+
 class CResult:
    def __init__(self):
       self.__listResults = []
@@ -100,11 +134,11 @@ class CResult:
 # ==============================================================================================================
 #                                        TESTFUNCTIONS
 # ==============================================================================================================
-#TM***
 
 # --------------------------------------------------------------------------------------------------------------
 # CFile
 # --------------------------------------------------------------------------------------------------------------
+#TM***
 
 def PEC_0001(oConfig):
    oResults = CResult()
@@ -770,7 +804,7 @@ def PEC_0012(oConfig):
    if bSuccess is not True: del oFile; return bSuccess, oResults.Results()
    bSuccess, sResult = oFile.Delete(bConfirmDelete=True) # default
    oResults.Results(sResult)
-   if bSuccess is not False: del oFile; return bSuccess, oResults.Results()
+   if bSuccess is not False: bSuccess=False; bSuccess=False; del oFile; return bSuccess, oResults.Results()
    bSuccess, sResult = oFile.Delete(bConfirmDelete=False)
    oResults.Results(sResult)
    if bSuccess is not True: del oFile; return bSuccess, oResults.Results()
@@ -791,16 +825,16 @@ def PEC_0050(oConfig):
    if bSuccess is not None: del oFile; return bSuccess, oResults.Results()
    listLines, bSuccess, sResult = oFile.ReadLines()
    oResults.Results(sResult)
-   if bSuccess is not False: del oFile; return bSuccess, oResults.Results()
+   if bSuccess is not False: bSuccess=False; del oFile; return bSuccess, oResults.Results()
    bSuccess, sResult = oFile.Delete() # bConfirmDelete is True per default
    oResults.Results(sResult)
-   if bSuccess is not False: del oFile; return bSuccess, oResults.Results()
+   if bSuccess is not False: bSuccess=False; del oFile; return bSuccess, oResults.Results()
    bSuccess, sResult = oFile.CopyTo(sFile_copy)
    oResults.Results(sResult)
-   if bSuccess is not False: del oFile; return bSuccess, oResults.Results()
+   if bSuccess is not False: bSuccess=False; del oFile; return bSuccess, oResults.Results()
    bSuccess, sResult = oFile.MoveTo(sFile_move)
    oResults.Results(sResult)
-   if bSuccess is not False: del oFile; return bSuccess, oResults.Results()
+   if bSuccess is not False: bSuccess=False; del oFile; return bSuccess, oResults.Results()
    del oFile
    return True, oResults.Results("PEC_0050 done")
 
@@ -816,10 +850,10 @@ def PEC_0051(oConfig):
    if bSuccess is not True: del oFile; return bSuccess, oResults.Results()
    bSuccess, sResult = oFile.CopyTo(sFile_notexistingpath)
    oResults.Results(sResult)
-   if bSuccess is not False: del oFile; return bSuccess, oResults.Results()
+   if bSuccess is not False: bSuccess=False; del oFile; return bSuccess, oResults.Results()
    bSuccess, sResult = oFile.MoveTo(sFile_notexistingpath)
    oResults.Results(sResult)
-   if bSuccess is not False: del oFile; return bSuccess, oResults.Results()
+   if bSuccess is not False: bSuccess=False; del oFile; return bSuccess, oResults.Results()
    del oFile
    os.remove(sFile)
    return True, oResults.Results("PEC_0051 done")
@@ -840,10 +874,10 @@ def PEC_0052(oConfig):
    if bSuccess is not True: del oFile; return bSuccess, oResults.Results()
    bSuccess, sResult = oFile.CopyTo(sFile)
    oResults.Results(sResult)
-   if bSuccess is not False: del oFile; return bSuccess, oResults.Results()
+   if bSuccess is not False: bSuccess=False; del oFile; return bSuccess, oResults.Results()
    bSuccess, sResult = oFile.MoveTo(sFile)
    oResults.Results(sResult)
-   if bSuccess is not False: del oFile; return bSuccess, oResults.Results()
+   if bSuccess is not False: bSuccess=False; del oFile; return bSuccess, oResults.Results()
    dFileInfo = oFile.GetFileInfo()
    bSuccess, sResult = compare(((dFileInfo['bFileIsExisting'], True),))
    oResults.Results(sResult)
@@ -896,7 +930,7 @@ def PEC_0053(oConfig):
    # file 2 is closed, but not allowed to be overwritten
    bSuccess, sResult = oFile_1.CopyTo(sFile_2, bOverwrite=False)
    oResults.Results(sResult)
-   if bSuccess is not False: del oFile_1; return bSuccess, oResults.Results()
+   if bSuccess is not False: bSuccess=False; del oFile_1; return bSuccess, oResults.Results()
    # file 2 is expected to have still the same content as before
    oFile_2 = CFile(sFile_2)
    listLines, bSuccess, sResult = oFile_2.ReadLines()
@@ -942,7 +976,7 @@ def PEC_0053(oConfig):
    # try to copy file 1 to file 2 - but file 2 is still in access
    bSuccess, sResult = oFile_1.CopyTo(sFile_2, bOverwrite=True)
    oResults.Results(sResult)
-   if bSuccess is not False: del oFile_1; del oFile_2; return bSuccess, oResults.Results()
+   if bSuccess is not False: bSuccess=False; del oFile_1; del oFile_2; return bSuccess, oResults.Results()
    # again check the content of file 2 - must be the same as before
    listLines, bSuccess, sResult = oFile_2.ReadLines()
    oResults.Results(sResult)
@@ -956,7 +990,7 @@ def PEC_0053(oConfig):
    # try to move file 1 to file 2 - but file 2 is still in access
    bSuccess, sResult = oFile_1.MoveTo(sFile_2, bOverwrite=True)
    oResults.Results(sResult)
-   if bSuccess is not False: del oFile_1; del oFile_2; return bSuccess, oResults.Results()
+   if bSuccess is not False: bSuccess=False; del oFile_1; del oFile_2; return bSuccess, oResults.Results()
    # again check the content of file 2 - must be the same as before
    listLines, bSuccess, sResult = oFile_2.ReadLines()
    oResults.Results(sResult)
@@ -1005,4 +1039,896 @@ def PEC_0053(oConfig):
    os.remove(sFile_2)
    return True, oResults.Results("PEC_0053 done")
 
+
 # --------------------------------------------------------------------------------------------------------------
+# CFolder
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+def PEC_0100(oConfig):
+   oResults = CResult()
+   sTestFolder = oConfig.Get('CFOLDER_TESTFOLDER')
+   # test file for test folder
+   sTestFile = f"{sTestFolder}/CFolder_TestFile.txt"
+
+   # initial test folder creation with bOverwrite=True
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=False)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test file does not exist
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # create test file within test folder
+   oTestFile = CFile(sTestFile)
+   bSuccess, sResult = oTestFile.Write(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = oTestFile.Close()
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+   del oTestFile
+
+   # expected: test file exists now
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+
+   # try to create test folder again, but with bOverwrite=False (=> content will not be deleted)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=False, bRecursive=False)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: folder still exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test file still exists
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # tidying up
+   del oTestFolder
+   os.remove(sTestFile)
+   shutil.rmtree(sTestFolder, ignore_errors=False)
+
+   return True, oResults.Results("PEC_0100 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0101(oConfig):
+   oResults = CResult()
+   sTestFolder = oConfig.Get('CFOLDER_TESTFOLDER')
+   # test file for test folder
+   sTestFile = f"{sTestFolder}/CFolder_TestFile.txt"
+
+   # initial test folder creation with bOverwrite=True
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=False)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test file does not exist
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # create test file within test folder
+   oTestFile = CFile(sTestFile)
+   bSuccess, sResult = oTestFile.Write(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = oTestFile.Close()
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+   del oTestFile
+
+   # expected: test file exists now
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # try to create test folder again, but with bOverwrite=True (=> content will be deleted)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=False)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: folder still exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test file does not exist an more
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # tidying up
+   del oTestFolder
+   shutil.rmtree(sTestFolder, ignore_errors=False)
+
+   return True, oResults.Results("PEC_0101 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0102(oConfig):
+   oResults = CResult()
+   sTestFolder = oConfig.Get('CFOLDER_TESTSUBFOLDERS')
+   sFolder_tobedeletedfinally = oConfig.Get('CFOLDER_TESTSUBFOLDER_CFO')
+   # test file for test folder
+   sTestFile = f"{sTestFolder}/CFolder_TestFile.txt"
+
+   # initial test folder creation with bOverwrite=True
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test file does not exist
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # create test file within test folder
+   oTestFile = CFile(sTestFile)
+   bSuccess, sResult = oTestFile.Write(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = oTestFile.Close()
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+   del oTestFile
+
+   # expected: test file exists
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # try to create test folder again, with bOverwrite=False (=> content will not be deleted)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=False, bRecursive=False)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: folder still exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test file still exists
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # delete test folder
+   bSuccess, sResult = oTestFolder.Delete(bConfirmDelete=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test file does not exist any more
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test folder does not exist any more
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: parent folder exists
+   sParentFolder = os.path.dirname(sTestFolder)
+   bSuccess, sResult = is_folder(sParentFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # try to delete test folder again; but folder does not exist any more;
+   # because of a confirmation is requested, Delete() returns an error
+   bSuccess, sResult = oTestFolder.Delete(bConfirmDelete=True)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # tidying up
+   del oTestFolder
+   shutil.rmtree(sFolder_tobedeletedfinally, ignore_errors=False)
+
+   return True, oResults.Results("PEC_0102 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0103(oConfig):
+   oResults = CResult()
+   sTestFolder = oConfig.Get('CFOLDER_TESTFOLDER')
+
+   sSubFolder_1 = f"{sTestFolder}/sub1"
+   sSubFolder_2 = f"{sTestFolder}/sub2"
+   sTestFile_1  = f"{sSubFolder_1}/TestFile_1.txt"
+   sTestFile_2  = f"{sSubFolder_2}/TestFile_2.txt"
+
+   # initial test folder creation with bOverwrite=True
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: sub folders do not exist
+   bSuccess, sResult = is_folder(sSubFolder_1)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = is_folder(sSubFolder_2)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # creation of sub folders
+   oSubFolder_1 = CFolder(sSubFolder_1)
+   bSuccess, sResult = oSubFolder_1.Create()
+   del oSubFolder_1
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = is_folder(sSubFolder_1)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   oSubFolder_2 = CFolder(sSubFolder_2)
+   bSuccess, sResult = oSubFolder_2.Create()
+   del oSubFolder_2
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = is_folder(sSubFolder_2)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # creation of test files in sub folders
+   oTestFile_1 = CFile(sTestFile_1)
+   bSuccess, sResult = oTestFile_1.Write(sTestFile_1)
+   del oTestFile_1
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = is_file(sTestFile_1)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   oTestFile_2 = CFile(sTestFile_2)
+   bSuccess, sResult = oTestFile_2.Write(sTestFile_2)
+   del oTestFile_2
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = is_file(sTestFile_2)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # make test files write protected
+   os.chmod(sTestFile_1, stat.S_IREAD)
+   os.chmod(sTestFile_2, stat.S_IREAD)
+
+   # delete entire test folder (including write protected files; the write protection will be removed by Delete())
+   bSuccess, sResult = oTestFolder.Delete(bConfirmDelete=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # check outcome (expected: subfolders and files within subfolders deleted)
+   bSuccess, sResult = is_file(sTestFile_1)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = is_file(sTestFile_2)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = is_folder(sSubFolder_1)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = is_folder(sSubFolder_2)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # and some further tries (try to delete what does not exist)
+   bSuccess, sResult = oTestFolder.Delete(bConfirmDelete=True)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = oTestFolder.Delete(bConfirmDelete=False)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # tidying up
+   del oTestFolder
+
+   return True, oResults.Results("PEC_0103 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0104(oConfig):
+   oResults = CResult()
+   sTestFolder        = oConfig.Get('CFOLDER_TESTFOLDER')
+   sDestFolder        = oConfig.Get('CFOLDER_COPY')
+   sFolder_expected   = oConfig.Get('CFOLDER_COPY_TESTFOLDER')
+   sTestFile          = f"{sTestFolder}/CFolder_TestFile.txt"
+   sTestFile_expected = f"{sFolder_expected}/CFolder_TestFile.txt"
+
+   # initial test folder creation with bOverwrite=True
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # initial destination folder creation with bOverwrite=True
+   oDestFolder = CFolder(sDestFolder)
+   bSuccess, sResult = oDestFolder.Create(bOverwrite=True, bRecursive=True)
+   del oDestFolder
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sDestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # create test file within test folder
+   oTestFile = CFile(sTestFile)
+   bSuccess, sResult = oTestFile.Write(sTestFile)
+   del oTestFile
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: test file exists
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # copy the test folder
+   bSuccess, sResult = oTestFolder.CopyTo(sDestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: destination folder does exist
+   bSuccess, sResult = is_folder(sFolder_expected)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: copied file within destination folder does exist
+   bSuccess, sResult = is_file(sTestFile_expected)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # tidying up
+   del oTestFolder
+   os.remove(sTestFile)
+   os.remove(sTestFile_expected)
+   shutil.rmtree(sTestFolder, ignore_errors=False)
+   shutil.rmtree(sFolder_expected, ignore_errors=False)
+   shutil.rmtree(sDestFolder, ignore_errors=False)
+
+   return True, oResults.Results("PEC_0104 done")
+
+# ----------------------------------------------------------------------------------------------------------
+
+def PEC_0105(oConfig):
+   oResults = CResult()
+   sTestFolder        = oConfig.Get('CFOLDER_TESTFOLDER')
+   sDestFolder        = oConfig.Get('CFOLDER_COPY')
+   sFolder_expected   = oConfig.Get('CFOLDER_COPY_TESTFOLDER')
+   sTestFile          = f"{sTestFolder}/CFolder_TestFile.txt"
+   sTestFile_expected = f"{sFolder_expected}/CFolder_TestFile.txt"
+
+   # initial test folder creation with bOverwrite=True
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # initial destination folder creation with bOverwrite=True
+   oDestFolder = CFolder(sDestFolder)
+   bSuccess, sResult = oDestFolder.Create(bOverwrite=True, bRecursive=True)
+   del oDestFolder
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sDestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResult
+
+   # initial expected folder (the folder that is copied to the destination folder) creation with bOverwrite=True
+   oFolder_expected = CFolder(sFolder_expected)
+   bSuccess, sResult = oFolder_expected.Create(bOverwrite=True, bRecursive=True)
+   del oFolder_expected
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sFolder_expected)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResult
+
+   # create test file within test folder
+   oTestFile = CFile(sTestFile)
+   bSuccess, sResult = oTestFile.Write(sTestFile)
+   del oTestFile
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: test file exists
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # copy the test folder to destination folder (with default bOverwrite=False)
+   bSuccess, sResult = oTestFolder.CopyTo(sDestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: copied folder exists within destination folder (because has already been created before)
+   bSuccess, sResult = is_folder(sFolder_expected)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResult
+
+   # expected: destination file does not exist (because nothing is copied)
+   bSuccess, sResult = is_file(sTestFile_expected)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # again copy the test folder to destination folder (with bOverwrite=True)
+   bSuccess, sResult = oTestFolder.CopyTo(sDestFolder, bOverwrite=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: copied folder exists within destination folder (now has been copied)
+   bSuccess, sResult = is_folder(sFolder_expected)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResult
+
+   # expected: destination file does exist now (because the folder containing the file, has been copied)
+   bSuccess, sResult = is_file(sTestFile_expected)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # tidying up
+   del oTestFolder
+   os.remove(sTestFile)
+   os.remove(sTestFile_expected)
+   shutil.rmtree(sTestFolder, ignore_errors=False)
+   shutil.rmtree(sFolder_expected, ignore_errors=False)
+   shutil.rmtree(sDestFolder, ignore_errors=False)
+
+   return True, oResults.Results("PEC_0105 done")
+
+   # --------------------------------------------------------------------------------------------------------------
+
+def PEC_0150(oConfig):
+   oResults = CResult()
+   sTestFolder = oConfig.Get('CFOLDER_TESTFOLDER')
+   sDestFolder = oConfig.Get('TMPFILESFOLDER')
+   sTestFile   = f"{sTestFolder}/CFolder_TestFile.txt"
+
+   # initial test folder creation with bOverwrite=True
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # create test file within test folder
+   oTestFile = CFile(sTestFile)
+   bSuccess, sResult = oTestFile.Write(sTestFile)
+   del oTestFile
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: test file exists
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # Copy the test folder to destination folder, with default bOverwrite=False.
+   # But the outcome would be that the source path and the destination path are the same;
+   # therefore CopyTo() returns an error
+   bSuccess, sResult = oTestFolder.CopyTo(sDestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test folder still exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # again copy the test folder to destination folder, now with bOverwrite=True
+   bSuccess, sResult = oTestFolder.CopyTo(sDestFolder, bOverwrite=True)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test folder still exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test file still exists
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # tidying up
+   del oTestFolder
+   os.remove(sTestFile)
+   shutil.rmtree(sTestFolder, ignore_errors=False)
+
+   return True, oResults.Results("PEC_0150 done")
+
+   # --------------------------------------------------------------------------------------------------------------
+
+def PEC_0151(oConfig):
+   oResults = CResult()
+   sTestFolder             = oConfig.Get('CFOLDER_TESTFOLDER')
+   sDestFolder_notexisting = oConfig.Get('CFOLDER_NOTEXISTING')
+   sDestFolder_notexpected = oConfig.Get('CFOLDER_NOTEXISTING_TESTFOLDER')
+
+   # initial test folder creation with bOverwrite=True
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # Copy the test folder to destination folder, with default bOverwrite=False.
+   # But the destination folder does not exist, therefore CopyTo() returns an error
+   bSuccess, sResult = oTestFolder.CopyTo(sDestFolder_notexisting)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: destination folders do not exist
+   bSuccess, sResult = is_folder(sDestFolder_notexisting)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = is_folder(sDestFolder_notexpected)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # Again copy the test folder to destination folder, now with bOverwrite=True.
+   # But the destination folder does not exist, therefore CopyTo() returns an error
+   bSuccess, sResult = oTestFolder.CopyTo(sDestFolder_notexisting, bOverwrite=True)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: destination folders do not exist
+   bSuccess, sResult = is_folder(sDestFolder_notexisting)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+   bSuccess, sResult = is_folder(sDestFolder_notexpected)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # tidying up
+   del oTestFolder
+   shutil.rmtree(sTestFolder, ignore_errors=False)
+
+   return True, oResults.Results("PEC_0151 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0152(oConfig):
+   oResults = CResult()
+   sTestFolder      = oConfig.Get('CFOLDER_TESTFOLDER')
+   sDestFolder      = oConfig.Get('CFOLDER_COPY')
+   sFolder_expected = oConfig.Get('CFOLDER_COPY_TESTFOLDER')
+   sTestFile        = f"{sFolder_expected}/CFolder_TestFile.txt"
+
+   # initial test folder creation with bOverwrite=True
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # initial destination folder creation with bOverwrite=True
+   oFolder_expected = CFolder(sFolder_expected)
+   bSuccess, sResult = oFolder_expected.Create(bOverwrite=True, bRecursive=True)
+   del oFolder_expected
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sFolder_expected)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResult
+
+   # create test file within destination
+   oTestFile = CFile(sTestFile)
+   bSuccess, sResult = oTestFile.Write(sTestFile)
+   del oTestFile
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: test file exists
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # create instance of expected folder
+   oFolder_expected = CFolder(sFolder_expected)
+
+   # Copy the test folder to destination folder, with default bOverwrite=False.
+   # But the folder within the destination is already in use by oFolder_expected;
+   # therefore CopyTo() returns an error
+   bSuccess, sResult = oTestFolder.CopyTo(sDestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # Again copy the test folder to destination folder, now with bOverwrite=True.
+   # But the folder within the destination is still in use by oFolder_expected;
+   # therefore CopyTo() returns an error
+   bSuccess, sResult = oTestFolder.CopyTo(sDestFolder, bOverwrite=True)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test file still exists (within destination)
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # delete instance of expected folder
+   del oFolder_expected
+
+   # Again copy the test folder to destination folder, with default bOverwrite=False.
+   # The folder within the destination is not in use any more by another CFolder instance.
+   # But the folder still exists and is not allowed to be overwritten;
+   # therefore CopyTo() returns an error
+   bSuccess, sResult = oTestFolder.CopyTo(sDestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test file still exists (within destination)
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # Again copy the test folder to destination folder, now with bOverwrite=True.
+   # The folder within the destination is not in use any more by another CFolder instance.
+   # The folder still exists and will be overwritten.
+   # CopyTo() returns success
+   bSuccess, sResult = oTestFolder.CopyTo(sDestFolder, bOverwrite=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test file does not exist any more (within destination)
+   bSuccess, sResult = is_file(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # tidying up
+   del oTestFolder
+   shutil.rmtree(sTestFolder, ignore_errors=False)
+   shutil.rmtree(sFolder_expected, ignore_errors=False)
+   shutil.rmtree(sDestFolder, ignore_errors=False)
+
+   return True, oResults.Results("PEC_0152 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0153(oConfig):
+   oResults = CResult()
+   sTestFolder         = oConfig.Get('CFOLDER_TESTFOLDER')
+   sDestFolder         = oConfig.Get('CFOLDER_COPY')
+   sFolder_notexpected = oConfig.Get('CFOLDER_COPY_TESTFOLDER')
+
+   # make sure that the test folder does not exist
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Delete(bConfirmDelete=False)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: test folder does not exist
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # make sure that the destination folder does not exist
+   oFolder_notexpected = CFolder(sFolder_notexpected)
+   bSuccess, sResult = oFolder_notexpected.Delete(bConfirmDelete=False)
+   del oFolder_notexpected
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: destination folder does not exist
+   bSuccess, sResult = is_folder(sFolder_notexpected)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # copy the (not existing) folder
+   bSuccess, sResult = oTestFolder.CopyTo(sDestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # expected: destination folder still does not exist
+   bSuccess, sResult = is_folder(sFolder_notexpected)
+   oResults.Results(sResult)
+   if bSuccess is not False: bSuccess=False; del oTestFolder; return bSuccess, oResults.Results()
+
+   # tidying up
+   del oTestFolder
+   return True, oResults.Results("PEC_0153 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0154(oConfig):
+   oResults = CResult()
+   sTestFolder = oConfig.Get('CFOLDER_TESTFOLDER')
+   # test file for test folder
+   sTestFile = f"{sTestFolder}/CFolder_TestFile.txt"
+
+   # initial test folder creation with bOverwrite=True
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # create test file within test folder
+   oTestFile = CFile(sTestFile)
+   bSuccess, sResult = oTestFile.Write(sTestFile)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+
+   # //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   # start: platform dependency
+
+   sPlatformSystem = platform.system()
+   if sPlatformSystem == "Windows":
+      # Without 'oTestFile.Close()' or 'del oTestFile', the file handle is still open.
+      # Under Windows the deletion of the folder causes an access violation and it should not be possible to delete
+      # the folder.
+      # A folder can be deleted explicitely: with Delete(bConfirmDelete=True).
+      # A folder can also be deleted implicitely: with Create(bOverwrite=True).
+      # The deletion runs in a loop. This takes some time. After an iteration counter exceeds a limit,
+      # the computation stops with an error message.
+      # Outcome: The folder is not deleted.
+      bSuccess, sResult = oTestFolder.Delete(bConfirmDelete=True)
+      oResults.Results(sResult)
+      if bSuccess is not False: bSuccess=False; del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+      bSuccess, sResult = oTestFolder.Create(bOverwrite=True)
+      oResults.Results(sResult)
+      if bSuccess is not False: bSuccess=False; del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+      # expected: test file exists (and therefore the folder also)
+      bSuccess, sResult = is_file(sTestFile)
+      oResults.Results(sResult)
+      if bSuccess is not True: del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+      # tidying up
+      del oTestFile
+      del oTestFolder
+      os.remove(sTestFile)
+      shutil.rmtree(sTestFolder, ignore_errors=False)
+
+   elif sPlatformSystem == "Linux":
+      # Without 'oTestFile.Close()' or 'del oTestFile', the file handle is still open.
+      # Under Linux this doesn't matter
+      # Outcome: The folder (and the file with open handle) is deleted.
+      bSuccess, sResult = oTestFolder.Delete(bConfirmDelete=True)
+      oResults.Results(sResult)
+      if bSuccess is not True: del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+      # expected: the test folder does not exist any more
+      bSuccess, sResult = is_folder(sTestFolder)
+      oResults.Results(sResult)
+      if bSuccess is not False: bSuccess=False; del oTestFile; del oTestFolder; return bSuccess, oResults.Results()
+      # tidying up
+      del oTestFile
+      del oTestFolder
+
+   else:
+      # tidying up
+      del oTestFile
+      del oTestFolder
+      os.remove(sTestFile)
+      shutil.rmtree(sTestFolder, ignore_errors=False)
+      bSuccess = None
+      sResult  = f"Platform '{sPlatformSystem}' is not supported"
+      oResults.Results(sResult)
+      return bSuccess, oResults.Results()
+
+   # end: platform dependency
+   # //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+   # cross check (test folder should be ready to use again)
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # tidying up
+   del oTestFolder
+   shutil.rmtree(sTestFolder, ignore_errors=False)
+   return True, oResults.Results("PEC_0154 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0155(oConfig):
+   oResults = CResult()
+   sTestFolder = oConfig.Get('CFOLDER_TESTFOLDER')
+
+   # initial test folder creation with bOverwrite=True
+   oTestFolder = CFolder(sTestFolder)
+   bSuccess, sResult = oTestFolder.Create(bOverwrite=True, bRecursive=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+   # expected: folder exists
+   bSuccess, sResult = is_folder(sTestFolder)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # further CFolder instance of same folder is expected to cause an exception
+   oTestFolder_2 = None
+   bSuccess = None
+   sResult  = None
+   try:
+      oTestFolder_2 = CFolder(sTestFolder)
+      bSuccess = False
+      sResult  = "Missing exception in case of further CFolder instance of same folder"
+   except Exception as reason:
+      bSuccess = True
+      sResult  = str(reason)
+
+   del oTestFolder_2
+
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder; return bSuccess, oResults.Results()
+
+   # deletion of first CFolder instance must enable to create again an instance with same folder
+   del oTestFolder
+
+   oTestFolder_2 = None
+   bSuccess = None
+   sResult  = None
+   try:
+      oTestFolder_2 = CFolder(sTestFolder)
+      bSuccess = True
+      sResult  = "CFolder instance created"
+   except Exception as reason:
+      bSuccess = False
+      sResult  = str(reason)
+
+   oResults.Results(sResult)
+   if bSuccess is not True: del oTestFolder_2; return bSuccess, oResults.Results()
+
+   # tidying up
+   del oTestFolder_2
+   shutil.rmtree(sTestFolder, ignore_errors=False)
+   return True, oResults.Results("PEC_0155 done")
+
+
+# --------------------------------------------------------------------------------------------------------------
+

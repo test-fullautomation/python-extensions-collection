@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 07.08.2023
+# 11.08.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -33,6 +33,7 @@ listofdictUsecases = []
 # dictUsecase['COMMENT']      = None
 
 # --------------------------------------------------------------------------------------------------------------
+# CFile
 #TM***
 # --------------------------------------------------------------------------------------------------------------
 dictUsecase = {}
@@ -213,5 +214,144 @@ listofdictUsecases.append(dictUsecase)
 del dictUsecase
 # --------------------------------------------------------------------------------------------------------------
 
+# --------------------------------------------------------------------------------------------------------------
+# CFolder
+#TM***
+# --------------------------------------------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0100"
+dictUsecase['DESCRIPTION']       = "Create a folder, bOverwrite=False"
+dictUsecase['EXPECTATION']       = "New folder is created, but existing folder is not overwritten"
+dictUsecase['SECTION']           = "CFOLDER"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0101"
+dictUsecase['DESCRIPTION']       = "Create a folder, bOverwrite=True"
+dictUsecase['EXPECTATION']       = "New folder is created, existing folder is overwritten"
+dictUsecase['SECTION']           = "CFOLDER"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0102"
+dictUsecase['DESCRIPTION']       = "Create and delete a folder, bRecursive=True"
+dictUsecase['EXPECTATION']       = "Entire path to folder is created; folder is deleted"
+dictUsecase['SECTION']           = "CFOLDER"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0103"
+dictUsecase['DESCRIPTION']       = "Delete a folder with content write protected"
+dictUsecase['EXPECTATION']       = "Write protection is removed, folder is deleted"
+dictUsecase['SECTION']           = "CFOLDER"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0104"
+dictUsecase['DESCRIPTION']       = "Copy a folder"
+dictUsecase['EXPECTATION']       = "Folder is copied"
+dictUsecase['SECTION']           = "CFOLDER"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0105"
+dictUsecase['DESCRIPTION']       = "Copy a folder, destination folder already exists"
+dictUsecase['EXPECTATION']       = "Destination folder is overwritten or not, depending on bOverwrite"
+dictUsecase['SECTION']           = "CFOLDER"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0150"
+dictUsecase['DESCRIPTION']       = "Copy a folder, source and destination are same folder"
+dictUsecase['EXPECTATION']       = "Nothing is copied; error message"
+dictUsecase['SECTION']           = "CFOLDER"
+dictUsecase['SUBSECTION']        = "BADCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0151"
+dictUsecase['DESCRIPTION']       = "Copy a folder, destination path does not exist"
+dictUsecase['EXPECTATION']       = "Nothing is copied; error message"
+dictUsecase['SECTION']           = "CFOLDER"
+dictUsecase['SUBSECTION']        = "BADCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0152"
+dictUsecase['DESCRIPTION']       = "Copy a folder, destination folder already in use by another instance"
+dictUsecase['EXPECTATION']       = "Nothing is copied; error message"
+dictUsecase['SECTION']           = "CFOLDER"
+dictUsecase['SUBSECTION']        = "BADCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0153"
+dictUsecase['DESCRIPTION']       = "Copy a folder, source folder does not exist"
+dictUsecase['EXPECTATION']       = "Nothing is copied; error message"
+dictUsecase['SECTION']           = "CFOLDER"
+dictUsecase['SUBSECTION']        = "BADCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0154"
+dictUsecase['DESCRIPTION']       = "Create a folder, bOverwrite=True, open file handle"
+dictUsecase['EXPECTATION']       = "Windows: Access violation; not possible to delete the folder (BADCASE) / Linux: Folder is deleted (GOODCASE)"
+dictUsecase['SECTION']           = "CFOLDER"
+dictUsecase['SUBSECTION']        = "BADCASE"
+dictUsecase['HINT']              = "Platform specific; under Windows test needs some seconds (because of an internal loop of tries)"
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0155"
+dictUsecase['DESCRIPTION']       = "Multiple CFolder instances of same folder"
+dictUsecase['EXPECTATION']       = "Error message"
+dictUsecase['SECTION']           = "CFOLDER"
+dictUsecase['SUBSECTION']        = "BADCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
 
 

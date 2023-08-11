@@ -79,5 +79,54 @@ Test PEC_0053 / CFILE / BADCASE
 Description: bOverwrite and access violations
 Expectation: Existing files are not overwritten, if not allowed; no multiple class instances pointing to the same file
 ------------------------------------------------------------------------------------------------------------------------
-Generated: 07.08.2023 - 16:19:07
+Test PEC_0100 / CFOLDER / GOODCASE
+Description: Create a folder, bOverwrite=False
+Expectation: New folder is created, but existing folder is not overwritten
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0101 / CFOLDER / GOODCASE
+Description: Create a folder, bOverwrite=True
+Expectation: New folder is created, existing folder is overwritten
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0102 / CFOLDER / GOODCASE
+Description: Create and delete a folder, bRecursive=True
+Expectation: Entire path to folder is created; folder is deleted
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0103 / CFOLDER / GOODCASE
+Description: Delete a folder with content write protected
+Expectation: Write protection is removed, folder is deleted
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0104 / CFOLDER / GOODCASE
+Description: Copy a folder
+Expectation: Folder is copied
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0105 / CFOLDER / GOODCASE
+Description: Copy a folder, destination folder already exists
+Expectation: Destination folder is overwritten or not, depending on bOverwrite
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0150 / CFOLDER / BADCASE
+Description: Copy a folder, source and destination are same folder
+Expectation: Nothing is copied; error message
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0151 / CFOLDER / BADCASE
+Description: Copy a folder, destination path does not exist
+Expectation: Nothing is copied; error message
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0152 / CFOLDER / BADCASE
+Description: Copy a folder, destination folder already in use by another instance
+Expectation: Nothing is copied; error message
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0153 / CFOLDER / BADCASE
+Description: Copy a folder, source folder does not exist
+Expectation: Nothing is copied; error message
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0154 / CFOLDER / BADCASE
+Description: Create a folder, bOverwrite=True, open file handle
+Expectation: Windows: Access violation; not possible to delete the folder (BADCASE) / Linux: Folder is deleted (GOODCASE)
+Hint.......: Platform specific; under Windows test needs some seconds (because of an internal loop of tries)
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0155 / CFOLDER / BADCASE
+Description: Multiple CFolder instances of same folder
+Expectation: Error message
+------------------------------------------------------------------------------------------------------------------------
+Generated: 11.08.2023 - 16:41:27
 

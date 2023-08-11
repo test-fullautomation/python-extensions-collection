@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 07.08.2023
+# 11.08.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -154,6 +154,14 @@ class CConfig():
       self.__dictConfig['CFILE_TESTFILE_COPIED']          = f"{TMPFILESFOLDER}/CFile_TestFile_copied.txt"
       self.__dictConfig['CFILE_TESTFILE_MOVED']           = f"{TMPFILESFOLDER}/CFile_TestFile_moved.txt"
       self.__dictConfig['CFILE_TESTFILE_NOTEXISTINGPATH'] = f"{TMPFILESFOLDER}/IAmNotExisting/IAmNotExisting.txt"
+
+      self.__dictConfig['CFOLDER_TESTFOLDER']             = f"{TMPFILESFOLDER}/CFolder_TestFolder"
+      self.__dictConfig['CFOLDER_TESTSUBFOLDERS']         = f"{TMPFILESFOLDER}/CFo/ld/er_Te/st/Fol/der"
+      self.__dictConfig['CFOLDER_TESTSUBFOLDER_CFO']      = f"{TMPFILESFOLDER}/CFo"
+      self.__dictConfig['CFOLDER_COPY']                   = f"{TMPFILESFOLDER}/CFolder_copy"
+      self.__dictConfig['CFOLDER_COPY_TESTFOLDER']        = f"{TMPFILESFOLDER}/CFolder_copy/CFolder_TestFolder"
+      self.__dictConfig['CFOLDER_NOTEXISTING']            = f"{TMPFILESFOLDER}/I/Am/Not/Existing"
+      self.__dictConfig['CFOLDER_NOTEXISTING_TESTFOLDER'] = f"{TMPFILESFOLDER}/I/Am/Not/Existing/CFolder_TestFolder"
 
       # dump of basic configuration parameters to console
       # self.DumpConfig() # done in main script now!

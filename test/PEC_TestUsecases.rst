@@ -175,5 +175,127 @@ Test Use Cases
 
 ----
 
-Generated: 07.08.2023 - 16:19:07
+* **Test PEC_0100**
+
+  [CFOLDER / GOODCASE]
+
+   **Create a folder, bOverwrite=False**
+
+   Expected: New folder is created, but existing folder is not overwritten
+
+----
+
+* **Test PEC_0101**
+
+  [CFOLDER / GOODCASE]
+
+   **Create a folder, bOverwrite=True**
+
+   Expected: New folder is created, existing folder is overwritten
+
+----
+
+* **Test PEC_0102**
+
+  [CFOLDER / GOODCASE]
+
+   **Create and delete a folder, bRecursive=True**
+
+   Expected: Entire path to folder is created; folder is deleted
+
+----
+
+* **Test PEC_0103**
+
+  [CFOLDER / GOODCASE]
+
+   **Delete a folder with content write protected**
+
+   Expected: Write protection is removed, folder is deleted
+
+----
+
+* **Test PEC_0104**
+
+  [CFOLDER / GOODCASE]
+
+   **Copy a folder**
+
+   Expected: Folder is copied
+
+----
+
+* **Test PEC_0105**
+
+  [CFOLDER / GOODCASE]
+
+   **Copy a folder, destination folder already exists**
+
+   Expected: Destination folder is overwritten or not, depending on bOverwrite
+
+----
+
+* **Test PEC_0150**
+
+  [CFOLDER / BADCASE]
+
+   **Copy a folder, source and destination are same folder**
+
+   Expected: Nothing is copied; error message
+
+----
+
+* **Test PEC_0151**
+
+  [CFOLDER / BADCASE]
+
+   **Copy a folder, destination path does not exist**
+
+   Expected: Nothing is copied; error message
+
+----
+
+* **Test PEC_0152**
+
+  [CFOLDER / BADCASE]
+
+   **Copy a folder, destination folder already in use by another instance**
+
+   Expected: Nothing is copied; error message
+
+----
+
+* **Test PEC_0153**
+
+  [CFOLDER / BADCASE]
+
+   **Copy a folder, source folder does not exist**
+
+   Expected: Nothing is copied; error message
+
+----
+
+* **Test PEC_0154**
+
+  [CFOLDER / BADCASE]
+
+   **Create a folder, bOverwrite=True, open file handle**
+
+   Expected: Windows: Access violation; not possible to delete the folder (BADCASE) / Linux: Folder is deleted (GOODCASE)
+
+   *Hint: Platform specific; under Windows test needs some seconds (because of an internal loop of tries)*
+
+----
+
+* **Test PEC_0155**
+
+  [CFOLDER / BADCASE]
+
+   **Multiple CFolder instances of same folder**
+
+   Expected: Error message
+
+----
+
+Generated: 11.08.2023 - 16:41:27
 

@@ -14,7 +14,7 @@
 #  limitations under the License.
 # --------------------------------------------------------------------------------------------------------------
 #
-# test_02_CFILE_BADCASE.py
+# test_03_CFOLDER_GOODCASE.py
 #
 # XC-CT/ECA3-Queckenstedt
 #
@@ -27,38 +27,54 @@ from pytestlibs.CExecute import CExecute
 
 # --------------------------------------------------------------------------------------------------------------
 
-class Test_CFILE_BADCASE:
+class Test_CFOLDER_GOODCASE:
 
 # --------------------------------------------------------------------------------------------------------------
-   # Expected: Source file not written, not deleted, not copied, not moved
+   # Expected: New folder is created, but existing folder is not overwritten
    @pytest.mark.parametrize(
-      "Description", ["Path to source file does not exist",]
+      "Description", ["Create a folder, bOverwrite=False",]
    )
-   def test_PEC_0050(self, Description):
-      nReturn = CExecute.Execute("PEC_0050")
+   def test_PEC_0100(self, Description):
+      nReturn = CExecute.Execute("PEC_0100")
       assert nReturn == 0
 # --------------------------------------------------------------------------------------------------------------
-   # Expected: Source file not copied and not moved to destination
+   # Expected: New folder is created, existing folder is overwritten
    @pytest.mark.parametrize(
-      "Description", ["Path to destination file does not exist",]
+      "Description", ["Create a folder, bOverwrite=True",]
    )
-   def test_PEC_0051(self, Description):
-      nReturn = CExecute.Execute("PEC_0051")
+   def test_PEC_0101(self, Description):
+      nReturn = CExecute.Execute("PEC_0101")
       assert nReturn == 0
 # --------------------------------------------------------------------------------------------------------------
-   # Expected: Source file not copied and not moved to destination
+   # Expected: Entire path to folder is created; folder is deleted
    @pytest.mark.parametrize(
-      "Description", ["source file == destination file",]
+      "Description", ["Create and delete a folder, bRecursive=True",]
    )
-   def test_PEC_0052(self, Description):
-      nReturn = CExecute.Execute("PEC_0052")
+   def test_PEC_0102(self, Description):
+      nReturn = CExecute.Execute("PEC_0102")
       assert nReturn == 0
 # --------------------------------------------------------------------------------------------------------------
-   # Expected: Existing files are not overwritten, if not allowed; no multiple class instances pointing to the same file
+   # Expected: Write protection is removed, folder is deleted
    @pytest.mark.parametrize(
-      "Description", ["bOverwrite and access violations",]
+      "Description", ["Delete a folder with content write protected",]
    )
-   def test_PEC_0053(self, Description):
-      nReturn = CExecute.Execute("PEC_0053")
+   def test_PEC_0103(self, Description):
+      nReturn = CExecute.Execute("PEC_0103")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Folder is copied
+   @pytest.mark.parametrize(
+      "Description", ["Copy a folder",]
+   )
+   def test_PEC_0104(self, Description):
+      nReturn = CExecute.Execute("PEC_0104")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Destination folder is overwritten or not, depending on bOverwrite
+   @pytest.mark.parametrize(
+      "Description", ["Copy a folder, destination folder already exists",]
+   )
+   def test_PEC_0105(self, Description):
+      nReturn = CExecute.Execute("PEC_0105")
       assert nReturn == 0
 # --------------------------------------------------------------------------------------------------------------
