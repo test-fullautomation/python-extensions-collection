@@ -1,0 +1,30 @@
+sep=|
+TESTID|SECTION|SUBSECTION|DESCRIPTION
+PEC_0001|CFILE|GOODCASE|Write and Read with explicit Close
+PEC_0002|CFILE|GOODCASE|Write and Read without explicit Close
+PEC_0003|CFILE|GOODCASE|Delete a file
+PEC_0004|CFILE|GOODCASE|Append and Read with explicit Close
+PEC_0005|CFILE|GOODCASE|Append and Read without explicit Close
+PEC_0006|CFILE|GOODCASE|Write to new file; repeated ReadLines with filter
+PEC_0007|CFILE|GOODCASE|ReadLines; skip blank lines
+PEC_0008|CFILE|GOODCASE|Write, Append and ReadLines combinations
+PEC_0009|CFILE|GOODCASE|Write and ReadLines of composite data types: list, tuple, set and dict
+PEC_0010|CFILE|GOODCASE|Write: Prefix and additional vertical space
+PEC_0011|CFILE|GOODCASE|CopyTo, MoveTo and GetFileInfo
+PEC_0012|CFILE|GOODCASE|ConfirmDelete
+PEC_0050|CFILE|BADCASE|Path to source file does not exist
+PEC_0051|CFILE|BADCASE|Path to destination file does not exist
+PEC_0052|CFILE|BADCASE|source file == destination file
+PEC_0053|CFILE|BADCASE|bOverwrite and access violations
+PEC_0100|CFOLDER|GOODCASE|Create a folder, bOverwrite=False
+PEC_0101|CFOLDER|GOODCASE|Create a folder, bOverwrite=True
+PEC_0102|CFOLDER|GOODCASE|Create and delete a folder, bRecursive=True
+PEC_0103|CFOLDER|GOODCASE|Delete a folder with content write protected
+PEC_0104|CFOLDER|GOODCASE|Copy a folder
+PEC_0105|CFOLDER|GOODCASE|Copy a folder, destination folder already exists
+PEC_0150|CFOLDER|BADCASE|Copy a folder, source and destination are same folder
+PEC_0151|CFOLDER|BADCASE|Copy a folder, destination path does not exist
+PEC_0152|CFOLDER|BADCASE|Copy a folder, destination folder already in use by another instance
+PEC_0153|CFOLDER|BADCASE|Copy a folder, source folder does not exist
+PEC_0154|CFOLDER|BADCASE|Create a folder, bOverwrite=True, open file handle
+PEC_0155|CFOLDER|BADCASE|Multiple CFolder instances of same folder
