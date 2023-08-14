@@ -28,3 +28,19 @@ PEC_0152|CFOLDER|BADCASE|Copy a folder, destination folder already in use by ano
 PEC_0153|CFOLDER|BADCASE|Copy a folder, source folder does not exist
 PEC_0154|CFOLDER|BADCASE|Create a folder, bOverwrite=True, open file handle
 PEC_0155|CFOLDER|BADCASE|Multiple CFolder instances of same folder
+PEC_0200|CSTRING|GOODCASE|NormalizePath: Resolve environment variables
+PEC_0201|CSTRING|GOODCASE|NormalizePath: Resolving of environment variables deactivated
+PEC_0202|CSTRING|GOODCASE|NormalizePath: Convert backslashes
+PEC_0203|CSTRING|GOODCASE|NormalizePath: Strip surrounding quotes and spaces
+PEC_0204|CSTRING|GOODCASE|NormalizePath: Path with redundant path separators
+PEC_0205|CSTRING|GOODCASE|NormalizePath: Path with redundant path separators; bWin=True
+PEC_0206|CSTRING|GOODCASE|NormalizePath: Path with up-level references
+PEC_0207|CSTRING|GOODCASE|NormalizePath: Path with up-level references; bWin=True
+PEC_0208|CSTRING|GOODCASE|NormalizePath: Path with up-level references; bWin=True; bMask=False
+PEC_0209|CSTRING|GOODCASE|NormalizePath: Relative input path with absolute reference path
+PEC_0210|CSTRING|GOODCASE|NormalizePath: Relative input path with absolute reference path; bWin=True; bMask=True
+PEC_0211|CSTRING|GOODCASE|NormalizePath: Path with blanks inside; bConsiderBlanks=True
+PEC_0212|CSTRING|GOODCASE|NormalizePath: Path without blanks inside; bConsiderBlanks=True
+PEC_0213|CSTRING|GOODCASE|NormalizePath: Local network resource paths
+PEC_0214|CSTRING|GOODCASE|NormalizePath: Local network resource paths in web browser format
+PEC_0215|CSTRING|GOODCASE|NormalizePath: Internet addresses

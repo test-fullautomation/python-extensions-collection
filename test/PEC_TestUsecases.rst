@@ -297,5 +297,165 @@ Test Use Cases
 
 ----
 
-Generated: 11.08.2023 - 16:41:27
+* **Test PEC_0200**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Resolve environment variables**
+
+   Expected: String with resolved environment variable is not expected to be the same as the input string
+
+----
+
+* **Test PEC_0201**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Resolving of environment variables deactivated**
+
+   Expected: String with environment variable is returned unresolved
+
+----
+
+* **Test PEC_0202**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Convert backslashes**
+
+   Expected: All backslashes replaced by single slashes
+
+----
+
+* **Test PEC_0203**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Strip surrounding quotes and spaces**
+
+   Expected: Surrounding quotes and spaces are removed
+
+----
+
+* **Test PEC_0204**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Path with redundant path separators**
+
+   Expected: Redundant path separators removed; all backslashes replaced by single slashes
+
+----
+
+* **Test PEC_0205**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Path with redundant path separators; bWin=True**
+
+   Expected: Redundant path separators removed; remaining separators are masked backslashes
+
+----
+
+* **Test PEC_0206**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Path with up-level references**
+
+   Expected: All backslashes replaced by single slashes; up-level references resolved
+
+----
+
+* **Test PEC_0207**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Path with up-level references; bWin=True**
+
+   Expected: All slashes replaced by double (masked) backslashes; up-level references resolved
+
+----
+
+* **Test PEC_0208**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Path with up-level references; bWin=True; bMask=False**
+
+   Expected: All slashes replaced by single (unmasked) backslashes; up-level references resolved
+
+----
+
+* **Test PEC_0209**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Relative input path with absolute reference path**
+
+   Expected: Resulting absolute path is a merge of the absolute reference path and the relative input path; single slashes as separator
+
+----
+
+* **Test PEC_0210**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Relative input path with absolute reference path; bWin=True; bMask=True**
+
+   Expected: Resulting absolute path is a merge of the absolute reference path and the relative input path; masked backslashes as separator
+
+----
+
+* **Test PEC_0211**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Path with blanks inside; bConsiderBlanks=True**
+
+   Expected: Paths with blanks inside are encapsulated in quotes; single slashes as separator; up-level references resolved
+
+----
+
+* **Test PEC_0212**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Path without blanks inside; bConsiderBlanks=True**
+
+   Expected: Paths without blanks inside are not encapsulated in quotes; single slashes as separator
+
+----
+
+* **Test PEC_0213**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Local network resource paths**
+
+   Expected: Resulting local network resource path contains single slashes as separator
+
+----
+
+* **Test PEC_0214**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Local network resource paths in web browser format**
+
+   Expected: Resulting local network resource path (web browser format) contains single slashes as separator; bWin has no effect
+
+----
+
+* **Test PEC_0215**
+
+  [CSTRING / GOODCASE]
+
+   **NormalizePath: Internet addresses**
+
+   Expected: Resulting internet address contains single backslashes as separator; bWin has no effect
+
+----
+
+Generated: 14.08.2023 - 14:52:59
 

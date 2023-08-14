@@ -22,7 +22,16 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 11.08.2023
+# 14.08.2023
+#
+# --------------------------------------------------------------------------------------------------------------
+#
+# Some test variables depend on the operating system. If the test runs on a operating system, that is not supported,
+# these variables are not defined! This will cause an expection. This exception will be catched (component_test.py)
+# and the result of the corresponding test case will be UNKNOWN. Because of an error handling is guaranteed and
+# to keep this code short, those variables are not initialized! These variables are also used to compare
+# received against expected values. If they would have the same initial value, the result of the test case would
+# be PASSED by mistake (instead opf UNKNOWN).
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -50,7 +59,7 @@ def printerror(sMsg):
 
 # --------------------------------------------------------------------------------------------------------------
 
-def compare(valuepairs = [], prefix=None):
+def compare(valuepairs = (), prefix=None, bInverse=False):
    # 'valuepairs' expected to be a tuple of tuples of 2 elements: received value and expected value
    bSuccess = True
    sResult  = "valid"
@@ -59,29 +68,51 @@ def compare(valuepairs = [], prefix=None):
       if len(tupleValues) == 2:
          sReceived = f"{tupleValues[0]}"
          sExpected = f"{tupleValues[1]}"
-         if sReceived != sExpected:
-            sDeviation = f"Expected: '{sExpected}', but received: '{sReceived}'."
-            listDeviations.append(sDeviation)
+         if bInverse is False:
+            if sReceived != sExpected:
+               sDeviation = f"Expected: '{sExpected}', but received: '{sReceived}'."
+               listDeviations.append(sDeviation)
+         elif bInverse is True:
+            if sReceived == sExpected:
+               sDeviation = f"Received what is not expected: '{sReceived}'."
+               listDeviations.append(sDeviation)
+         else:
+            bSuccess = None
+            sResult  = f"Invalid value '{bInverse}' for bInverse"
+            return bSuccess, sResult
+
       elif len(tupleValues) == 3:
          sReceived = f"{tupleValues[0]}"
          sExpected = f"{tupleValues[1]}"
          sLabel    = f"{tupleValues[2]}"
-         if sReceived != sExpected:
-            sDeviation = f"Expected: '{sExpected}', but received: '{sReceived}' ({sLabel})."
-            listDeviations.append(sDeviation)
+         if bInverse is False:
+            if sReceived != sExpected:
+               sDeviation = f"Expected: '{sExpected}', but received: '{sReceived}' ({sLabel})."
+               listDeviations.append(sDeviation)
+         elif bInverse is True:
+            if sReceived == sExpected:
+               sDeviation = f"Received what is not expected: '{sReceived}' ({sLabel})."
+               listDeviations.append(sDeviation)
+         else:
+            bSuccess = None
+            sResult  = f"Invalid value '{bInverse}' for bInverse"
+            return bSuccess, sResult
+
       else:
          bSuccess = None
          sResult  = "Invalid input (expected tuple with 2 or 3 values)"
          return bSuccess, sResult
    # eof for tupleValues in valuepairs:
+
    if len(listDeviations) > 0:
       bSuccess = False
       sResult  = "Deviation"
       if prefix is not None:
          sResult = f"{sResult} ({prefix})"
       sResult = f"{sResult}!\n" + "\n".join(listDeviations)
+
    return bSuccess, sResult
-# eof def compare(valuepairs = [], prefix=None):
+# eof def compare(valuepairs = (), prefix=None):
 
 # --------------------------------------------------------------------------------------------------------------
 
@@ -1929,6 +1960,353 @@ def PEC_0155(oConfig):
    shutil.rmtree(sTestFolder, ignore_errors=False)
    return True, oResults.Results("PEC_0155 done")
 
+# --------------------------------------------------------------------------------------------------------------
+# CString
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+def PEC_0200(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sIn  = r"%TMP%"
+   elif platform.system() == "Linux":
+      sIn  = r"${HOME}"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sIn, sOut),), bInverse=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   return True, oResults.Results("PEC_0200 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0201(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sIn  = r"%TMP%"
+   elif platform.system() == "Linux":
+      sIn  = r"${HOME}"
+   sOut = CString.NormalizePath(sIn, bExpandEnvVars=False)
+   bSuccess, sResult = compare(((sIn, sOut),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   return True, oResults.Results("PEC_0201 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0202(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sIn  = r"C:\dir\subdir\subsubdir"
+      sExp = r"C:/dir/subdir/subsubdir"
+   elif platform.system() == "Linux":
+      sIn  = r"/tmp\dir\subdir\subsubdir"
+      sExp = r"/tmp/dir/subdir/subsubdir"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   return True, oResults.Results("PEC_0202 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0203(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sIn  = r'  "  C:\dir\subdir\subsubdir  "  '
+      sExp = r"C:/dir/subdir/subsubdir"
+   elif platform.system() == "Linux":
+      sIn  = r'  " /tmp\dir\subdir\subsubdir  "  '
+      sExp = r"/tmp/dir/subdir/subsubdir"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   if platform.system() == "Windows":
+      sIn  = r"  '  C:\dir\subdir\subsubdir  '  "
+      sExp = r"C:/dir/subdir/subsubdir"
+   elif platform.system() == "Linux":
+      sIn  = r"  '  /tmp\dir\subdir\subsubdir  '  "
+      sExp = r"/tmp/dir/subdir/subsubdir"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0203 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0204(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sIn  = r"C:\dir\\subdir//subsubdir"
+      sExp = r"C:/dir/subdir/subsubdir"
+   elif platform.system() == "Linux":
+      sIn  = r"/tmp\dir\\subdir//subsubdir"
+      sExp = r"/tmp/dir/subdir/subsubdir"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0204 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0205(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sIn  = r"C:\dir\\subdir//subsubdir"
+      sExp = r"C:\\dir\\subdir\\subsubdir"
+   elif platform.system() == "Linux":
+      sIn  = r"/tmp\dir\\subdir//subsubdir"
+      sExp = r"\\tmp\\dir\\subdir\\subsubdir" # this makes no sense, but nevertheless let's do something under Linux also
+   sOut = CString.NormalizePath(sIn, bWin=True)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0205 done")
+
+   # --------------------------------------------------------------------------------------------------------------
+
+def PEC_0206(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sIn  = r"C:\dir1\..\\dir2"
+      sExp = r"C:/dir2"
+   elif platform.system() == "Linux":
+      sIn  = r"/tmp/dir1\..\\dir2"
+      sExp = r"/tmp/dir2"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0206 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0207(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sIn  = r"C:\dir/../dir\\subdir"
+      sExp = r"C:\\dir\\subdir"
+   elif platform.system() == "Linux":
+      sIn  = r"/tmp\dir/../dir\\subdir"
+      sExp = r"\\tmp\\dir\\subdir" # this makes no sense, but nevertheless let's do something under Linux also
+   sOut = CString.NormalizePath(sIn, bWin=True)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0207 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0208(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sIn  = r"C:\dir/../dir\\subdir"
+      sExp = r"C:\dir\subdir"
+   elif platform.system() == "Linux":
+      sIn  = r"/tmp\dir/../dir\\subdir"
+      sExp = r"\tmp\dir\subdir" # this makes no sense, but nevertheless let's do something under Linux also
+   sOut = CString.NormalizePath(sIn, bWin=True, bMask=False)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0208 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0209(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sReferencePathAbs = r"C:\test"
+      sIn  = r"../test_2\\subdir"
+      sExp = r"C:/test_2/subdir"
+   elif platform.system() == "Linux":
+      sReferencePathAbs = r"/tmp/test"
+      sIn  = r"../test_2\\subdir"
+      sExp = r"/tmp/test_2/subdir"
+   sOut = CString.NormalizePath(sIn, sReferencePathAbs=sReferencePathAbs)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0209 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0210(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sReferencePathAbs = r"C:\test"
+      sIn  = r"../test_2\\subdir"
+      sExp = r"C:\\test_2\\subdir"
+   elif platform.system() == "Linux":
+      sReferencePathAbs = r"/tmp/test"
+      sIn  = r"../test_2\\subdir"
+      sExp = r"\\tmp\\test_2\\subdir" # this makes no sense, but nevertheless let's do something under Linux also
+   sOut = CString.NormalizePath(sIn, bWin=True, bMask=True, sReferencePathAbs=sReferencePathAbs)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0210 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0211(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sIn  = r"C:\dir//../dir\\sub  dir"
+      sExp = r'"C:/dir/sub  dir"'
+   elif platform.system() == "Linux":
+      sIn  = r"/tmp\dir//../dir\\sub  dir"
+      sExp = r'"/tmp/dir/sub  dir"'
+   sOut = CString.NormalizePath(sIn, bConsiderBlanks=True)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0211 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0212(oConfig):
+   oResults = CResult()
+   if platform.system() == "Windows":
+      sIn  = r"C:\dir\\subdir"
+      sExp = r"C:/dir/subdir"
+   elif platform.system() == "Linux":
+      sIn  = r"/tmp\dir\\subdir"
+      sExp = r"/tmp/dir/subdir"
+   sOut = CString.NormalizePath(sIn, bConsiderBlanks=True)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0212 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0213(oConfig):
+   oResults = CResult()
+   sIn  = r"//server.com\001//..\002/003\\004"
+   sExp = r"//server.com/002/003/004"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   sIn  = r"\\server.com\001//..\002/003\\004"
+   sExp = r"//server.com/002/003/004"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   sIn  = r"//server.com\001//..\002/003\\004"
+   sExp = r"\\server.com\002\003\004"
+   sOut = CString.NormalizePath(sIn, bWin=True)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   sIn  = r"\\server.com\001//..\002/003\\004"
+   sExp = r"\\server.com\002\003\004"
+   sOut = CString.NormalizePath(sIn, bWin=True)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0213 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0214(oConfig):
+   oResults = CResult()
+   sIn  = r"file://///server.com\001//..\002/003\\004"
+   sExp = r"file://///server.com/002/003/004"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   sIn  = r"file://///server.com\001//..\002/003\\004"
+   sExp = r"file://///server.com/002/003/004"
+   sOut = CString.NormalizePath(sIn, bWin=True)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0214 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0215(oConfig):
+   oResults = CResult()
+   sIn  = r"http://server.com\001//..\002/003\\004"
+   sExp = r"http://server.com/002/003/004"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   sIn  = r"http:\\server.com\001//..\002/003\\004"
+   sExp = r"http://server.com/002/003/004"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   sIn  = r"https://server.com\001//..\002/003\\004"
+   sExp = r"https://server.com/002/003/004"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   sIn  = r"https:\\server.com\001//..\002/003\\004"
+   sExp = r"https://server.com/002/003/004"
+   sOut = CString.NormalizePath(sIn)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   sIn  = r"http://server.com\001//..\002/003\\004"
+   sExp = r"http://server.com/002/003/004"
+   sOut = CString.NormalizePath(sIn, bWin=True)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   sIn  = r"http:\\server.com\001//..\002/003\\004"
+   sExp = r"http://server.com/002/003/004"
+   sOut = CString.NormalizePath(sIn, bWin=True)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   sIn  = r"https://server.com\001//..\002/003\\004"
+   sExp = r"https://server.com/002/003/004"
+   sOut = CString.NormalizePath(sIn, bWin=True)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   sIn  = r"https:\\server.com\001//..\002/003\\004"
+   sExp = r"https://server.com/002/003/004"
+   sOut = CString.NormalizePath(sIn, bWin=True)
+   bSuccess, sResult = compare(((sOut, sExp),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0215 done")
 
 # --------------------------------------------------------------------------------------------------------------
 

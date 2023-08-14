@@ -128,5 +128,69 @@ Test PEC_0155 / CFOLDER / BADCASE
 Description: Multiple CFolder instances of same folder
 Expectation: Error message
 ------------------------------------------------------------------------------------------------------------------------
-Generated: 11.08.2023 - 16:41:27
+Test PEC_0200 / CSTRING / GOODCASE
+Description: NormalizePath: Resolve environment variables
+Expectation: String with resolved environment variable is not expected to be the same as the input string
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0201 / CSTRING / GOODCASE
+Description: NormalizePath: Resolving of environment variables deactivated
+Expectation: String with environment variable is returned unresolved
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0202 / CSTRING / GOODCASE
+Description: NormalizePath: Convert backslashes
+Expectation: All backslashes replaced by single slashes
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0203 / CSTRING / GOODCASE
+Description: NormalizePath: Strip surrounding quotes and spaces
+Expectation: Surrounding quotes and spaces are removed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0204 / CSTRING / GOODCASE
+Description: NormalizePath: Path with redundant path separators
+Expectation: Redundant path separators removed; all backslashes replaced by single slashes
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0205 / CSTRING / GOODCASE
+Description: NormalizePath: Path with redundant path separators; bWin=True
+Expectation: Redundant path separators removed; remaining separators are masked backslashes
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0206 / CSTRING / GOODCASE
+Description: NormalizePath: Path with up-level references
+Expectation: All backslashes replaced by single slashes; up-level references resolved
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0207 / CSTRING / GOODCASE
+Description: NormalizePath: Path with up-level references; bWin=True
+Expectation: All slashes replaced by double (masked) backslashes; up-level references resolved
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0208 / CSTRING / GOODCASE
+Description: NormalizePath: Path with up-level references; bWin=True; bMask=False
+Expectation: All slashes replaced by single (unmasked) backslashes; up-level references resolved
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0209 / CSTRING / GOODCASE
+Description: NormalizePath: Relative input path with absolute reference path
+Expectation: Resulting absolute path is a merge of the absolute reference path and the relative input path; single slashes as separator
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0210 / CSTRING / GOODCASE
+Description: NormalizePath: Relative input path with absolute reference path; bWin=True; bMask=True
+Expectation: Resulting absolute path is a merge of the absolute reference path and the relative input path; masked backslashes as separator
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0211 / CSTRING / GOODCASE
+Description: NormalizePath: Path with blanks inside; bConsiderBlanks=True
+Expectation: Paths with blanks inside are encapsulated in quotes; single slashes as separator; up-level references resolved
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0212 / CSTRING / GOODCASE
+Description: NormalizePath: Path without blanks inside; bConsiderBlanks=True
+Expectation: Paths without blanks inside are not encapsulated in quotes; single slashes as separator
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0213 / CSTRING / GOODCASE
+Description: NormalizePath: Local network resource paths
+Expectation: Resulting local network resource path contains single slashes as separator
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0214 / CSTRING / GOODCASE
+Description: NormalizePath: Local network resource paths in web browser format
+Expectation: Resulting local network resource path (web browser format) contains single slashes as separator; bWin has no effect
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0215 / CSTRING / GOODCASE
+Description: NormalizePath: Internet addresses
+Expectation: Resulting internet address contains single backslashes as separator; bWin has no effect
+------------------------------------------------------------------------------------------------------------------------
+Generated: 14.08.2023 - 14:52:59
 
