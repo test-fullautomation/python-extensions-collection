@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 11.08.2023
+# 14.08.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -353,5 +353,190 @@ dictUsecase['COMMENT']           = None
 listofdictUsecases.append(dictUsecase)
 del dictUsecase
 # --------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0200"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Resolve environment variables"
+dictUsecase['EXPECTATION']       = "String with resolved environment variable is not expected to be the same as the input string"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0201"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Resolving of environment variables deactivated"
+dictUsecase['EXPECTATION']       = "String with environment variable is returned unresolved"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0202"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Convert backslashes"
+dictUsecase['EXPECTATION']       = "All backslashes replaced by single slashes"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0203"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Strip surrounding quotes and spaces"
+dictUsecase['EXPECTATION']       = "Surrounding quotes and spaces are removed"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0204"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Path with redundant path separators"
+dictUsecase['EXPECTATION']       = "Redundant path separators removed; all backslashes replaced by single slashes"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0205"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Path with redundant path separators; bWin=True"
+dictUsecase['EXPECTATION']       = "Redundant path separators removed; remaining separators are masked backslashes"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0206"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Path with up-level references"
+dictUsecase['EXPECTATION']       = "All backslashes replaced by single slashes; up-level references resolved"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0207"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Path with up-level references; bWin=True"
+dictUsecase['EXPECTATION']       = "All slashes replaced by double (masked) backslashes; up-level references resolved"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0208"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Path with up-level references; bWin=True; bMask=False"
+dictUsecase['EXPECTATION']       = "All slashes replaced by single (unmasked) backslashes; up-level references resolved"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0209"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Relative input path with absolute reference path"
+dictUsecase['EXPECTATION']       = "Resulting absolute path is a merge of the absolute reference path and the relative input path; single slashes as separator"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0210"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Relative input path with absolute reference path; bWin=True; bMask=True"
+dictUsecase['EXPECTATION']       = "Resulting absolute path is a merge of the absolute reference path and the relative input path; masked backslashes as separator"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0211"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Path with blanks inside; bConsiderBlanks=True"
+dictUsecase['EXPECTATION']       = "Paths with blanks inside are encapsulated in quotes; single slashes as separator; up-level references resolved"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0212"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Path without blanks inside; bConsiderBlanks=True"
+dictUsecase['EXPECTATION']       = "Paths without blanks inside are not encapsulated in quotes; single slashes as separator"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0213"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Local network resource paths"
+dictUsecase['EXPECTATION']       = "Resulting local network resource path contains single slashes as separator"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0214"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Local network resource paths in web browser format"
+dictUsecase['EXPECTATION']       = "Resulting local network resource path (web browser format) contains single slashes as separator; bWin has no effect"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0215"
+dictUsecase['DESCRIPTION']       = "NormalizePath: Internet addresses"
+dictUsecase['EXPECTATION']       = "Resulting internet address contains single backslashes as separator; bWin has no effect"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 
