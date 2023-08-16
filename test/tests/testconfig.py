@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 14.08.2023
+# 16.08.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -353,6 +353,12 @@ dictUsecase['COMMENT']           = None
 listofdictUsecases.append(dictUsecase)
 del dictUsecase
 # --------------------------------------------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------------------------------------------
+# CString
+#TM***
+# --------------------------------------------------------------------------------------------------------------
+
 # --------------------------------------------------------------------------------------------------------------
 dictUsecase = {}
 dictUsecase['TESTID']            = "PEC_0200"
@@ -530,6 +536,74 @@ dictUsecase['COMMENT']           = None
 listofdictUsecases.append(dictUsecase)
 del dictUsecase
 # --------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0300"
+dictUsecase['DESCRIPTION']       = "DetectParentPath: Search for a single folder"
+dictUsecase['EXPECTATION']       = "Path to folder found within start path"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0301"
+dictUsecase['DESCRIPTION']       = "DetectParentPath: Search for two folders"
+dictUsecase['EXPECTATION']       = "Expected paths detected one and two levels up"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0302"
+dictUsecase['DESCRIPTION']       = "DetectParentPath: Search for two folders; with one folder does not exist"
+dictUsecase['EXPECTATION']       = "Expected path to existing folder detected one level up"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0303"
+dictUsecase['DESCRIPTION']       = "DetectParentPath: Search for two folders; both folders do not exist"
+dictUsecase['EXPECTATION']       = "No path detected"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0304"
+dictUsecase['DESCRIPTION']       = "DetectParentPath: Search for a single folder; additionally search for a file"
+dictUsecase['EXPECTATION']       = "Expected path to folder detected one level up; one file found"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0305"
+dictUsecase['DESCRIPTION']       = "DetectParentPath: Search for a single folder; additionally search for a file"
+dictUsecase['EXPECTATION']       = "Expected path to folder detected one level up; file not found"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+
 
 
 

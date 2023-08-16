@@ -457,5 +457,65 @@ Test Use Cases
 
 ----
 
-Generated: 14.08.2023 - 14:52:59
+* **Test PEC_0300**
+
+  [CSTRING / GOODCASE]
+
+   **DetectParentPath: Search for a single folder**
+
+   Expected: Path to folder found within start path
+
+----
+
+* **Test PEC_0301**
+
+  [CSTRING / GOODCASE]
+
+   **DetectParentPath: Search for two folders**
+
+   Expected: Expected paths detected one and two levels up
+
+----
+
+* **Test PEC_0302**
+
+  [CSTRING / GOODCASE]
+
+   **DetectParentPath: Search for two folders; with one folder does not exist**
+
+   Expected: Expected path to existing folder detected one level up
+
+----
+
+* **Test PEC_0303**
+
+  [CSTRING / GOODCASE]
+
+   **DetectParentPath: Search for two folders; both folders do not exist**
+
+   Expected: No path detected
+
+----
+
+* **Test PEC_0304**
+
+  [CSTRING / GOODCASE]
+
+   **DetectParentPath: Search for a single folder; additionally search for a file**
+
+   Expected: Expected path to folder detected one level up; one file found
+
+----
+
+* **Test PEC_0305**
+
+  [CSTRING / GOODCASE]
+
+   **DetectParentPath: Search for a single folder; additionally search for a file**
+
+   Expected: Expected path to folder detected one level up; file not found
+
+----
+
+Generated: 16.08.2023 - 14:53:58
 

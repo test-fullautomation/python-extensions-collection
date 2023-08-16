@@ -18,7 +18,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 14.08.2023 - 14:52:59
+# 16.08.2023 - 14:53:58
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -156,5 +156,53 @@ class Test_CSTRING_GOODCASE:
    )
    def test_PEC_0215(self, Description):
       nReturn = CExecute.Execute("PEC_0215")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Path to folder found within start path
+   @pytest.mark.parametrize(
+      "Description", ["DetectParentPath: Search for a single folder",]
+   )
+   def test_PEC_0300(self, Description):
+      nReturn = CExecute.Execute("PEC_0300")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Expected paths detected one and two levels up
+   @pytest.mark.parametrize(
+      "Description", ["DetectParentPath: Search for two folders",]
+   )
+   def test_PEC_0301(self, Description):
+      nReturn = CExecute.Execute("PEC_0301")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Expected path to existing folder detected one level up
+   @pytest.mark.parametrize(
+      "Description", ["DetectParentPath: Search for two folders; with one folder does not exist",]
+   )
+   def test_PEC_0302(self, Description):
+      nReturn = CExecute.Execute("PEC_0302")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: No path detected
+   @pytest.mark.parametrize(
+      "Description", ["DetectParentPath: Search for two folders; both folders do not exist",]
+   )
+   def test_PEC_0303(self, Description):
+      nReturn = CExecute.Execute("PEC_0303")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Expected path to folder detected one level up; one file found
+   @pytest.mark.parametrize(
+      "Description", ["DetectParentPath: Search for a single folder; additionally search for a file",]
+   )
+   def test_PEC_0304(self, Description):
+      nReturn = CExecute.Execute("PEC_0304")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Expected path to folder detected one level up; file not found
+   @pytest.mark.parametrize(
+      "Description", ["DetectParentPath: Search for a single folder; additionally search for a file",]
+   )
+   def test_PEC_0305(self, Description):
+      nReturn = CExecute.Execute("PEC_0305")
       assert nReturn == 0
 # --------------------------------------------------------------------------------------------------------------
