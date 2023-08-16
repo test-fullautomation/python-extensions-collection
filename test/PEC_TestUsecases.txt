@@ -192,5 +192,29 @@ Test PEC_0215 / CSTRING / GOODCASE
 Description: NormalizePath: Internet addresses
 Expectation: Resulting internet address contains single backslashes as separator; bWin has no effect
 ------------------------------------------------------------------------------------------------------------------------
-Generated: 14.08.2023 - 14:52:59
+Test PEC_0300 / CSTRING / GOODCASE
+Description: DetectParentPath: Search for a single folder
+Expectation: Path to folder found within start path
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0301 / CSTRING / GOODCASE
+Description: DetectParentPath: Search for two folders
+Expectation: Expected paths detected one and two levels up
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0302 / CSTRING / GOODCASE
+Description: DetectParentPath: Search for two folders; with one folder does not exist
+Expectation: Expected path to existing folder detected one level up
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0303 / CSTRING / GOODCASE
+Description: DetectParentPath: Search for two folders; both folders do not exist
+Expectation: No path detected
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0304 / CSTRING / GOODCASE
+Description: DetectParentPath: Search for a single folder; additionally search for a file
+Expectation: Expected path to folder detected one level up; one file found
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0305 / CSTRING / GOODCASE
+Description: DetectParentPath: Search for a single folder; additionally search for a file
+Expectation: Expected path to folder detected one level up; file not found
+------------------------------------------------------------------------------------------------------------------------
+Generated: 16.08.2023 - 14:53:58
 

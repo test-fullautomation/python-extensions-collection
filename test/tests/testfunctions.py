@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 14.08.2023
+# 16.08.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -1961,7 +1961,7 @@ def PEC_0155(oConfig):
    return True, oResults.Results("PEC_0155 done")
 
 # --------------------------------------------------------------------------------------------------------------
-# CString
+# CString / NormalizePath
 # --------------------------------------------------------------------------------------------------------------
 #TM***
 
@@ -2308,5 +2308,267 @@ def PEC_0215(oConfig):
 
    return True, oResults.Results("PEC_0215 done")
 
+# --------------------------------------------------------------------------------------------------------------
+# CString / DetectParentPath
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+# The functionality of this method is based on the structure of the file system, on which this test is executed.
+# Therefore we compute all expected return values dynamically inside every test - relative to the position of this file
+# (to ensure that this test can be executed in any folder).
+# But it must be possible to go 3 levels up in the file system!
+
+def PEC_0300(oConfig):
+   oResults = CResult()
+
+   sIn_StartPath       = CString.NormalizePath(os.path.dirname(__file__))
+   sExp_DestPath       = CString.NormalizePath(os.path.dirname(sIn_StartPath))
+   sExp_DestPathParent = CString.NormalizePath(os.path.dirname(sExp_DestPath))
+   sIn_Foldername      = os.path.basename(sExp_DestPath)
+   sRet_DestPath, listRet_DestPaths, sRet_DestFile, listRet_DestFiles, sRet_DestPathParent = CString.DetectParentPath(sIn_StartPath, sIn_Foldername)
+
+   bSuccess, sResult = compare(((sRet_DestPath, sExp_DestPath),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((len(listRet_DestPaths), 1),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestPaths[0], sExp_DestPath),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((sRet_DestFile, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestFiles, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((sRet_DestPathParent, sExp_DestPathParent),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0300 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0301(oConfig):
+   oResults = CResult()
+
+   sIn_StartPath       = CString.NormalizePath(os.path.dirname(__file__))
+   sParentPath         = CString.NormalizePath(os.path.dirname(sIn_StartPath))
+   sIn_Foldername_1    = os.path.basename(sParentPath)
+   sParentParentPath   = CString.NormalizePath(os.path.dirname(os.path.dirname(sIn_StartPath)))
+   sIn_Foldername_2    = os.path.basename(sParentParentPath)
+   sIn_Foldername      = f"{sIn_Foldername_1};{sIn_Foldername_2}"
+   sExp_DestPathParent = sParentParentPath
+
+   sRet_DestPath, listRet_DestPaths, sRet_DestFile, listRet_DestFiles, sRet_DestPathParent = CString.DetectParentPath(sIn_StartPath, sIn_Foldername)
+
+   # print()
+   # print(f"==================== sIn_StartPath       : '{sIn_StartPath}'")
+   # print(f"==================== sParentPath         : '{sParentPath}'")
+   # print(f"==================== sIn_Foldername_1    : '{sIn_Foldername_1}'")
+   # print(f"==================== sParentParentPath   : '{sParentParentPath}'")
+   # print(f"==================== sIn_Foldername_2    : '{sIn_Foldername_2}'")
+   # print(f"==================== sIn_Foldername      : '{sIn_Foldername}'")
+   # print(f"==================== sExp_DestPathParent : '{sExp_DestPathParent}'")
+
+   # print(f"==================== sRet_DestPath       : '{sRet_DestPath}'")
+   # print(f"==================== listRet_DestPaths   : '{listRet_DestPaths}'")
+   # print(f"==================== sRet_DestFile       : '{sRet_DestFile}'")
+   # print(f"==================== listRet_DestFiles   : '{listRet_DestFiles}'")
+   # print(f"==================== sRet_DestPathParent : '{sRet_DestPathParent}'")
+   # print()
+
+# ==================== sIn_StartPath       : 'D:/ROBFW/components/python-extensions-collection/test/tests'
+# ==================== sParentPath         : 'D:/ROBFW/components/python-extensions-collection/test'
+# ==================== sIn_Foldername_1    : 'test'
+# ==================== sParentParentPath   : 'D:/ROBFW/components/python-extensions-collection'
+# ==================== sIn_Foldername_2    : 'python-extensions-collection'
+# ==================== sIn_Foldername      : 'test;python-extensions-collection'
+# ==================== sRet_DestPath       : 'D:/ROBFW/components/python-extensions-collection/test'
+# ==================== listRet_DestPaths   : '['D:/ROBFW/components/python-extensions-collection/test', 'D:/ROBFW/components/python-extensions-collection']'
+# ==================== sRet_DestFile       : 'None'
+# ==================== listRet_DestFiles   : 'None'
+# ==================== sRet_DestPathParent : 'D:/ROBFW/components/python-extensions-collection'
+
+   bSuccess, sResult = compare(((sRet_DestPath, sParentPath),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((len(listRet_DestPaths), 2),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestPaths[0], sParentPath),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestPaths[1], sParentParentPath),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((sRet_DestFile, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestFiles, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((sRet_DestPathParent, sExp_DestPathParent),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0301 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0302(oConfig):
+   oResults = CResult()
+
+   sIn_StartPath     = CString.NormalizePath(os.path.dirname(__file__))
+   sParentPath       = CString.NormalizePath(os.path.dirname(sIn_StartPath))
+   sParentParentPath = CString.NormalizePath(os.path.dirname(sParentPath))
+   sIn_Foldername_1  = "iamnotexisting"
+   sIn_Foldername_2  = os.path.basename(sParentPath)
+   sIn_Foldername    = f"{sIn_Foldername_1};{sIn_Foldername_2}"
+
+   sExp_DestPathParent = sParentParentPath
+
+   sRet_DestPath, listRet_DestPaths, sRet_DestFile, listRet_DestFiles, sRet_DestPathParent = CString.DetectParentPath(sIn_StartPath, sIn_Foldername)
+
+   # print()
+   # print(f"==================== sIn_StartPath       : '{sIn_StartPath}'")
+   # print(f"==================== sParentPath         : '{sParentPath}'")
+   # print(f"==================== sParentParentPath   : '{sParentParentPath}'")
+   # print(f"==================== sIn_Foldername_1    : '{sIn_Foldername_1}'")
+   # print(f"==================== sIn_Foldername_2    : '{sIn_Foldername_2}'")
+   # print(f"==================== sIn_Foldername      : '{sIn_Foldername}'")
+   # print(f"==================== sExp_DestPathParent : '{sExp_DestPathParent}'")
+   # print(f"==================== sRet_DestPath       : '{sRet_DestPath}'")
+   # print(f"==================== listRet_DestPaths   : '{listRet_DestPaths}'")
+   # print(f"==================== sRet_DestFile       : '{sRet_DestFile}'")
+   # print(f"==================== listRet_DestFiles   : '{listRet_DestFiles}'")
+   # print(f"==================== sRet_DestPathParent : '{sRet_DestPathParent}'")
+   # print()
+
+   bSuccess, sResult = compare(((sRet_DestPath, sParentPath),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((len(listRet_DestPaths), 0, "listRet_DestPaths"),), bInverse=True)
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestPaths[0], sParentPath),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((sRet_DestFile, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestFiles, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((sRet_DestPathParent, sExp_DestPathParent),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0302 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0303(oConfig):
+   oResults = CResult()
+
+   sIn_StartPath    = CString.NormalizePath(os.path.dirname(__file__))
+   sIn_Foldername_1 = "iamnotexisting"
+   sIn_Foldername_2 = "iamalsonotexisting"
+   sIn_Foldername   = f"{sIn_Foldername_1};{sIn_Foldername_2}"
+
+   sRet_DestPath, listRet_DestPaths, sRet_DestFile, listRet_DestFiles, sRet_DestPathParent = CString.DetectParentPath(sIn_StartPath, sIn_Foldername)
+
+   bSuccess, sResult = compare(((sRet_DestPath, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestPaths, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((sRet_DestFile, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestFiles, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((sRet_DestPathParent, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0303 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0304(oConfig):
+   oResults = CResult()
+
+   sIn_StartPath    = CString.NormalizePath(os.path.dirname(__file__))
+   sExp_DestPath       = CString.NormalizePath(os.path.dirname(sIn_StartPath))
+   sExp_DestPathParent = CString.NormalizePath(os.path.dirname(sExp_DestPath))
+   sIn_Foldername      = os.path.basename(sExp_DestPath)
+   sIn_FileName        = "testfunctions.py"
+   sExp_DestFile       = f"{sIn_StartPath}/{sIn_FileName}"
+
+   sRet_DestPath, listRet_DestPaths, sRet_DestFile, listRet_DestFiles, sRet_DestPathParent = CString.DetectParentPath(sIn_StartPath, sIn_Foldername, sFileName=sIn_FileName)
+
+   bSuccess, sResult = compare(((sRet_DestPath, sExp_DestPath),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((len(listRet_DestPaths), 1),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestPaths[0], sExp_DestPath),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((sRet_DestFile, sExp_DestFile),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((len(listRet_DestFiles), 1),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestFiles[0], sExp_DestFile),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((sRet_DestPathParent, sExp_DestPathParent),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0304 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0305(oConfig):
+   oResults = CResult()
+
+   sIn_StartPath       = CString.NormalizePath(os.path.dirname(__file__))
+   sExp_DestPath       = CString.NormalizePath(os.path.dirname(sIn_StartPath))
+   sExp_DestPathParent = CString.NormalizePath(os.path.dirname(sExp_DestPath))
+   sIn_Foldername      = os.path.basename(sExp_DestPath)
+   sIn_FileName        = "IAmNotExisting.txt"
+
+   sRet_DestPath, listRet_DestPaths, sRet_DestFile, listRet_DestFiles, sRet_DestPathParent = CString.DetectParentPath(sIn_StartPath, sIn_Foldername, sFileName=sIn_FileName)
+
+   bSuccess, sResult = compare(((sRet_DestPath, sExp_DestPath),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((len(listRet_DestPaths), 1),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestPaths[0], sExp_DestPath),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((sRet_DestFile, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((listRet_DestFiles, None),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+   bSuccess, sResult = compare(((sRet_DestPathParent, sExp_DestPathParent),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0305 done")
+
+# --------------------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------------------------------
 

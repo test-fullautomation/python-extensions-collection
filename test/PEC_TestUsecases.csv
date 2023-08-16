@@ -44,3 +44,9 @@ PEC_0212|CSTRING|GOODCASE|NormalizePath: Path without blanks inside; bConsiderBl
 PEC_0213|CSTRING|GOODCASE|NormalizePath: Local network resource paths
 PEC_0214|CSTRING|GOODCASE|NormalizePath: Local network resource paths in web browser format
 PEC_0215|CSTRING|GOODCASE|NormalizePath: Internet addresses
+PEC_0300|CSTRING|GOODCASE|DetectParentPath: Search for a single folder
+PEC_0301|CSTRING|GOODCASE|DetectParentPath: Search for two folders
+PEC_0302|CSTRING|GOODCASE|DetectParentPath: Search for two folders; with one folder does not exist
+PEC_0303|CSTRING|GOODCASE|DetectParentPath: Search for two folders; both folders do not exist
+PEC_0304|CSTRING|GOODCASE|DetectParentPath: Search for a single folder; additionally search for a file
+PEC_0305|CSTRING|GOODCASE|DetectParentPath: Search for a single folder; additionally search for a file
