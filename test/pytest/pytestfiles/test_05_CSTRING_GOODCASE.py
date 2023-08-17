@@ -18,7 +18,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 16.08.2023 - 14:53:58
+# 17.08.2023 - 15:49:18
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -204,5 +204,317 @@ class Test_CSTRING_GOODCASE:
    )
    def test_PEC_0305(self, Description):
       nReturn = CExecute.Execute("PEC_0305")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Skip blank strings",]
+   )
+   def test_PEC_0400(self, Description):
+      nReturn = CExecute.Execute("PEC_0400")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Blank strings not skipped",]
+   )
+   def test_PEC_0401(self, Description):
+      nReturn = CExecute.Execute("PEC_0401")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String commented out (1)",]
+   )
+   def test_PEC_0402(self, Description):
+      nReturn = CExecute.Execute("PEC_0402")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String commented out (2)",]
+   )
+   def test_PEC_0403(self, Description):
+      nReturn = CExecute.Execute("PEC_0403")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String commented out (3)",]
+   )
+   def test_PEC_0404(self, Description):
+      nReturn = CExecute.Execute("PEC_0404")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String commented out (4)",]
+   )
+   def test_PEC_0405(self, Description):
+      nReturn = CExecute.Execute("PEC_0405")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String commented out (5)",]
+   )
+   def test_PEC_0406(self, Description):
+      nReturn = CExecute.Execute("PEC_0406")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String commented out (6)",]
+   )
+   def test_PEC_0407(self, Description):
+      nReturn = CExecute.Execute("PEC_0407")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String starts with ...",]
+   )
+   def test_PEC_0408(self, Description):
+      nReturn = CExecute.Execute("PEC_0408")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String ends with ...",]
+   )
+   def test_PEC_0409(self, Description):
+      nReturn = CExecute.Execute("PEC_0409")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String starts not with ...",]
+   )
+   def test_PEC_0410(self, Description):
+      nReturn = CExecute.Execute("PEC_0410")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String ends not with ...",]
+   )
+   def test_PEC_0411(self, Description):
+      nReturn = CExecute.Execute("PEC_0411")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String contains ... (1)",]
+   )
+   def test_PEC_0412(self, Description):
+      nReturn = CExecute.Execute("PEC_0412")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String contains ... (2)",]
+   )
+   def test_PEC_0413(self, Description):
+      nReturn = CExecute.Execute("PEC_0413")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String contains ... and contains not ...",]
+   )
+   def test_PEC_0414(self, Description):
+      nReturn = CExecute.Execute("PEC_0414")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: String contains not ...",]
+   )
+   def test_PEC_0415(self, Description):
+      nReturn = CExecute.Execute("PEC_0415")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter combinations; case sensitive",]
+   )
+   def test_PEC_0416(self, Description):
+      nReturn = CExecute.Execute("PEC_0416")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter combinations; not case sensitive",]
+   )
+   def test_PEC_0417(self, Description):
+      nReturn = CExecute.Execute("PEC_0417")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Inclusive by regular expression (1)",]
+   )
+   def test_PEC_0418(self, Description):
+      nReturn = CExecute.Execute("PEC_0418")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Inclusive by regular expression (2)",]
+   )
+   def test_PEC_0419(self, Description):
+      nReturn = CExecute.Execute("PEC_0419")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter combinations (1)",]
+   )
+   def test_PEC_0420(self, Description):
+      nReturn = CExecute.Execute("PEC_0420")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter combinations (2)",]
+   )
+   def test_PEC_0421(self, Description):
+      nReturn = CExecute.Execute("PEC_0421")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter combinations (3)",]
+   )
+   def test_PEC_0422(self, Description):
+      nReturn = CExecute.Execute("PEC_0422")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter combinations (4)",]
+   )
+   def test_PEC_0423(self, Description):
+      nReturn = CExecute.Execute("PEC_0423")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Exclusive by regular expression (1)",]
+   )
+   def test_PEC_0424(self, Description):
+      nReturn = CExecute.Execute("PEC_0424")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Exclusive by regular expression (2)",]
+   )
+   def test_PEC_0425(self, Description):
+      nReturn = CExecute.Execute("PEC_0425")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter combinations (5)",]
+   )
+   def test_PEC_0426(self, Description):
+      nReturn = CExecute.Execute("PEC_0426")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter combinations (6)",]
+   )
+   def test_PEC_0427(self, Description):
+      nReturn = CExecute.Execute("PEC_0427")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter combinations (7)",]
+   )
+   def test_PEC_0428(self, Description):
+      nReturn = CExecute.Execute("PEC_0428")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter combinations (8)",]
+   )
+   def test_PEC_0429(self, Description):
+      nReturn = CExecute.Execute("PEC_0429")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Handling of blanks (1)",]
+   )
+   def test_PEC_0430(self, Description):
+      nReturn = CExecute.Execute("PEC_0430")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Handling of blanks (2)",]
+   )
+   def test_PEC_0431(self, Description):
+      nReturn = CExecute.Execute("PEC_0431")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter string lists (1)",]
+   )
+   def test_PEC_0432(self, Description):
+      nReturn = CExecute.Execute("PEC_0432")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter string lists (2)",]
+   )
+   def test_PEC_0433(self, Description):
+      nReturn = CExecute.Execute("PEC_0433")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter string lists (3)",]
+   )
+   def test_PEC_0434(self, Description):
+      nReturn = CExecute.Execute("PEC_0434")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter string lists (4)",]
+   )
+   def test_PEC_0435(self, Description):
+      nReturn = CExecute.Execute("PEC_0435")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter string lists (5)",]
+   )
+   def test_PEC_0436(self, Description):
+      nReturn = CExecute.Execute("PEC_0436")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: False
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter string lists (6)",]
+   )
+   def test_PEC_0437(self, Description):
+      nReturn = CExecute.Execute("PEC_0437")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Returned: True
+   @pytest.mark.parametrize(
+      "Description", ["StringFilter: Filter string lists (7)",]
+   )
+   def test_PEC_0438(self, Description):
+      nReturn = CExecute.Execute("PEC_0438")
       assert nReturn == 0
 # --------------------------------------------------------------------------------------------------------------

@@ -517,5 +517,395 @@ Test Use Cases
 
 ----
 
-Generated: 16.08.2023 - 14:53:58
+* **Test PEC_0400**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Skip blank strings**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0401**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Blank strings not skipped**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0402**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String commented out (1)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0403**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String commented out (2)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0404**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String commented out (3)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0405**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String commented out (4)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0406**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String commented out (5)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0407**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String commented out (6)**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0408**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String starts with ...**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0409**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String ends with ...**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0410**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String starts not with ...**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0411**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String ends not with ...**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0412**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String contains ... (1)**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0413**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String contains ... (2)**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0414**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String contains ... and contains not ...**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0415**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: String contains not ...**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0416**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter combinations; case sensitive**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0417**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter combinations; not case sensitive**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0418**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Inclusive by regular expression (1)**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0419**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Inclusive by regular expression (2)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0420**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter combinations (1)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0421**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter combinations (2)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0422**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter combinations (3)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0423**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter combinations (4)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0424**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Exclusive by regular expression (1)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0425**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Exclusive by regular expression (2)**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0426**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter combinations (5)**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0427**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter combinations (6)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0428**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter combinations (7)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0429**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter combinations (8)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0430**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Handling of blanks (1)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0431**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Handling of blanks (2)**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0432**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter string lists (1)**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0433**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter string lists (2)**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0434**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter string lists (3)**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0435**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter string lists (4)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0436**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter string lists (5)**
+
+   Expected: Returned: True
+
+----
+
+* **Test PEC_0437**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter string lists (6)**
+
+   Expected: Returned: False
+
+----
+
+* **Test PEC_0438**
+
+  [CSTRING / GOODCASE]
+
+   **StringFilter: Filter string lists (7)**
+
+   Expected: Returned: True
+
+----
+
+Generated: 17.08.2023 - 15:49:18
 

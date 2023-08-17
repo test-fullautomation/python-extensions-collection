@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 16.08.2023
+# 17.08.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -2570,5 +2570,903 @@ def PEC_0305(oConfig):
    return True, oResults.Results("PEC_0305 done")
 
 # --------------------------------------------------------------------------------------------------------------
+# CString / StringFilter
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+def PEC_0400(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "    ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0400 done")
+
 # --------------------------------------------------------------------------------------------------------------
 
+def PEC_0401(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "    ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = False,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0401 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0402(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  # Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = "#",
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0402 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0403(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  ; Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = ";",
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0403 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0404(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  # Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = "#",
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "beats",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0404 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0405(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = "Speed",
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "beats",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0405 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0406(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = False,
+                               bSkipBlankStrings = True,
+                               sComment          = "SPEED",
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "beats",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0406 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0407(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = "SPEED",
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "beats",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0407 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0408(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "Spee",
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0408 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0409(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = "nute",
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0409 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0410(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = "Spee",
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0410 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0411(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = "nute",
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0411 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0412(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "ts pe",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0412 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0413(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "otto;25;beats;all",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0413 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0414(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "otto;25;beats;all",
+                               sContainsNot      = "beats",
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0414 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0415(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = "ts pe",
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0415 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0416(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "Speed",
+                               sEndsWith         = "minute",
+                               sStartsNotWith    = "Speed",
+                               sEndsNotWith      = "minute",
+                               sContains         = "beats",
+                               sContainsNot      = "beats",
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0416 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0417(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = False,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "spEED",
+                               sEndsWith         = "MINute",
+                               sStartsNotWith    = "minute",
+                               sEndsNotWith      = "Speed",
+                               sContains         = "BEats",
+                               sContainsNot      = "really not",
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0417 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0418(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"\d{2}",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0418 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0419(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"\d{3}",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0419 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0420(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "Speed",
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"\d{3}",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0420 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0421(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = "Speed",
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"\d{2}",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0421 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0422(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = "Speed",
+                               sEndsNotWith      = None,
+                               sContains         = "beats",
+                               sContainsNot      = None,
+                               sInclRegEx        = r"\d{2}",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0422 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0423(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "Speed",
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = "really not",
+                               sInclRegEx        = r"\d{3}",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0423 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0424(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = r"\d{2}")
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0424 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0425(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = r"\d{3}")
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0425 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0426(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "Speed",
+                               sEndsWith         = "minute",
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = r"\d{3}")
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0426 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0427(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "Speed",
+                               sEndsWith         = "minute",
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = r"\d{2}")
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0427 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0428(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = "Speed",
+                               sEndsNotWith      = "minute",
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = r"\d{3}")
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0428 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0429(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = "Speed",
+                               sEndsNotWith      = "minute",
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = r"\d{2}")
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0429 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0430(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "   Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "   Speed ",
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0430 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0431(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "   Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"\s{3}Speed",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0431 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0432(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "beta; and",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0432 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0433(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "beta; not",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0433 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0434(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = r"beta\; and",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0434 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0435(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = r"beta\; not",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0435 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0436(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = False,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = r"BETA\; AND",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0436 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0437(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = False,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"BETA\;\sAND",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0437 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0438(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = False,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"beta\;\sand",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+
+   return True, oResults.Results("PEC_0438 done")
+
+# --------------------------------------------------------------------------------------------------------------

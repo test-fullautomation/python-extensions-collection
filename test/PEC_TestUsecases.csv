@@ -50,3 +50,42 @@ PEC_0302|CSTRING|GOODCASE|DetectParentPath: Search for two folders; with one fol
 PEC_0303|CSTRING|GOODCASE|DetectParentPath: Search for two folders; both folders do not exist
 PEC_0304|CSTRING|GOODCASE|DetectParentPath: Search for a single folder; additionally search for a file
 PEC_0305|CSTRING|GOODCASE|DetectParentPath: Search for a single folder; additionally search for a file
+PEC_0400|CSTRING|GOODCASE|StringFilter: Skip blank strings
+PEC_0401|CSTRING|GOODCASE|StringFilter: Blank strings not skipped
+PEC_0402|CSTRING|GOODCASE|StringFilter: String commented out (1)
+PEC_0403|CSTRING|GOODCASE|StringFilter: String commented out (2)
+PEC_0404|CSTRING|GOODCASE|StringFilter: String commented out (3)
+PEC_0405|CSTRING|GOODCASE|StringFilter: String commented out (4)
+PEC_0406|CSTRING|GOODCASE|StringFilter: String commented out (5)
+PEC_0407|CSTRING|GOODCASE|StringFilter: String commented out (6)
+PEC_0408|CSTRING|GOODCASE|StringFilter: String starts with ...
+PEC_0409|CSTRING|GOODCASE|StringFilter: String ends with ...
+PEC_0410|CSTRING|GOODCASE|StringFilter: String starts not with ...
+PEC_0411|CSTRING|GOODCASE|StringFilter: String ends not with ...
+PEC_0412|CSTRING|GOODCASE|StringFilter: String contains ... (1)
+PEC_0413|CSTRING|GOODCASE|StringFilter: String contains ... (2)
+PEC_0414|CSTRING|GOODCASE|StringFilter: String contains ... and contains not ...
+PEC_0415|CSTRING|GOODCASE|StringFilter: String contains not ...
+PEC_0416|CSTRING|GOODCASE|StringFilter: Filter combinations; case sensitive
+PEC_0417|CSTRING|GOODCASE|StringFilter: Filter combinations; not case sensitive
+PEC_0418|CSTRING|GOODCASE|StringFilter: Inclusive by regular expression (1)
+PEC_0419|CSTRING|GOODCASE|StringFilter: Inclusive by regular expression (2)
+PEC_0420|CSTRING|GOODCASE|StringFilter: Filter combinations (1)
+PEC_0421|CSTRING|GOODCASE|StringFilter: Filter combinations (2)
+PEC_0422|CSTRING|GOODCASE|StringFilter: Filter combinations (3)
+PEC_0423|CSTRING|GOODCASE|StringFilter: Filter combinations (4)
+PEC_0424|CSTRING|GOODCASE|StringFilter: Exclusive by regular expression (1)
+PEC_0425|CSTRING|GOODCASE|StringFilter: Exclusive by regular expression (2)
+PEC_0426|CSTRING|GOODCASE|StringFilter: Filter combinations (5)
+PEC_0427|CSTRING|GOODCASE|StringFilter: Filter combinations (6)
+PEC_0428|CSTRING|GOODCASE|StringFilter: Filter combinations (7)
+PEC_0429|CSTRING|GOODCASE|StringFilter: Filter combinations (8)
+PEC_0430|CSTRING|GOODCASE|StringFilter: Handling of blanks (1)
+PEC_0431|CSTRING|GOODCASE|StringFilter: Handling of blanks (2)
+PEC_0432|CSTRING|GOODCASE|StringFilter: Filter string lists (1)
+PEC_0433|CSTRING|GOODCASE|StringFilter: Filter string lists (2)
+PEC_0434|CSTRING|GOODCASE|StringFilter: Filter string lists (3)
+PEC_0435|CSTRING|GOODCASE|StringFilter: Filter string lists (4)
+PEC_0436|CSTRING|GOODCASE|StringFilter: Filter string lists (5)
+PEC_0437|CSTRING|GOODCASE|StringFilter: Filter string lists (6)
+PEC_0438|CSTRING|GOODCASE|StringFilter: Filter string lists (7)
