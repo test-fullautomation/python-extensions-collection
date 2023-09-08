@@ -1246,8 +1246,190 @@ listofdictUsecases.append(dictUsecase)
 del dictUsecase
 # --------------------------------------------------------------------------------------------------------------
 
+# --------------------------------------------------------------------------------------------------------------
+# CUtils
+#TM***
+# --------------------------------------------------------------------------------------------------------------
 
-
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0700"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'int'"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0701"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'float'"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0702"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'str'"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0703"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'bool'"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0704"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'None'"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0705"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'list'"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0706"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'tuple'"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0707"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'set'"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0708"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'dict'"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0709"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'dotdict'"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0710"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of nested types"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0711"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'list'; output indented by 5 blanks"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0712"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'list'; output indented by 2 blanks and with prefix"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0713"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of nested types; output indented by 2 blanks and with prefix; strings in hexadecimal format"
+dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0800"
+dictUsecase['DESCRIPTION']       = "GetInstalledPackages: Default usage"
+dictUsecase['EXPECTATION']       = "List of installed Python packages created"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = "This sometimes needs some time"
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0801"
+dictUsecase['DESCRIPTION']       = "GetInstalledPackages: List written to output file"
+dictUsecase['EXPECTATION']       = "List of installed Python packages created and written to output file"
+dictUsecase['SECTION']           = "CUTILS"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = "This sometimes some time"
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
 
 
 

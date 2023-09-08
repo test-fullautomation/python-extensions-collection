@@ -107,3 +107,19 @@ PEC_0653|CCOMPARISON|BADCASE|Compare two files (first file not existing)
 PEC_0654|CCOMPARISON|BADCASE|Compare two files (second file not existing)
 PEC_0655|CCOMPARISON|BADCASE|Compare two files (pattern file not existing)
 PEC_0656|CCOMPARISON|BADCASE|Compare two files (ignore pattern file not existing)
+PEC_0700|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'int'
+PEC_0701|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'float'
+PEC_0702|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'str'
+PEC_0703|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'bool'
+PEC_0704|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'None'
+PEC_0705|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'list'
+PEC_0706|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'tuple'
+PEC_0707|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'set'
+PEC_0708|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'dict'
+PEC_0709|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'dotdict'
+PEC_0710|CUTILS|GOODCASE|PrettyPrint: Input parameter of nested types
+PEC_0711|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'list'; output indented by 5 blanks
+PEC_0712|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'list'; output indented by 2 blanks and with prefix
+PEC_0713|CUTILS|GOODCASE|PrettyPrint: Input parameter of nested types; output indented by 2 blanks and with prefix; strings in hexadecimal format
+PEC_0800|CUTILS|GOODCASE|GetInstalledPackages: Default usage
+PEC_0801|CUTILS|GOODCASE|GetInstalledPackages: List written to output file

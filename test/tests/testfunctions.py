@@ -43,6 +43,7 @@ from PythonExtensionsCollection.String.CString import CString
 from PythonExtensionsCollection.File.CFile import CFile
 from PythonExtensionsCollection.Folder.CFolder import CFolder
 from PythonExtensionsCollection.Comparison.CComparison import CComparison
+from PythonExtensionsCollection.Utils.CUtils import *
 
 col.init(autoreset=True)
 
@@ -3541,12 +3542,6 @@ def PEC_0505(oConfig):
 # --------------------------------------------------------------------------------------------------------------
 #TM***
 
-# # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-# # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 def PEC_0600(oConfig):
    oResults = CResult()
 
@@ -3566,9 +3561,9 @@ def PEC_0600(oConfig):
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
 
-   bSuccess, sResult = compare(((bSuccess, True),))
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
    oResults.Results(sResult)
-   if bSuccess is not True: return bSuccess, oResults.Results()
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
 
    return True, oResults.Results("PEC_0600 done")
 # --------------------------------------------------------------------------------------------------------------
@@ -3592,9 +3587,9 @@ def PEC_0601(oConfig):
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
 
-   bSuccess, sResult = compare(((bSuccess, True),))
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
    oResults.Results(sResult)
-   if bSuccess is not True: return bSuccess, oResults.Results()
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
 
    return True, oResults.Results("PEC_0601 done")
 # --------------------------------------------------------------------------------------------------------------
@@ -3620,9 +3615,9 @@ def PEC_0602(oConfig):
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
 
-   bSuccess, sResult = compare(((bSuccess, True),))
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
    oResults.Results(sResult)
-   if bSuccess is not True: return bSuccess, oResults.Results()
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
 
    return True, oResults.Results("PEC_0602 done")
 # --------------------------------------------------------------------------------------------------------------
@@ -3648,9 +3643,9 @@ def PEC_0603(oConfig):
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
 
-   bSuccess, sResult = compare(((bSuccess, True),))
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
    oResults.Results(sResult)
-   if bSuccess is not True: return bSuccess, oResults.Results()
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
 
    return True, oResults.Results("PEC_0603 done")
 # --------------------------------------------------------------------------------------------------------------
@@ -3678,9 +3673,9 @@ def PEC_0604(oConfig):
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
 
-   bSuccess, sResult = compare(((bSuccess, True),))
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
    oResults.Results(sResult)
-   if bSuccess is not True: return bSuccess, oResults.Results()
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
 
    return True, oResults.Results("PEC_0604 done")
 # --------------------------------------------------------------------------------------------------------------
@@ -3889,4 +3884,443 @@ def PEC_0656(oConfig):
    if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
 
    return True, oResults.Results("PEC_0656 done")
+
+# --------------------------------------------------------------------------------------------------------------
+# CUtils / PrettyPrint
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+def PEC_0700(oConfig):
+   oResults = CResult()
+
+   oData = 4
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[INT]  :  4")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0700 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0701(oConfig):
+   oResults = CResult()
+
+   oData = 6.8
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[FLOAT]  :  6.8")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0701 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0702(oConfig):
+   oResults = CResult()
+
+   oData = "ABC"
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[STR]  :  'ABC'")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0702 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0703(oConfig):
+   oResults = CResult()
+
+   oData = True
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[BOOL]  :  True")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0703 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0704(oConfig):
+   oResults = CResult()
+
+   oData = None
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0704 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0705(oConfig):
+   oResults = CResult()
+
+   oData = [4, 6.8, "ABC", True, None]
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[LIST] (5/1) > [INT]  :  4")
+   listExpected.append("[LIST] (5/2) > [FLOAT]  :  6.8")
+   listExpected.append("[LIST] (5/3) > [STR]  :  'ABC'")
+   listExpected.append("[LIST] (5/4) > [BOOL]  :  True")
+   listExpected.append("[LIST] (5/5) > [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0705 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0706(oConfig):
+   oResults = CResult()
+
+   oData = (4, 6.8, "ABC", True, None)
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[TUPLE] (5/1) > [INT]  :  4")
+   listExpected.append("[TUPLE] (5/2) > [FLOAT]  :  6.8")
+   listExpected.append("[TUPLE] (5/3) > [STR]  :  'ABC'")
+   listExpected.append("[TUPLE] (5/4) > [BOOL]  :  True")
+   listExpected.append("[TUPLE] (5/5) > [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0706 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0707(oConfig):
+   oResults = CResult()
+
+   oData = {4, 6.8, "ABC", True, None}
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpectedParts = []
+   listExpectedParts.append("> [INT]  :  4")
+   listExpectedParts.append("> [FLOAT]  :  6.8")
+   listExpectedParts.append("> [STR]  :  'ABC'")
+   listExpectedParts.append("> [BOOL]  :  True")
+   listExpectedParts.append("> [NONE]  :  None")
+   sExp = "\n".join(listExpectedParts)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}' (subset, not ordered)")
+
+   bSuccess, sResult = compare(((len(listOutLines), len(listExpectedParts)),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   # !!! elements of a set are not ordered !!!
+   for sLine in listOutLines:
+      if not sLine.startswith("[SET] (5"):
+         bSuccess = False
+         sResult  = f"line '{sLine}' does not start with '[SET] (5'"
+         oResults.Results(sResult)
+         return bSuccess, oResults.Results()
+
+      bFound = False
+      for sExpectedPart in listExpectedParts:
+          if sLine.endswith(sExpectedPart):
+              bFound = True
+              break
+
+      bSuccess, sResult = compare(((bFound, True),))
+      oResults.Results(sResult)
+      if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0707 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0708(oConfig):
+   oResults = CResult()
+
+   oData = {}
+   oData['K1'] = 4
+   oData['K2'] = 6.8
+   oData['K3'] = "ABC"
+   oData['K4'] = True
+   oData['K5'] = None
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[DICT] (5/1) > {K1} [INT]  :  4")
+   listExpected.append("[DICT] (5/2) > {K2} [FLOAT]  :  6.8")
+   listExpected.append("[DICT] (5/3) > {K3} [STR]  :  'ABC'")
+   listExpected.append("[DICT] (5/4) > {K4} [BOOL]  :  True")
+   listExpected.append("[DICT] (5/5) > {K5} [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0708 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0709(oConfig):
+   oResults = CResult()
+
+   dData = {}
+   dData['K1'] = 4
+   dData['K2'] = 6.8
+   dData['K3'] = "ABC"
+   dData['K4'] = True
+   dData['K5'] = None
+   oData = dotdict(dData)
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[DOTDICT] (5/1) > {K1} [INT]  :  4")
+   listExpected.append("[DOTDICT] (5/2) > {K2} [FLOAT]  :  6.8")
+   listExpected.append("[DOTDICT] (5/3) > {K3} [STR]  :  'ABC'")
+   listExpected.append("[DOTDICT] (5/4) > {K4} [BOOL]  :  True")
+   listExpected.append("[DOTDICT] (5/5) > {K5} [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0709 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0710(oConfig):
+   oResults = CResult()
+
+   listData = [1, "A"]
+   dictData = {}
+   dictData['K1'] = 2
+   dictData['K2'] = [3, 'B', (4.5, 'X', False, None)]
+   dotdictData = dotdict(dictData)
+   oData = [6, listData, dictData, dotdictData, None]
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[LIST] (5/1) > [INT]  :  6")
+   listExpected.append("[LIST] (5/2) > [LIST] (2/1) > [INT]  :  1")
+   listExpected.append("[LIST] (5/2) > [LIST] (2/2) > [STR]  :  'A'")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/1) > {K1} [INT]  :  2")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/2) > {K2} [LIST] (3/1) > [INT]  :  3")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/2) > {K2} [LIST] (3/2) > [STR]  :  'B'")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/1) > [FLOAT]  :  4.5")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/2) > [STR]  :  'X'")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/3) > [BOOL]  :  False")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/4) > [NONE]  :  None")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/1) > {K1} [INT]  :  2")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/2) > {K2} [LIST] (3/1) > [INT]  :  3")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/2) > {K2} [LIST] (3/2) > [STR]  :  'B'")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/1) > [FLOAT]  :  4.5")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/2) > [STR]  :  'X'")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/3) > [BOOL]  :  False")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/4) > [NONE]  :  None")
+   listExpected.append("[LIST] (5/5) > [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0710 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0711(oConfig):
+   oResults = CResult()
+
+   oData = [4, 6.8, "ABC", True, None]
+   listOutLines = PrettyPrint(oData, nIndent=5)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("     [LIST] (5/1) > [INT]  :  4")
+   listExpected.append("     [LIST] (5/2) > [FLOAT]  :  6.8")
+   listExpected.append("     [LIST] (5/3) > [STR]  :  'ABC'")
+   listExpected.append("     [LIST] (5/4) > [BOOL]  :  True")
+   listExpected.append("     [LIST] (5/5) > [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0711 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0712(oConfig):
+   oResults = CResult()
+
+   oData = [4, 6.8, "ABC", True, None]
+   listOutLines = PrettyPrint(oData, nIndent=2, sPrefix="--PREFIX--")
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("  --PREFIX-- [LIST] (5/1) > [INT]  :  4")
+   listExpected.append("  --PREFIX-- [LIST] (5/2) > [FLOAT]  :  6.8")
+   listExpected.append("  --PREFIX-- [LIST] (5/3) > [STR]  :  'ABC'")
+   listExpected.append("  --PREFIX-- [LIST] (5/4) > [BOOL]  :  True")
+   listExpected.append("  --PREFIX-- [LIST] (5/5) > [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0712 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0713(oConfig):
+   oResults = CResult()
+
+   oData = [4, 6.8, "ABC", True, None, ("A", "B"), ["DE", "FGH"], {"KA":4, "KB":6.8, "KC":"ABC", "KD":True, "KE":None, "KF":[1, "MNO"]}]
+   listOutLines = PrettyPrint(oData, nIndent=2, sPrefix="--HEX OUTPUT--", bHexFormat=True)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/1) > [INT]  :  4")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/2) > [FLOAT]  :  6.8")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/3) > [STR]  :  '0x41 0x42 0x43'")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/4) > [BOOL]  :  True")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/5) > [NONE]  :  None")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/6) > [TUPLE] (2/1) > [STR]  :  '0x41'")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/6) > [TUPLE] (2/2) > [STR]  :  '0x42'")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/7) > [LIST] (2/1) > [STR]  :  '0x44 0x45'")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/7) > [LIST] (2/2) > [STR]  :  '0x46 0x47 0x48'")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/1) > {KA} [INT]  :  4")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/2) > {KB} [FLOAT]  :  6.8")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/3) > {KC} [STR]  :  '0x41 0x42 0x43'")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/4) > {KD} [BOOL]  :  True")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/5) > {KE} [NONE]  :  None")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/6) > {KF} [LIST] (2/1) > [INT]  :  1")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/6) > {KF} [LIST] (2/2) > [STR]  :  '0x4d 0x4e 0x4f'")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0713 done")
+
+# --------------------------------------------------------------------------------------------------------------
+# CUtils / GetInstalledPackages
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+def PEC_0800(oConfig):
+   oResults = CResult()
+
+   listofTuplesPackages, bSuccess, sResult = CUtils.GetInstalledPackages()
+
+   oResults.Results(f"listofTuplesPackages: {listofTuplesPackages}")
+   oResults.Results(f"sResult : {sResult}")
+   oResults.Results(f"bSuccess: {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   if len(listofTuplesPackages) == 0:
+      bSuccess = False
+      sResult  = "list of Python packages is empty"
+      oResults.Results(sResult)
+      return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0800 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0801(oConfig):
+   oResults = CResult()
+
+   sOutputFile = oConfig.Get('CUTILS_TESTFILE')
+   oOutputFile = CFile(sOutputFile)
+   bSuccess, sResult = oOutputFile.Delete(bConfirmDelete=False)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oOutputFile; return bSuccess, oResults.Results()
+   del oOutputFile
+
+   listofTuplesPackages, bSuccess, sResult = CUtils.GetInstalledPackages(sOutputFile)
+
+   oResults.Results(f"listofTuplesPackages: {listofTuplesPackages}")
+   oResults.Results(f"sResult : {sResult}")
+   oResults.Results(f"bSuccess: {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   if len(listofTuplesPackages) == 0:
+      bSuccess = False
+      sResult  = "list of Python packages is empty"
+      oResults.Results(sResult)
+      return bSuccess, oResults.Results()
+
+   bIsFile = os.path.isfile(sOutputFile)
+   bSuccessCompare, sResult = compare(((bIsFile, True),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+   os.remove(sOutputFile)
+
+   return True, oResults.Results("PEC_0801 done")
 # --------------------------------------------------------------------------------------------------------------

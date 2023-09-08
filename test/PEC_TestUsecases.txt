@@ -444,5 +444,71 @@ Test PEC_0656 / CCOMPARISON / BADCASE
 Description: Compare two files (ignore pattern file not existing)
 Expectation: No comparison; error message instead
 ------------------------------------------------------------------------------------------------------------------------
-Generated: 08.09.2023 - 13:42:17
+Test PEC_0700 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of type 'int'
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0701 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of type 'float'
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0702 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of type 'str'
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0703 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of type 'bool'
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0704 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of type 'None'
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0705 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of type 'list'
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0706 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of type 'tuple'
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0707 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of type 'set'
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0708 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of type 'dict'
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0709 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of type 'dotdict'
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0710 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of nested types
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0711 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of type 'list'; output indented by 5 blanks
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0712 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of type 'list'; output indented by 2 blanks and with prefix
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0713 / CUTILS / GOODCASE
+Description: PrettyPrint: Input parameter of nested types; output indented by 2 blanks and with prefix; strings in hexadecimal format
+Expectation: Input parameter is pretty printed
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0800 / CUTILS / GOODCASE
+Description: GetInstalledPackages: Default usage
+Expectation: List of installed Python packages created
+Hint.......: This sometimes needs some time
+------------------------------------------------------------------------------------------------------------------------
+Test PEC_0801 / CUTILS / GOODCASE
+Description: GetInstalledPackages: List written to output file
+Expectation: List of installed Python packages created and written to output file
+Hint.......: This sometimes some time
+------------------------------------------------------------------------------------------------------------------------
+Generated: 08.09.2023 - 17:36:34
 

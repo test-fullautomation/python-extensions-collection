@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 07.09.2023
+# 08.09.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -162,6 +162,8 @@ class CConfig():
       self.__dictConfig['CFOLDER_COPY_TESTFOLDER']        = f"{TMPFILESFOLDER}/CFolder_copy/CFolder_TestFolder"
       self.__dictConfig['CFOLDER_NOTEXISTING']            = f"{TMPFILESFOLDER}/I/Am/Not/Existing"
       self.__dictConfig['CFOLDER_NOTEXISTING_TESTFOLDER'] = f"{TMPFILESFOLDER}/I/Am/Not/Existing/CFolder_TestFolder"
+
+      self.__dictConfig['CUTILS_TESTFILE']                = f"{TMPFILESFOLDER}/CUtils_TestFile.txt"
 
       # -- predefined test files
       self.__dictConfig['TESTFILES_PATH'] = f"{REFERENCEPATH}/testfiles"

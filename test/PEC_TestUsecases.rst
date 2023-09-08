@@ -1087,5 +1087,169 @@ Test Use Cases
 
 ----
 
-Generated: 08.09.2023 - 13:42:17
+* **Test PEC_0700**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of type 'int'**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0701**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of type 'float'**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0702**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of type 'str'**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0703**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of type 'bool'**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0704**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of type 'None'**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0705**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of type 'list'**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0706**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of type 'tuple'**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0707**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of type 'set'**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0708**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of type 'dict'**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0709**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of type 'dotdict'**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0710**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of nested types**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0711**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of type 'list'; output indented by 5 blanks**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0712**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of type 'list'; output indented by 2 blanks and with prefix**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0713**
+
+  [CUTILS / GOODCASE]
+
+   **PrettyPrint: Input parameter of nested types; output indented by 2 blanks and with prefix; strings in hexadecimal format**
+
+   Expected: Input parameter is pretty printed
+
+----
+
+* **Test PEC_0800**
+
+  [CUTILS / GOODCASE]
+
+   **GetInstalledPackages: Default usage**
+
+   Expected: List of installed Python packages created
+
+   *Hint: This sometimes needs some time*
+
+----
+
+* **Test PEC_0801**
+
+  [CUTILS / GOODCASE]
+
+   **GetInstalledPackages: List written to output file**
+
+   Expected: List of installed Python packages created and written to output file
+
+   *Hint: This sometimes some time*
+
+----
+
+Generated: 08.09.2023 - 17:36:34
 
