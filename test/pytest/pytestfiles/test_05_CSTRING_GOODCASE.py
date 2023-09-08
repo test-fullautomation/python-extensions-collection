@@ -18,7 +18,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 17.08.2023 - 15:49:18
+# 08.09.2023 - 13:42:17
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -516,5 +516,53 @@ class Test_CSTRING_GOODCASE:
    )
    def test_PEC_0438(self, Description):
       nReturn = CExecute.Execute("PEC_0438")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Message formatted as success, with method
+   @pytest.mark.parametrize(
+      "Description", ["FormatResult: Success (1)",]
+   )
+   def test_PEC_0500(self, Description):
+      nReturn = CExecute.Execute("PEC_0500")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Message formatted as success, without method
+   @pytest.mark.parametrize(
+      "Description", ["FormatResult: Success (2)",]
+   )
+   def test_PEC_0501(self, Description):
+      nReturn = CExecute.Execute("PEC_0501")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Message formatted as error, with method
+   @pytest.mark.parametrize(
+      "Description", ["FormatResult: Error (1)",]
+   )
+   def test_PEC_0502(self, Description):
+      nReturn = CExecute.Execute("PEC_0502")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Message formatted as error, without method
+   @pytest.mark.parametrize(
+      "Description", ["FormatResult: Error (2)",]
+   )
+   def test_PEC_0503(self, Description):
+      nReturn = CExecute.Execute("PEC_0503")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Message formatted as exception, with method
+   @pytest.mark.parametrize(
+      "Description", ["FormatResult: Exception (1)",]
+   )
+   def test_PEC_0504(self, Description):
+      nReturn = CExecute.Execute("PEC_0504")
+      assert nReturn == 0
+# --------------------------------------------------------------------------------------------------------------
+   # Expected: Message formatted as exception, without method
+   @pytest.mark.parametrize(
+      "Description", ["FormatResult: Exception (2)",]
+   )
+   def test_PEC_0505(self, Description):
+      nReturn = CExecute.Execute("PEC_0505")
       assert nReturn == 0
 # --------------------------------------------------------------------------------------------------------------

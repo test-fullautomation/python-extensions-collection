@@ -907,5 +907,185 @@ Test Use Cases
 
 ----
 
-Generated: 17.08.2023 - 15:49:18
+* **Test PEC_0500**
+
+  [CSTRING / GOODCASE]
+
+   **FormatResult: Success (1)**
+
+   Expected: Message formatted as success, with method
+
+----
+
+* **Test PEC_0501**
+
+  [CSTRING / GOODCASE]
+
+   **FormatResult: Success (2)**
+
+   Expected: Message formatted as success, without method
+
+----
+
+* **Test PEC_0502**
+
+  [CSTRING / GOODCASE]
+
+   **FormatResult: Error (1)**
+
+   Expected: Message formatted as error, with method
+
+----
+
+* **Test PEC_0503**
+
+  [CSTRING / GOODCASE]
+
+   **FormatResult: Error (2)**
+
+   Expected: Message formatted as error, without method
+
+----
+
+* **Test PEC_0504**
+
+  [CSTRING / GOODCASE]
+
+   **FormatResult: Exception (1)**
+
+   Expected: Message formatted as exception, with method
+
+----
+
+* **Test PEC_0505**
+
+  [CSTRING / GOODCASE]
+
+   **FormatResult: Exception (2)**
+
+   Expected: Message formatted as exception, without method
+
+----
+
+* **Test PEC_0600**
+
+  [CCOMPARISON / GOODCASE]
+
+   **Compare two files (with same content; no pattern)**
+
+   Expected: Result: Files have same content
+
+----
+
+* **Test PEC_0601**
+
+  [CCOMPARISON / GOODCASE]
+
+   **Compare two files (with different content; no pattern)**
+
+   Expected: Result: Files have different content
+
+----
+
+* **Test PEC_0602**
+
+  [CCOMPARISON / GOODCASE]
+
+   **Compare two files (with same content; with pattern)**
+
+   Expected: Result: Files have same content
+
+----
+
+* **Test PEC_0603**
+
+  [CCOMPARISON / GOODCASE]
+
+   **Compare two files (with different content; with pattern)**
+
+   Expected: Result: Files have different content
+
+----
+
+* **Test PEC_0604**
+
+  [CCOMPARISON / GOODCASE]
+
+   **Compare two files (with different content; with pattern and ignore pattern)**
+
+   Expected: Result: Files have same content (because the different lines are ignored)
+
+----
+
+* **Test PEC_0650**
+
+  [CCOMPARISON / BADCASE]
+
+   **Compare two files (with same path and name)**
+
+   Expected: No comparison; error message instead
+
+----
+
+* **Test PEC_0651**
+
+  [CCOMPARISON / BADCASE]
+
+   **Compare two files (first file not given)**
+
+   Expected: No comparison; error message instead
+
+----
+
+* **Test PEC_0652**
+
+  [CCOMPARISON / BADCASE]
+
+   **Compare two files (second file not given)**
+
+   Expected: No comparison; error message instead
+
+----
+
+* **Test PEC_0653**
+
+  [CCOMPARISON / BADCASE]
+
+   **Compare two files (first file not existing)**
+
+   Expected: No comparison; error message instead
+
+----
+
+* **Test PEC_0654**
+
+  [CCOMPARISON / BADCASE]
+
+   **Compare two files (second file not existing)**
+
+   Expected: No comparison; error message instead
+
+----
+
+* **Test PEC_0655**
+
+  [CCOMPARISON / BADCASE]
+
+   **Compare two files (pattern file not existing)**
+
+   Expected: No comparison; error message instead
+
+----
+
+* **Test PEC_0656**
+
+  [CCOMPARISON / BADCASE]
+
+   **Compare two files (ignore pattern file not existing)**
+
+   Expected: No comparison; error message instead
+
+----
+
+Generated: 08.09.2023 - 13:42:17
 

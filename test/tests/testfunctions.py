@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 17.08.2023
+# 08.09.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -42,6 +42,7 @@ import colorama as col
 from PythonExtensionsCollection.String.CString import CString
 from PythonExtensionsCollection.File.CFile import CFile
 from PythonExtensionsCollection.Folder.CFolder import CFolder
+from PythonExtensionsCollection.Comparison.CComparison import CComparison
 
 col.init(autoreset=True)
 
@@ -1069,7 +1070,6 @@ def PEC_0053(oConfig):
    os.remove(sFile_1)
    os.remove(sFile_2)
    return True, oResults.Results("PEC_0053 done")
-
 
 # --------------------------------------------------------------------------------------------------------------
 # CFolder
@@ -2363,34 +2363,6 @@ def PEC_0301(oConfig):
 
    sRet_DestPath, listRet_DestPaths, sRet_DestFile, listRet_DestFiles, sRet_DestPathParent = CString.DetectParentPath(sIn_StartPath, sIn_Foldername)
 
-   # print()
-   # print(f"==================== sIn_StartPath       : '{sIn_StartPath}'")
-   # print(f"==================== sParentPath         : '{sParentPath}'")
-   # print(f"==================== sIn_Foldername_1    : '{sIn_Foldername_1}'")
-   # print(f"==================== sParentParentPath   : '{sParentParentPath}'")
-   # print(f"==================== sIn_Foldername_2    : '{sIn_Foldername_2}'")
-   # print(f"==================== sIn_Foldername      : '{sIn_Foldername}'")
-   # print(f"==================== sExp_DestPathParent : '{sExp_DestPathParent}'")
-
-   # print(f"==================== sRet_DestPath       : '{sRet_DestPath}'")
-   # print(f"==================== listRet_DestPaths   : '{listRet_DestPaths}'")
-   # print(f"==================== sRet_DestFile       : '{sRet_DestFile}'")
-   # print(f"==================== listRet_DestFiles   : '{listRet_DestFiles}'")
-   # print(f"==================== sRet_DestPathParent : '{sRet_DestPathParent}'")
-   # print()
-
-# ==================== sIn_StartPath       : 'D:/ROBFW/components/python-extensions-collection/test/tests'
-# ==================== sParentPath         : 'D:/ROBFW/components/python-extensions-collection/test'
-# ==================== sIn_Foldername_1    : 'test'
-# ==================== sParentParentPath   : 'D:/ROBFW/components/python-extensions-collection'
-# ==================== sIn_Foldername_2    : 'python-extensions-collection'
-# ==================== sIn_Foldername      : 'test;python-extensions-collection'
-# ==================== sRet_DestPath       : 'D:/ROBFW/components/python-extensions-collection/test'
-# ==================== listRet_DestPaths   : '['D:/ROBFW/components/python-extensions-collection/test', 'D:/ROBFW/components/python-extensions-collection']'
-# ==================== sRet_DestFile       : 'None'
-# ==================== listRet_DestFiles   : 'None'
-# ==================== sRet_DestPathParent : 'D:/ROBFW/components/python-extensions-collection'
-
    bSuccess, sResult = compare(((sRet_DestPath, sParentPath),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2430,21 +2402,6 @@ def PEC_0302(oConfig):
    sExp_DestPathParent = sParentParentPath
 
    sRet_DestPath, listRet_DestPaths, sRet_DestFile, listRet_DestFiles, sRet_DestPathParent = CString.DetectParentPath(sIn_StartPath, sIn_Foldername)
-
-   # print()
-   # print(f"==================== sIn_StartPath       : '{sIn_StartPath}'")
-   # print(f"==================== sParentPath         : '{sParentPath}'")
-   # print(f"==================== sParentParentPath   : '{sParentParentPath}'")
-   # print(f"==================== sIn_Foldername_1    : '{sIn_Foldername_1}'")
-   # print(f"==================== sIn_Foldername_2    : '{sIn_Foldername_2}'")
-   # print(f"==================== sIn_Foldername      : '{sIn_Foldername}'")
-   # print(f"==================== sExp_DestPathParent : '{sExp_DestPathParent}'")
-   # print(f"==================== sRet_DestPath       : '{sRet_DestPath}'")
-   # print(f"==================== listRet_DestPaths   : '{listRet_DestPaths}'")
-   # print(f"==================== sRet_DestFile       : '{sRet_DestFile}'")
-   # print(f"==================== listRet_DestFiles   : '{listRet_DestFiles}'")
-   # print(f"==================== sRet_DestPathParent : '{sRet_DestPathParent}'")
-   # print()
 
    bSuccess, sResult = compare(((sRet_DestPath, sParentPath),))
    oResults.Results(sResult)
@@ -2592,6 +2549,7 @@ def PEC_0400(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0400 done")
 
@@ -2615,6 +2573,7 @@ def PEC_0401(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0401 done")
 
@@ -2638,6 +2597,7 @@ def PEC_0402(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0402 done")
 
@@ -2661,6 +2621,7 @@ def PEC_0403(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0403 done")
 
@@ -2684,6 +2645,7 @@ def PEC_0404(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0404 done")
 
@@ -2707,6 +2669,7 @@ def PEC_0405(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0405 done")
 
@@ -2730,6 +2693,7 @@ def PEC_0406(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0406 done")
 
@@ -2753,6 +2717,7 @@ def PEC_0407(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0407 done")
 
@@ -2776,6 +2741,7 @@ def PEC_0408(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0408 done")
 
@@ -2799,6 +2765,7 @@ def PEC_0409(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0409 done")
 
@@ -2822,6 +2789,7 @@ def PEC_0410(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0410 done")
 
@@ -2845,6 +2813,7 @@ def PEC_0411(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0411 done")
 
@@ -2868,6 +2837,7 @@ def PEC_0412(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0412 done")
 
@@ -2891,6 +2861,7 @@ def PEC_0413(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0413 done")
 
@@ -2914,6 +2885,7 @@ def PEC_0414(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0414 done")
 
@@ -2937,6 +2909,7 @@ def PEC_0415(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0415 done")
 
@@ -2960,6 +2933,7 @@ def PEC_0416(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0416 done")
 
@@ -2983,6 +2957,7 @@ def PEC_0417(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0417 done")
 
@@ -3006,6 +2981,7 @@ def PEC_0418(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0418 done")
 
@@ -3029,6 +3005,7 @@ def PEC_0419(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0419 done")
 
@@ -3052,6 +3029,7 @@ def PEC_0420(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0420 done")
 
@@ -3075,6 +3053,7 @@ def PEC_0421(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0421 done")
 
@@ -3098,6 +3077,7 @@ def PEC_0422(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0422 done")
 
@@ -3121,6 +3101,7 @@ def PEC_0423(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0423 done")
 
@@ -3144,6 +3125,7 @@ def PEC_0424(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0424 done")
 
@@ -3167,6 +3149,7 @@ def PEC_0425(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0425 done")
 
@@ -3190,6 +3173,7 @@ def PEC_0426(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0426 done")
 
@@ -3213,6 +3197,7 @@ def PEC_0427(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0427 done")
 
@@ -3236,6 +3221,7 @@ def PEC_0428(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0428 done")
 
@@ -3259,6 +3245,7 @@ def PEC_0429(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0429 done")
 
@@ -3282,6 +3269,7 @@ def PEC_0430(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0430 done")
 
@@ -3305,6 +3293,7 @@ def PEC_0431(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0431 done")
 
@@ -3328,6 +3317,7 @@ def PEC_0432(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0432 done")
 
@@ -3351,6 +3341,7 @@ def PEC_0433(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0433 done")
 
@@ -3374,6 +3365,7 @@ def PEC_0434(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0434 done")
 
@@ -3397,6 +3389,7 @@ def PEC_0435(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0435 done")
 
@@ -3420,6 +3413,7 @@ def PEC_0436(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0436 done")
 
@@ -3443,6 +3437,7 @@ def PEC_0437(oConfig):
 
    bSuccess, sResult = compare(((bAck, False),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0437 done")
 
@@ -3466,7 +3461,432 @@ def PEC_0438(oConfig):
 
    bSuccess, sResult = compare(((bAck, True),))
    oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
 
    return True, oResults.Results("PEC_0438 done")
 
+# --------------------------------------------------------------------------------------------------------------
+# CString / FormatResult
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+def PEC_0500(oConfig):
+   oResults = CResult()
+   sResult = CString.FormatResult(sMethod="Method",
+                                  bSuccess=True,
+                                  sResult="Result")
+   bSuccess, sResult = compare(((sResult, "[Method] : Result"),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0500 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0501(oConfig):
+   oResults = CResult()
+   sResult = CString.FormatResult(sMethod="",
+                                  bSuccess=True,
+                                  sResult="Result")
+   bSuccess, sResult = compare(((sResult, "Result"),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0501 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0502(oConfig):
+   oResults = CResult()
+   sResult = CString.FormatResult(sMethod="Method",
+                                  bSuccess=False,
+                                  sResult="Result")
+   bSuccess, sResult = compare(((sResult, "!!! ERROR !!!\n[Method] : Result"),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0502 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0503(oConfig):
+   oResults = CResult()
+   sResult = CString.FormatResult(sMethod="",
+                                  bSuccess=False,
+                                  sResult="Result")
+   bSuccess, sResult = compare(((sResult, "!!! ERROR !!!\nResult"),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0503 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0504(oConfig):
+   oResults = CResult()
+   sResult = CString.FormatResult(sMethod="Method",
+                                  bSuccess=None,
+                                  sResult="Result")
+   bSuccess, sResult = compare(((sResult, "!!! EXCEPTION !!!\n[Method] : Result"),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0504 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0505(oConfig):
+   oResults = CResult()
+   sResult = CString.FormatResult(sMethod="",
+                                  bSuccess=None,
+                                  sResult="Result")
+   bSuccess, sResult = compare(((sResult, "!!! EXCEPTION !!!\nResult"),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0505 done")
+
+# --------------------------------------------------------------------------------------------------------------
+# CComparison / Compare
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+# # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+# # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+def PEC_0600(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/01.File_1.A.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/02.File_2.A.txt")
+   oResults.Results(f"Compared file 1: '{sFile_1}'")
+   oResults.Results(f"Compared file 2: '{sFile_2}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+
+   bSuccess, sResult = compare(((bIdentical, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   bSuccess, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0600 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0601(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/03.File_1.B.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/04.File_2.B.txt")
+
+   oResults.Results(f"Compared file 1: '{sFile_1}'")
+   oResults.Results(f"Compared file 2: '{sFile_2}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+
+   bSuccess, sResult = compare(((bIdentical, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   bSuccess, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0601 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0602(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/03.File_1.B.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/04.File_2.B.txt")
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1: '{sFile_1}'")
+   oResults.Results(f"Compared file 2: '{sFile_2}'")
+   oResults.Results(f"Pattern file   : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+
+   bSuccess, sResult = compare(((bIdentical, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   bSuccess, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0602 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0603(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/03.File_1.B.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/05.File_2.C.txt")
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1: '{sFile_1}'")
+   oResults.Results(f"Compared file 2: '{sFile_2}'")
+   oResults.Results(f"Pattern file   : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+
+   bSuccess, sResult = compare(((bIdentical, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   bSuccess, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0603 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0604(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH     = oConfig.Get('TESTFILES_PATH')
+   sFile_1            = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/07.File_1.E.txt")
+   sFile_2            = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/08.File_2.E.txt")
+   sPatternFile       = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+   sIgnorePatternFile = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/11.IgnorePatternFile.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+   oResults.Results(f"Ignore pattern file: '{sIgnorePatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile, sIgnorePatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+
+   bSuccess, sResult = compare(((bIdentical, True),)) # because the different lines are ignored
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   bSuccess, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0604 done")
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0650(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/03.File_1.B.txt")
+   sFile_2        = sFile_1 # same file, therefore nothing to compare
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0650 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0651(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = None
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/02.File_2.A.txt")
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0651 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0652(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/01.File_1.A.txt")
+   sFile_2        = None
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0652 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0653(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/IAmNotExisting.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/02.File_2.A.txt")
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0653 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0654(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/01.File_1.A.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/IAmNotExisting.txt")
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0654 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0655(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/01.File_1.A.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/02.File_2.A.txt")
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/IAmNotExisting.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0655 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0656(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH     = oConfig.Get('TESTFILES_PATH')
+   sFile_1            = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/01.File_1.A.txt")
+   sFile_2            = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/02.File_2.A.txt")
+   sPatternFile       = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+   sIgnorePatternFile = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/IAmNotExisting.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+   oResults.Results(f"Ignore pattern file: '{sIgnorePatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile, sIgnorePatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0656 done")
 # --------------------------------------------------------------------------------------------------------------

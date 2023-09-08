@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 17.08.2023
+# 08.09.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -35,6 +35,8 @@ listofdictUsecases = []
 # --------------------------------------------------------------------------------------------------------------
 # CFile
 #TM***
+# --------------------------------------------------------------------------------------------------------------
+
 # --------------------------------------------------------------------------------------------------------------
 dictUsecase = {}
 dictUsecase['TESTID']            = "PEC_0001"
@@ -1030,6 +1032,214 @@ dictUsecase['DESCRIPTION']       = "StringFilter: Filter string lists (7)"
 dictUsecase['EXPECTATION']       = "Returned: True"
 dictUsecase['SECTION']           = "CSTRING"
 dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0500"
+dictUsecase['DESCRIPTION']       = "FormatResult: Success (1)"
+dictUsecase['EXPECTATION']       = "Message formatted as success, with method"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0501"
+dictUsecase['DESCRIPTION']       = "FormatResult: Success (2)"
+dictUsecase['EXPECTATION']       = "Message formatted as success, without method"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0502"
+dictUsecase['DESCRIPTION']       = "FormatResult: Error (1)"
+dictUsecase['EXPECTATION']       = "Message formatted as error, with method"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0503"
+dictUsecase['DESCRIPTION']       = "FormatResult: Error (2)"
+dictUsecase['EXPECTATION']       = "Message formatted as error, without method"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0504"
+dictUsecase['DESCRIPTION']       = "FormatResult: Exception (1)"
+dictUsecase['EXPECTATION']       = "Message formatted as exception, with method"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0505"
+dictUsecase['DESCRIPTION']       = "FormatResult: Exception (2)"
+dictUsecase['EXPECTATION']       = "Message formatted as exception, without method"
+dictUsecase['SECTION']           = "CSTRING"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------------------------------------------
+# CComparison
+#TM***
+# --------------------------------------------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------------------------------------------
+
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0600"
+dictUsecase['DESCRIPTION']       = "Compare two files (with same content; no pattern)"
+dictUsecase['EXPECTATION']       = "Result: Files have same content"
+dictUsecase['SECTION']           = "CCOMPARISON"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0601"
+dictUsecase['DESCRIPTION']       = "Compare two files (with different content; no pattern)"
+dictUsecase['EXPECTATION']       = "Result: Files have different content"
+dictUsecase['SECTION']           = "CCOMPARISON"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0602"
+dictUsecase['DESCRIPTION']       = "Compare two files (with same content; with pattern)"
+dictUsecase['EXPECTATION']       = "Result: Files have same content"
+dictUsecase['SECTION']           = "CCOMPARISON"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0603"
+dictUsecase['DESCRIPTION']       = "Compare two files (with different content; with pattern)"
+dictUsecase['EXPECTATION']       = "Result: Files have different content"
+dictUsecase['SECTION']           = "CCOMPARISON"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0604"
+dictUsecase['DESCRIPTION']       = "Compare two files (with different content; with pattern and ignore pattern)"
+dictUsecase['EXPECTATION']       = "Result: Files have same content (because the different lines are ignored)"
+dictUsecase['SECTION']           = "CCOMPARISON"
+dictUsecase['SUBSECTION']        = "GOODCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0650"
+dictUsecase['DESCRIPTION']       = "Compare two files (with same path and name)"
+dictUsecase['EXPECTATION']       = "No comparison; error message instead"
+dictUsecase['SECTION']           = "CCOMPARISON"
+dictUsecase['SUBSECTION']        = "BADCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0651"
+dictUsecase['DESCRIPTION']       = "Compare two files (first file not given)"
+dictUsecase['EXPECTATION']       = "No comparison; error message instead"
+dictUsecase['SECTION']           = "CCOMPARISON"
+dictUsecase['SUBSECTION']        = "BADCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0652"
+dictUsecase['DESCRIPTION']       = "Compare two files (second file not given)"
+dictUsecase['EXPECTATION']       = "No comparison; error message instead"
+dictUsecase['SECTION']           = "CCOMPARISON"
+dictUsecase['SUBSECTION']        = "BADCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0653"
+dictUsecase['DESCRIPTION']       = "Compare two files (first file not existing)"
+dictUsecase['EXPECTATION']       = "No comparison; error message instead"
+dictUsecase['SECTION']           = "CCOMPARISON"
+dictUsecase['SUBSECTION']        = "BADCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0654"
+dictUsecase['DESCRIPTION']       = "Compare two files (second file not existing)"
+dictUsecase['EXPECTATION']       = "No comparison; error message instead"
+dictUsecase['SECTION']           = "CCOMPARISON"
+dictUsecase['SUBSECTION']        = "BADCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0655"
+dictUsecase['DESCRIPTION']       = "Compare two files (pattern file not existing)"
+dictUsecase['EXPECTATION']       = "No comparison; error message instead"
+dictUsecase['SECTION']           = "CCOMPARISON"
+dictUsecase['SUBSECTION']        = "BADCASE"
+dictUsecase['HINT']              = None
+dictUsecase['COMMENT']           = None
+listofdictUsecases.append(dictUsecase)
+del dictUsecase
+# --------------------------------------------------------------------------------------------------------------
+dictUsecase = {}
+dictUsecase['TESTID']            = "PEC_0656"
+dictUsecase['DESCRIPTION']       = "Compare two files (ignore pattern file not existing)"
+dictUsecase['EXPECTATION']       = "No comparison; error message instead"
+dictUsecase['SECTION']           = "CCOMPARISON"
+dictUsecase['SUBSECTION']        = "BADCASE"
 dictUsecase['HINT']              = None
 dictUsecase['COMMENT']           = None
 listofdictUsecases.append(dictUsecase)
