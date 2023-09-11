@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 16.08.2023
+# 08.09.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -42,6 +42,8 @@ import colorama as col
 from PythonExtensionsCollection.String.CString import CString
 from PythonExtensionsCollection.File.CFile import CFile
 from PythonExtensionsCollection.Folder.CFolder import CFolder
+from PythonExtensionsCollection.Comparison.CComparison import CComparison
+from PythonExtensionsCollection.Utils.CUtils import *
 
 col.init(autoreset=True)
 
@@ -1069,7 +1071,6 @@ def PEC_0053(oConfig):
    os.remove(sFile_1)
    os.remove(sFile_2)
    return True, oResults.Results("PEC_0053 done")
-
 
 # --------------------------------------------------------------------------------------------------------------
 # CFolder
@@ -2363,34 +2364,6 @@ def PEC_0301(oConfig):
 
    sRet_DestPath, listRet_DestPaths, sRet_DestFile, listRet_DestFiles, sRet_DestPathParent = CString.DetectParentPath(sIn_StartPath, sIn_Foldername)
 
-   # print()
-   # print(f"==================== sIn_StartPath       : '{sIn_StartPath}'")
-   # print(f"==================== sParentPath         : '{sParentPath}'")
-   # print(f"==================== sIn_Foldername_1    : '{sIn_Foldername_1}'")
-   # print(f"==================== sParentParentPath   : '{sParentParentPath}'")
-   # print(f"==================== sIn_Foldername_2    : '{sIn_Foldername_2}'")
-   # print(f"==================== sIn_Foldername      : '{sIn_Foldername}'")
-   # print(f"==================== sExp_DestPathParent : '{sExp_DestPathParent}'")
-
-   # print(f"==================== sRet_DestPath       : '{sRet_DestPath}'")
-   # print(f"==================== listRet_DestPaths   : '{listRet_DestPaths}'")
-   # print(f"==================== sRet_DestFile       : '{sRet_DestFile}'")
-   # print(f"==================== listRet_DestFiles   : '{listRet_DestFiles}'")
-   # print(f"==================== sRet_DestPathParent : '{sRet_DestPathParent}'")
-   # print()
-
-# ==================== sIn_StartPath       : 'D:/ROBFW/components/python-extensions-collection/test/tests'
-# ==================== sParentPath         : 'D:/ROBFW/components/python-extensions-collection/test'
-# ==================== sIn_Foldername_1    : 'test'
-# ==================== sParentParentPath   : 'D:/ROBFW/components/python-extensions-collection'
-# ==================== sIn_Foldername_2    : 'python-extensions-collection'
-# ==================== sIn_Foldername      : 'test;python-extensions-collection'
-# ==================== sRet_DestPath       : 'D:/ROBFW/components/python-extensions-collection/test'
-# ==================== listRet_DestPaths   : '['D:/ROBFW/components/python-extensions-collection/test', 'D:/ROBFW/components/python-extensions-collection']'
-# ==================== sRet_DestFile       : 'None'
-# ==================== listRet_DestFiles   : 'None'
-# ==================== sRet_DestPathParent : 'D:/ROBFW/components/python-extensions-collection'
-
    bSuccess, sResult = compare(((sRet_DestPath, sParentPath),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2430,21 +2403,6 @@ def PEC_0302(oConfig):
    sExp_DestPathParent = sParentParentPath
 
    sRet_DestPath, listRet_DestPaths, sRet_DestFile, listRet_DestFiles, sRet_DestPathParent = CString.DetectParentPath(sIn_StartPath, sIn_Foldername)
-
-   # print()
-   # print(f"==================== sIn_StartPath       : '{sIn_StartPath}'")
-   # print(f"==================== sParentPath         : '{sParentPath}'")
-   # print(f"==================== sParentParentPath   : '{sParentParentPath}'")
-   # print(f"==================== sIn_Foldername_1    : '{sIn_Foldername_1}'")
-   # print(f"==================== sIn_Foldername_2    : '{sIn_Foldername_2}'")
-   # print(f"==================== sIn_Foldername      : '{sIn_Foldername}'")
-   # print(f"==================== sExp_DestPathParent : '{sExp_DestPathParent}'")
-   # print(f"==================== sRet_DestPath       : '{sRet_DestPath}'")
-   # print(f"==================== listRet_DestPaths   : '{listRet_DestPaths}'")
-   # print(f"==================== sRet_DestFile       : '{sRet_DestFile}'")
-   # print(f"==================== listRet_DestFiles   : '{listRet_DestFiles}'")
-   # print(f"==================== sRet_DestPathParent : '{sRet_DestPathParent}'")
-   # print()
 
    bSuccess, sResult = compare(((sRet_DestPath, sParentPath),))
    oResults.Results(sResult)
@@ -2570,5 +2528,1799 @@ def PEC_0305(oConfig):
    return True, oResults.Results("PEC_0305 done")
 
 # --------------------------------------------------------------------------------------------------------------
+# CString / StringFilter
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+def PEC_0400(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "    ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0400 done")
+
 # --------------------------------------------------------------------------------------------------------------
 
+def PEC_0401(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "    ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = False,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0401 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0402(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  # Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = "#",
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0402 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0403(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  ; Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = ";",
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0403 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0404(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  # Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = "#",
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "beats",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0404 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0405(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = "Speed",
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "beats",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0405 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0406(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = False,
+                               bSkipBlankStrings = True,
+                               sComment          = "SPEED",
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "beats",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0406 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0407(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = "SPEED",
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "beats",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0407 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0408(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "Spee",
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0408 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0409(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = "nute",
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0409 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0410(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = "Spee",
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0410 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0411(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = "nute",
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0411 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0412(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "ts pe",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0412 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0413(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "otto;25;beats;all",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0413 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0414(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "otto;25;beats;all",
+                               sContainsNot      = "beats",
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0414 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0415(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = "ts pe",
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0415 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0416(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "Speed",
+                               sEndsWith         = "minute",
+                               sStartsNotWith    = "Speed",
+                               sEndsNotWith      = "minute",
+                               sContains         = "beats",
+                               sContainsNot      = "beats",
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0416 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0417(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = False,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "spEED",
+                               sEndsWith         = "MINute",
+                               sStartsNotWith    = "minute",
+                               sEndsNotWith      = "Speed",
+                               sContains         = "BEats",
+                               sContainsNot      = "really not",
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0417 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0418(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"\d{2}",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0418 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0419(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"\d{3}",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0419 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0420(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "Speed",
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"\d{3}",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0420 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0421(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = "Speed",
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"\d{2}",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0421 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0422(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = "Speed",
+                               sEndsNotWith      = None,
+                               sContains         = "beats",
+                               sContainsNot      = None,
+                               sInclRegEx        = r"\d{2}",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0422 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0423(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "Speed",
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = "really not",
+                               sInclRegEx        = r"\d{3}",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0423 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0424(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = r"\d{2}")
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0424 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0425(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = r"\d{3}")
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0425 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0426(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "Speed",
+                               sEndsWith         = "minute",
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = r"\d{3}")
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0426 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0427(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "Speed",
+                               sEndsWith         = "minute",
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = r"\d{2}")
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0427 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0428(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = "Speed",
+                               sEndsNotWith      = "minute",
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = r"\d{3}")
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0428 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0429(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "  Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = "Speed",
+                               sEndsNotWith      = "minute",
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = r"\d{2}")
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0429 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0430(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "   Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = "   Speed ",
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0430 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0431(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "   Speed is 25 beats per minute  ",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"\s{3}Speed",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0431 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0432(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "beta; and",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0432 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0433(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = "beta; not",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0433 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0434(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = r"beta\; and",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0434 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0435(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = True,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = r"beta\; not",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0435 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0436(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = False,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = r"BETA\; AND",
+                               sContainsNot      = None,
+                               sInclRegEx        = None,
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0436 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0437(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = False,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"BETA\;\sAND",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0437 done")
+
+# --------------------------------------------------------------------------------------------------------------
+
+def PEC_0438(oConfig):
+   oResults = CResult()
+
+   bAck = CString.StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
+                               bCaseSensitive    = False,
+                               bSkipBlankStrings = True,
+                               sComment          = None,
+                               sStartsWith       = None,
+                               sEndsWith         = None,
+                               sStartsNotWith    = None,
+                               sEndsNotWith      = None,
+                               sContains         = None,
+                               sContainsNot      = None,
+                               sInclRegEx        = r"beta\;\sand",
+                               sExclRegEx        = None)
+
+   bSuccess, sResult = compare(((bAck, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0438 done")
+
+# --------------------------------------------------------------------------------------------------------------
+# CString / FormatResult
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+def PEC_0500(oConfig):
+   oResults = CResult()
+   sResult = CString.FormatResult(sMethod="Method",
+                                  bSuccess=True,
+                                  sResult="Result")
+   bSuccess, sResult = compare(((sResult, "[Method] : Result"),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0500 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0501(oConfig):
+   oResults = CResult()
+   sResult = CString.FormatResult(sMethod="",
+                                  bSuccess=True,
+                                  sResult="Result")
+   bSuccess, sResult = compare(((sResult, "Result"),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0501 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0502(oConfig):
+   oResults = CResult()
+   sResult = CString.FormatResult(sMethod="Method",
+                                  bSuccess=False,
+                                  sResult="Result")
+   bSuccess, sResult = compare(((sResult, "!!! ERROR !!!\n[Method] : Result"),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0502 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0503(oConfig):
+   oResults = CResult()
+   sResult = CString.FormatResult(sMethod="",
+                                  bSuccess=False,
+                                  sResult="Result")
+   bSuccess, sResult = compare(((sResult, "!!! ERROR !!!\nResult"),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0503 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0504(oConfig):
+   oResults = CResult()
+   sResult = CString.FormatResult(sMethod="Method",
+                                  bSuccess=None,
+                                  sResult="Result")
+   bSuccess, sResult = compare(((sResult, "!!! EXCEPTION !!!\n[Method] : Result"),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0504 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0505(oConfig):
+   oResults = CResult()
+   sResult = CString.FormatResult(sMethod="",
+                                  bSuccess=None,
+                                  sResult="Result")
+   bSuccess, sResult = compare(((sResult, "!!! EXCEPTION !!!\nResult"),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0505 done")
+
+# --------------------------------------------------------------------------------------------------------------
+# CComparison / Compare
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+def PEC_0600(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/01.File_1.A.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/02.File_2.A.txt")
+   oResults.Results(f"Compared file 1: '{sFile_1}'")
+   oResults.Results(f"Compared file 2: '{sFile_2}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+
+   bSuccess, sResult = compare(((bIdentical, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0600 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0601(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/03.File_1.B.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/04.File_2.B.txt")
+
+   oResults.Results(f"Compared file 1: '{sFile_1}'")
+   oResults.Results(f"Compared file 2: '{sFile_2}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+
+   bSuccess, sResult = compare(((bIdentical, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0601 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0602(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/03.File_1.B.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/04.File_2.B.txt")
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1: '{sFile_1}'")
+   oResults.Results(f"Compared file 2: '{sFile_2}'")
+   oResults.Results(f"Pattern file   : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+
+   bSuccess, sResult = compare(((bIdentical, True),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0602 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0603(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/03.File_1.B.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/05.File_2.C.txt")
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1: '{sFile_1}'")
+   oResults.Results(f"Compared file 2: '{sFile_2}'")
+   oResults.Results(f"Pattern file   : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+
+   bSuccess, sResult = compare(((bIdentical, False),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0603 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0604(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH     = oConfig.Get('TESTFILES_PATH')
+   sFile_1            = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/07.File_1.E.txt")
+   sFile_2            = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/08.File_2.E.txt")
+   sPatternFile       = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+   sIgnorePatternFile = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/11.IgnorePatternFile.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+   oResults.Results(f"Ignore pattern file: '{sIgnorePatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile, sIgnorePatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+
+   bSuccess, sResult = compare(((bIdentical, True),)) # because the different lines are ignored
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0604 done")
+# --------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0650(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/03.File_1.B.txt")
+   sFile_2        = sFile_1 # same file, therefore nothing to compare
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0650 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0651(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = None
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/02.File_2.A.txt")
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0651 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0652(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/01.File_1.A.txt")
+   sFile_2        = None
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0652 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0653(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/IAmNotExisting.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/02.File_2.A.txt")
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0653 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0654(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/01.File_1.A.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/IAmNotExisting.txt")
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0654 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0655(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH = oConfig.Get('TESTFILES_PATH')
+   sFile_1        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/01.File_1.A.txt")
+   sFile_2        = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/02.File_2.A.txt")
+   sPatternFile   = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/IAmNotExisting.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0655 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0656(oConfig):
+   oResults = CResult()
+
+   TESTFILES_PATH     = oConfig.Get('TESTFILES_PATH')
+   sFile_1            = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/01.File_1.A.txt")
+   sFile_2            = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/02.File_2.A.txt")
+   sPatternFile       = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/10.PatternFile.txt")
+   sIgnorePatternFile = CString.NormalizePath(f"{TESTFILES_PATH}/Comparison/IAmNotExisting.txt")
+
+   oResults.Results(f"Compared file 1    : '{sFile_1}'")
+   oResults.Results(f"Compared file 2    : '{sFile_2}'")
+   oResults.Results(f"Pattern file       : '{sPatternFile}'")
+   oResults.Results(f"Ignore pattern file: '{sIgnorePatternFile}'")
+
+   oComparison = CComparison()
+   bIdentical, bSuccess, sResult = oComparison.Compare(sFile_1, sFile_2, sPatternFile, sIgnorePatternFile)
+   del oComparison
+   oResults.Results(f"bIdentical: {bIdentical}")
+   oResults.Results(f"sResult   : {sResult}")
+   oResults.Results(f"bSuccess  : {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bIdentical, None),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   bSuccessCompare, sResult = compare(((bSuccess, False),)) # because of no comparison happened
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0656 done")
+
+# --------------------------------------------------------------------------------------------------------------
+# CUtils / PrettyPrint
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+def PEC_0700(oConfig):
+   oResults = CResult()
+
+   oData = 4
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[INT]  :  4")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0700 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0701(oConfig):
+   oResults = CResult()
+
+   oData = 6.8
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[FLOAT]  :  6.8")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0701 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0702(oConfig):
+   oResults = CResult()
+
+   oData = "ABC"
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[STR]  :  'ABC'")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0702 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0703(oConfig):
+   oResults = CResult()
+
+   oData = True
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[BOOL]  :  True")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0703 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0704(oConfig):
+   oResults = CResult()
+
+   oData = None
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0704 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0705(oConfig):
+   oResults = CResult()
+
+   oData = [4, 6.8, "ABC", True, None]
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[LIST] (5/1) > [INT]  :  4")
+   listExpected.append("[LIST] (5/2) > [FLOAT]  :  6.8")
+   listExpected.append("[LIST] (5/3) > [STR]  :  'ABC'")
+   listExpected.append("[LIST] (5/4) > [BOOL]  :  True")
+   listExpected.append("[LIST] (5/5) > [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0705 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0706(oConfig):
+   oResults = CResult()
+
+   oData = (4, 6.8, "ABC", True, None)
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[TUPLE] (5/1) > [INT]  :  4")
+   listExpected.append("[TUPLE] (5/2) > [FLOAT]  :  6.8")
+   listExpected.append("[TUPLE] (5/3) > [STR]  :  'ABC'")
+   listExpected.append("[TUPLE] (5/4) > [BOOL]  :  True")
+   listExpected.append("[TUPLE] (5/5) > [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0706 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0707(oConfig):
+   oResults = CResult()
+
+   oData = {4, 6.8, "ABC", True, None}
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpectedParts = []
+   listExpectedParts.append("> [INT]  :  4")
+   listExpectedParts.append("> [FLOAT]  :  6.8")
+   listExpectedParts.append("> [STR]  :  'ABC'")
+   listExpectedParts.append("> [BOOL]  :  True")
+   listExpectedParts.append("> [NONE]  :  None")
+   sExp = "\n".join(listExpectedParts)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}' (subset, not ordered)")
+
+   bSuccess, sResult = compare(((len(listOutLines), len(listExpectedParts)),))
+   oResults.Results(sResult)
+   if bSuccess is not True: return bSuccess, oResults.Results()
+
+   # !!! elements of a set are not ordered !!!
+   for sLine in listOutLines:
+      if not sLine.startswith("[SET] (5"):
+         bSuccess = False
+         sResult  = f"line '{sLine}' does not start with '[SET] (5'"
+         oResults.Results(sResult)
+         return bSuccess, oResults.Results()
+
+      bFound = False
+      for sExpectedPart in listExpectedParts:
+          if sLine.endswith(sExpectedPart):
+              bFound = True
+              break
+
+      bSuccess, sResult = compare(((bFound, True),))
+      oResults.Results(sResult)
+      if bSuccess is not True: return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0707 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0708(oConfig):
+   oResults = CResult()
+
+   oData = {}
+   oData['K1'] = 4
+   oData['K2'] = 6.8
+   oData['K3'] = "ABC"
+   oData['K4'] = True
+   oData['K5'] = None
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[DICT] (5/1) > {K1} [INT]  :  4")
+   listExpected.append("[DICT] (5/2) > {K2} [FLOAT]  :  6.8")
+   listExpected.append("[DICT] (5/3) > {K3} [STR]  :  'ABC'")
+   listExpected.append("[DICT] (5/4) > {K4} [BOOL]  :  True")
+   listExpected.append("[DICT] (5/5) > {K5} [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0708 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0709(oConfig):
+   oResults = CResult()
+
+   dData = {}
+   dData['K1'] = 4
+   dData['K2'] = 6.8
+   dData['K3'] = "ABC"
+   dData['K4'] = True
+   dData['K5'] = None
+   oData = dotdict(dData)
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[DOTDICT] (5/1) > {K1} [INT]  :  4")
+   listExpected.append("[DOTDICT] (5/2) > {K2} [FLOAT]  :  6.8")
+   listExpected.append("[DOTDICT] (5/3) > {K3} [STR]  :  'ABC'")
+   listExpected.append("[DOTDICT] (5/4) > {K4} [BOOL]  :  True")
+   listExpected.append("[DOTDICT] (5/5) > {K5} [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0709 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0710(oConfig):
+   oResults = CResult()
+
+   listData = [1, "A"]
+   dictData = {}
+   dictData['K1'] = 2
+   dictData['K2'] = [3, 'B', (4.5, 'X', False, None)]
+   dotdictData = dotdict(dictData)
+   oData = [6, listData, dictData, dotdictData, None]
+   listOutLines = PrettyPrint(oData)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("[LIST] (5/1) > [INT]  :  6")
+   listExpected.append("[LIST] (5/2) > [LIST] (2/1) > [INT]  :  1")
+   listExpected.append("[LIST] (5/2) > [LIST] (2/2) > [STR]  :  'A'")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/1) > {K1} [INT]  :  2")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/2) > {K2} [LIST] (3/1) > [INT]  :  3")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/2) > {K2} [LIST] (3/2) > [STR]  :  'B'")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/1) > [FLOAT]  :  4.5")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/2) > [STR]  :  'X'")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/3) > [BOOL]  :  False")
+   listExpected.append("[LIST] (5/3) > [DICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/4) > [NONE]  :  None")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/1) > {K1} [INT]  :  2")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/2) > {K2} [LIST] (3/1) > [INT]  :  3")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/2) > {K2} [LIST] (3/2) > [STR]  :  'B'")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/1) > [FLOAT]  :  4.5")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/2) > [STR]  :  'X'")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/3) > [BOOL]  :  False")
+   listExpected.append("[LIST] (5/4) > [DOTDICT] (2/2) > {K2} [LIST] (3/3) > [TUPLE] (4/4) > [NONE]  :  None")
+   listExpected.append("[LIST] (5/5) > [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0710 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0711(oConfig):
+   oResults = CResult()
+
+   oData = [4, 6.8, "ABC", True, None]
+   listOutLines = PrettyPrint(oData, nIndent=5)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("     [LIST] (5/1) > [INT]  :  4")
+   listExpected.append("     [LIST] (5/2) > [FLOAT]  :  6.8")
+   listExpected.append("     [LIST] (5/3) > [STR]  :  'ABC'")
+   listExpected.append("     [LIST] (5/4) > [BOOL]  :  True")
+   listExpected.append("     [LIST] (5/5) > [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0711 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0712(oConfig):
+   oResults = CResult()
+
+   oData = [4, 6.8, "ABC", True, None]
+   listOutLines = PrettyPrint(oData, nIndent=2, sPrefix="--PREFIX--")
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("  --PREFIX-- [LIST] (5/1) > [INT]  :  4")
+   listExpected.append("  --PREFIX-- [LIST] (5/2) > [FLOAT]  :  6.8")
+   listExpected.append("  --PREFIX-- [LIST] (5/3) > [STR]  :  'ABC'")
+   listExpected.append("  --PREFIX-- [LIST] (5/4) > [BOOL]  :  True")
+   listExpected.append("  --PREFIX-- [LIST] (5/5) > [NONE]  :  None")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0712 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0713(oConfig):
+   oResults = CResult()
+
+   oData = [4, 6.8, "ABC", True, None, ("A", "B"), ["DE", "FGH"], {"KA":4, "KB":6.8, "KC":"ABC", "KD":True, "KE":None, "KF":[1, "MNO"]}]
+   listOutLines = PrettyPrint(oData, nIndent=2, sPrefix="--HEX OUTPUT--", bHexFormat=True)
+   print()
+   sRet = "\n".join(listOutLines)
+   listExpected = []
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/1) > [INT]  :  4")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/2) > [FLOAT]  :  6.8")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/3) > [STR]  :  '0x41 0x42 0x43'")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/4) > [BOOL]  :  True")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/5) > [NONE]  :  None")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/6) > [TUPLE] (2/1) > [STR]  :  '0x41'")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/6) > [TUPLE] (2/2) > [STR]  :  '0x42'")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/7) > [LIST] (2/1) > [STR]  :  '0x44 0x45'")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/7) > [LIST] (2/2) > [STR]  :  '0x46 0x47 0x48'")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/1) > {KA} [INT]  :  4")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/2) > {KB} [FLOAT]  :  6.8")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/3) > {KC} [STR]  :  '0x41 0x42 0x43'")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/4) > {KD} [BOOL]  :  True")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/5) > {KE} [NONE]  :  None")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/6) > {KF} [LIST] (2/1) > [INT]  :  1")
+   listExpected.append("  --HEX OUTPUT-- [LIST] (8/8) > [DICT] (6/6) > {KF} [LIST] (2/2) > [STR]  :  '0x4d 0x4e 0x4f'")
+   sExp = "\n".join(listExpected)
+
+   oResults.Results(f"Returned: '{sRet}'")
+   oResults.Results(f"Expected: '{sExp}'")
+
+   bSuccessCompare, sResult = compare(((sRet, sExp),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   return True, oResults.Results("PEC_0713 done")
+
+# --------------------------------------------------------------------------------------------------------------
+# CUtils / GetInstalledPackages
+# --------------------------------------------------------------------------------------------------------------
+#TM***
+
+def PEC_0800(oConfig):
+   oResults = CResult()
+
+   listofTuplesPackages, bSuccess, sResult = CUtils.GetInstalledPackages()
+
+   oResults.Results(f"listofTuplesPackages: {listofTuplesPackages}")
+   oResults.Results(f"sResult : {sResult}")
+   oResults.Results(f"bSuccess: {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   if len(listofTuplesPackages) == 0:
+      bSuccess = False
+      sResult  = "list of Python packages is empty"
+      oResults.Results(sResult)
+      return bSuccess, oResults.Results()
+
+   return True, oResults.Results("PEC_0800 done")
+# --------------------------------------------------------------------------------------------------------------
+def PEC_0801(oConfig):
+   oResults = CResult()
+
+   sOutputFile = oConfig.Get('CUTILS_TESTFILE')
+   oOutputFile = CFile(sOutputFile)
+   bSuccess, sResult = oOutputFile.Delete(bConfirmDelete=False)
+   oResults.Results(sResult)
+   if bSuccess is not True: del oOutputFile; return bSuccess, oResults.Results()
+   del oOutputFile
+
+   listofTuplesPackages, bSuccess, sResult = CUtils.GetInstalledPackages(sOutputFile)
+
+   oResults.Results(f"listofTuplesPackages: {listofTuplesPackages}")
+   oResults.Results(f"sResult : {sResult}")
+   oResults.Results(f"bSuccess: {bSuccess}")
+
+   bSuccessCompare, sResult = compare(((bSuccess, True),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+
+   if len(listofTuplesPackages) == 0:
+      bSuccess = False
+      sResult  = "list of Python packages is empty"
+      oResults.Results(sResult)
+      return bSuccess, oResults.Results()
+
+   bIsFile = os.path.isfile(sOutputFile)
+   bSuccessCompare, sResult = compare(((bIsFile, True),))
+   oResults.Results(sResult)
+   if bSuccessCompare is not True: return bSuccessCompare, oResults.Results()
+   os.remove(sOutputFile)
+
+   return True, oResults.Results("PEC_0801 done")
+# --------------------------------------------------------------------------------------------------------------
