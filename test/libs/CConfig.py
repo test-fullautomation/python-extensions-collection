@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 08.09.2023
+# 13.09.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -83,17 +83,6 @@ class CConfig():
       self.__dictConfig['PYTHONPATH']     = os.path.dirname(PYTHON)
       self.__dictConfig['PYTHONVERSION']  = sys.version
 
-      # -- configuration: test environment (default, maybe overwritten by command line)
-
-      TESTLOGFILESFOLDER = f"{REFERENCEPATH}/testlogfiles"
-      self.__dictConfig['TESTLOGFILESFOLDER'] = TESTLOGFILESFOLDER
-
-      TMPFILESFOLDER = f"{TESTLOGFILESFOLDER}/tmpfiles"
-      self.__dictConfig['TMPFILESFOLDER'] = TMPFILESFOLDER
-
-      SELFTESTLOGFILE = f"{TESTLOGFILESFOLDER}/PEC_SelfTest.log"
-      self.__dictConfig['SELFTESTLOGFILE'] = SELFTESTLOGFILE
-
       # -- configuration: command line
 
       oCmdLineParser = argparse.ArgumentParser()
@@ -109,28 +98,38 @@ class CConfig():
          TESTID = str(oCmdLineArgs.testid).strip()
       self.__dictConfig['TESTID'] = TESTID
 
-      bCodeDump = False
+      CODEDUMP = False
       if oCmdLineArgs.codedump != None:
-         bCodeDump = oCmdLineArgs.codedump
-      self.__dictConfig['CODEDUMP'] = bCodeDump
+         CODEDUMP = oCmdLineArgs.codedump
+      self.__dictConfig['CODEDUMP'] = CODEDUMP
       # if True: script quits after config dump
 
-      bConfigDump = False
+      CONFIGDUMP = False
       if oCmdLineArgs.configdump != None:
-         bConfigDump = oCmdLineArgs.configdump
-      self.__dictConfig['CONFIGDUMP'] = bConfigDump
+         CONFIGDUMP = oCmdLineArgs.configdump
+      self.__dictConfig['CONFIGDUMP'] = CONFIGDUMP
       # if True: script quits after config dump
 
-      # self test log file: default settings
+      # -- log file and output folders
+      sLogFileName = "PEC_SelfTest.log"
+      if TESTID is not None:
+         if ';' not in TESTID:
+            # in case of a single TESTID is given in command line, we add this ID to the log file name
+            # (support of pytest, where every test case is executed separately)
+            sLogFileName = f"PEC_SelfTest_{TESTID}.log"
+
+      SELFTESTLOGFILE = f"{REFERENCEPATH}/testlogfiles/{sLogFileName}"
+
       if oCmdLineArgs.logfile != None:
-         SELFTESTLOGFILE = oCmdLineArgs.logfile
-         SELFTESTLOGFILE = CString.NormalizePath(SELFTESTLOGFILE, sReferencePathAbs=REFERENCEPATH)
-         TESTLOGFILESFOLDER = os.path.dirname(SELFTESTLOGFILE)
-         TMPFILESFOLDER = f"{TESTLOGFILESFOLDER}/tmpfiles"
-         # update default values in config
-         self.__dictConfig['TESTLOGFILESFOLDER'] = TESTLOGFILESFOLDER
-         self.__dictConfig['TMPFILESFOLDER']     = TMPFILESFOLDER
-         self.__dictConfig['SELFTESTLOGFILE']    = SELFTESTLOGFILE
+         # command line overwrites default log file location
+         SELFTESTLOGFILE = CString.NormalizePath(oCmdLineArgs.logfile, sReferencePathAbs=REFERENCEPATH)
+
+      TESTLOGFILESFOLDER = os.path.dirname(SELFTESTLOGFILE)
+      TMPFILESFOLDER = f"{TESTLOGFILESFOLDER}/tmpfiles"
+      # update default values in config
+      self.__dictConfig['SELFTESTLOGFILE']    = SELFTESTLOGFILE
+      self.__dictConfig['TESTLOGFILESFOLDER'] = TESTLOGFILESFOLDER
+      self.__dictConfig['TMPFILESFOLDER']     = TMPFILESFOLDER
 
       # -- create output folders
 
