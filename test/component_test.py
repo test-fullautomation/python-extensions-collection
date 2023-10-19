@@ -22,8 +22,8 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-VERSION      = "0.8.0"
-VERSION_DATE = "13.09.2023"
+VERSION      = "0.9.0"
+VERSION_DATE = "06.10.2023"
 #
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -99,7 +99,7 @@ def printunknown(sMsg, prefix=None):
 # --------------------------------------------------------------------------------------------------------------
 # [TESTCONFIG]
 # --------------------------------------------------------------------------------------------------------------
-# [TESTCONFIG]
+#TM***
 
 # -- initialize and dump test configuration
 
@@ -137,15 +137,11 @@ if CONFIGDUMP is True:
 # --------------------------------------------------------------------------------------------------------------
 #TM***
 
-# -- access to configuration
-
-THISSCRIPTNAME  = oConfig.Get('THISSCRIPTNAME')
-SELFTESTLOGFILE = oConfig.Get('SELFTESTLOGFILE')
-
 # -- start logging
+SELFTESTLOGFILE = oConfig.Get('SELFTESTLOGFILE')
 oSelfTestLogFile = CFile(SELFTESTLOGFILE)
 NOW = time.strftime('%d.%m.%Y - %H:%M:%S')
-oSelfTestLogFile.Write(f"{THISSCRIPTNAME} started at: {NOW}\n")
+oSelfTestLogFile.Write(f"{THISSCRIPTFULLNAME} started at: {NOW}\n")
 oSelfTestLogFile.Write(listConfigLines) # from DumpConfig() called above
 oSelfTestLogFile.Write()
 
@@ -178,8 +174,6 @@ if TESTID is not None:
    del listofdictUsecases
    listofdictUsecases = listofdictUsecasesSubset
 # eof if TESTID is not None:
-
-# --------------------------------------------------------------------------------------------------------------
 
 # -- check for duplicate test IDs
 # Test IDs are used to identify and select test cases. They have to be unique.

@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 13.09.2023
+# 06.10.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -89,7 +89,7 @@ class CConfig():
       oCmdLineParser.add_argument('--testid', type=str, help='The ID of the test to be executed')
       oCmdLineParser.add_argument('--codedump', action='store_true', help='If True, creates pytest code and test lists; default: False')
       oCmdLineParser.add_argument('--configdump', action='store_true', help='If True, basic configuration values are dumped to console; default: False')
-      oCmdLineParser.add_argument('--logfile', type=str, help='Path and name of log file (optional)')
+      oCmdLineParser.add_argument('--logfile', type=str, help='Path and name of self test log file (optional)')
 
       oCmdLineArgs = oCmdLineParser.parse_args()
 
@@ -118,6 +118,7 @@ class CConfig():
             # (support of pytest, where every test case is executed separately)
             sLogFileName = f"PEC_SelfTest_{TESTID}.log"
 
+      # default
       SELFTESTLOGFILE = f"{REFERENCEPATH}/testlogfiles/{sLogFileName}"
 
       if oCmdLineArgs.logfile != None:
@@ -125,8 +126,9 @@ class CConfig():
          SELFTESTLOGFILE = CString.NormalizePath(oCmdLineArgs.logfile, sReferencePathAbs=REFERENCEPATH)
 
       TESTLOGFILESFOLDER = os.path.dirname(SELFTESTLOGFILE)
-      TMPFILESFOLDER = f"{TESTLOGFILESFOLDER}/tmpfiles"
-      # update default values in config
+      TMPFILESFOLDER     = f"{TESTLOGFILESFOLDER}/tmpfiles"
+
+      # update config
       self.__dictConfig['SELFTESTLOGFILE']    = SELFTESTLOGFILE
       self.__dictConfig['TESTLOGFILESFOLDER'] = TESTLOGFILESFOLDER
       self.__dictConfig['TMPFILESFOLDER']     = TMPFILESFOLDER
@@ -166,9 +168,6 @@ class CConfig():
 
       # -- predefined test files
       self.__dictConfig['TESTFILES_PATH'] = f"{REFERENCEPATH}/testfiles"
-
-      # dump of basic configuration parameters to console
-      # self.DumpConfig() # done in main script now!
 
    # eof def __init__(self, sCalledBy=None):
 
