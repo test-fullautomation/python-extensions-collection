@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 08.09.2023
+# 19.10.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -1968,14 +1968,24 @@ def PEC_0155(oConfig):
 
 def PEC_0200(oConfig):
    oResults = CResult()
+   # (1)
    if platform.system() == "Windows":
-      sIn  = r"%TMP%"
+      sIn = r"%TMP%"
    elif platform.system() == "Linux":
-      sIn  = r"${HOME}"
+      sIn = r"${HOME}"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"(1) sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sIn, sOut),), bInverse=True)
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
+   # (2)
+   if platform.system() == "Windows":
+      sIn  = r"${TMP}" # Linux notation under Windows
+      sOut = CString.NormalizePath(sIn)
+      oResults.Results(f"(2) sIn: {sIn}; sOut: {sOut}")
+      bSuccess, sResult = compare(((sIn, sOut),), bInverse=True)
+      oResults.Results(sResult)
+      if bSuccess is not True: return bSuccess, oResults.Results()
    return True, oResults.Results("PEC_0200 done")
 
 # --------------------------------------------------------------------------------------------------------------
@@ -1987,6 +1997,7 @@ def PEC_0201(oConfig):
    elif platform.system() == "Linux":
       sIn  = r"${HOME}"
    sOut = CString.NormalizePath(sIn, bExpandEnvVars=False)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sIn, sOut),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2003,6 +2014,7 @@ def PEC_0202(oConfig):
       sIn  = r"/tmp\dir\subdir\subsubdir"
       sExp = r"/tmp/dir/subdir/subsubdir"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2019,6 +2031,7 @@ def PEC_0203(oConfig):
       sIn  = r'  " /tmp\dir\subdir\subsubdir  "  '
       sExp = r"/tmp/dir/subdir/subsubdir"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2030,6 +2043,7 @@ def PEC_0203(oConfig):
       sIn  = r"  '  /tmp\dir\subdir\subsubdir  '  "
       sExp = r"/tmp/dir/subdir/subsubdir"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2047,6 +2061,7 @@ def PEC_0204(oConfig):
       sIn  = r"/tmp\dir\\subdir//subsubdir"
       sExp = r"/tmp/dir/subdir/subsubdir"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2064,6 +2079,7 @@ def PEC_0205(oConfig):
       sIn  = r"/tmp\dir\\subdir//subsubdir"
       sExp = r"\\tmp\\dir\\subdir\\subsubdir" # this makes no sense, but nevertheless let's do something under Linux also
    sOut = CString.NormalizePath(sIn, bWin=True)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2081,6 +2097,7 @@ def PEC_0206(oConfig):
       sIn  = r"/tmp/dir1\..\\dir2"
       sExp = r"/tmp/dir2"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2098,6 +2115,7 @@ def PEC_0207(oConfig):
       sIn  = r"/tmp\dir/../dir\\subdir"
       sExp = r"\\tmp\\dir\\subdir" # this makes no sense, but nevertheless let's do something under Linux also
    sOut = CString.NormalizePath(sIn, bWin=True)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2115,6 +2133,7 @@ def PEC_0208(oConfig):
       sIn  = r"/tmp\dir/../dir\\subdir"
       sExp = r"\tmp\dir\subdir" # this makes no sense, but nevertheless let's do something under Linux also
    sOut = CString.NormalizePath(sIn, bWin=True, bMask=False)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2134,6 +2153,7 @@ def PEC_0209(oConfig):
       sIn  = r"../test_2\\subdir"
       sExp = r"/tmp/test_2/subdir"
    sOut = CString.NormalizePath(sIn, sReferencePathAbs=sReferencePathAbs)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2153,6 +2173,7 @@ def PEC_0210(oConfig):
       sIn  = r"../test_2\\subdir"
       sExp = r"\\tmp\\test_2\\subdir" # this makes no sense, but nevertheless let's do something under Linux also
    sOut = CString.NormalizePath(sIn, bWin=True, bMask=True, sReferencePathAbs=sReferencePathAbs)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2170,6 +2191,7 @@ def PEC_0211(oConfig):
       sIn  = r"/tmp\dir//../dir\\sub  dir"
       sExp = r'"/tmp/dir/sub  dir"'
    sOut = CString.NormalizePath(sIn, bConsiderBlanks=True)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2187,6 +2209,7 @@ def PEC_0212(oConfig):
       sIn  = r"/tmp\dir\\subdir"
       sExp = r"/tmp/dir/subdir"
    sOut = CString.NormalizePath(sIn, bConsiderBlanks=True)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2200,6 +2223,7 @@ def PEC_0213(oConfig):
    sIn  = r"//server.com\001//..\002/003\\004"
    sExp = r"//server.com/002/003/004"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2207,6 +2231,7 @@ def PEC_0213(oConfig):
    sIn  = r"\\server.com\001//..\002/003\\004"
    sExp = r"//server.com/002/003/004"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2214,6 +2239,7 @@ def PEC_0213(oConfig):
    sIn  = r"//server.com\001//..\002/003\\004"
    sExp = r"\\server.com\002\003\004"
    sOut = CString.NormalizePath(sIn, bWin=True)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2221,6 +2247,7 @@ def PEC_0213(oConfig):
    sIn  = r"\\server.com\001//..\002/003\\004"
    sExp = r"\\server.com\002\003\004"
    sOut = CString.NormalizePath(sIn, bWin=True)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2234,6 +2261,7 @@ def PEC_0214(oConfig):
    sIn  = r"file://///server.com\001//..\002/003\\004"
    sExp = r"file://///server.com/002/003/004"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2254,6 +2282,7 @@ def PEC_0215(oConfig):
    sIn  = r"http://server.com\001//..\002/003\\004"
    sExp = r"http://server.com/002/003/004"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2261,6 +2290,7 @@ def PEC_0215(oConfig):
    sIn  = r"http:\\server.com\001//..\002/003\\004"
    sExp = r"http://server.com/002/003/004"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2268,6 +2298,7 @@ def PEC_0215(oConfig):
    sIn  = r"https://server.com\001//..\002/003\\004"
    sExp = r"https://server.com/002/003/004"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2275,6 +2306,7 @@ def PEC_0215(oConfig):
    sIn  = r"https:\\server.com\001//..\002/003\\004"
    sExp = r"https://server.com/002/003/004"
    sOut = CString.NormalizePath(sIn)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2282,6 +2314,7 @@ def PEC_0215(oConfig):
    sIn  = r"http://server.com\001//..\002/003\\004"
    sExp = r"http://server.com/002/003/004"
    sOut = CString.NormalizePath(sIn, bWin=True)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2289,6 +2322,7 @@ def PEC_0215(oConfig):
    sIn  = r"http:\\server.com\001//..\002/003\\004"
    sExp = r"http://server.com/002/003/004"
    sOut = CString.NormalizePath(sIn, bWin=True)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2296,6 +2330,7 @@ def PEC_0215(oConfig):
    sIn  = r"https://server.com\001//..\002/003\\004"
    sExp = r"https://server.com/002/003/004"
    sOut = CString.NormalizePath(sIn, bWin=True)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()
@@ -2303,6 +2338,7 @@ def PEC_0215(oConfig):
    sIn  = r"https:\\server.com\001//..\002/003\\004"
    sExp = r"https://server.com/002/003/004"
    sOut = CString.NormalizePath(sIn, bWin=True)
+   oResults.Results(f"sIn: {sIn}; sOut: {sOut}")
    bSuccess, sResult = compare(((sOut, sExp),))
    oResults.Results(sResult)
    if bSuccess is not True: return bSuccess, oResults.Results()

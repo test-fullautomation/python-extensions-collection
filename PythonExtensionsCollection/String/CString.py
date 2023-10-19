@@ -20,12 +20,12 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 14.11.2022
+# 19.10.2023
 #
 # **************************************************************************************************************
 
 # -- import standard Python modules
-import os, ntpath, re
+import os, ntpath, platform, re
 
 # **************************************************************************************************************
 
@@ -47,7 +47,8 @@ Normalizes local paths, paths to local network resources and internet addresses
 
   / *Condition*: required / *Type*: str /
 
-  The path to be normalized
+  The path to be normalized. Paths can start with environment variables. Accepted are notations for both Windows
+  (``%ENVVAR%``) and Linux (``${ENVVAR}``). Under Windows also the Linux notation will be resolved.
 
 * ``bWin``
 
@@ -94,10 +95,6 @@ Normalizes local paths, paths to local network resources and internet addresses
 
       if sPath is not None:
 
-         # -- expand Windows environment variables
-         if bExpandEnvVars is True:
-            sPath = os.path.expandvars(sPath)
-
          # - remove leading and trailing horizontal space
          sPath = sPath.strip(" \t\r\n")
 
@@ -114,6 +111,20 @@ Normalizes local paths, paths to local network resources and internet addresses
 
          # - remove trailing slash or backslash (maybe at end of path to folder)
          sPath = sPath.rstrip("/\\")
+
+         # -- expand environment variables
+         if bExpandEnvVars is True:
+            sPattern_envvar = r"^\$\{(\w+?)\}" # check for Linux notation (shall be usable also under Windows)
+            regex_envvar    = re.compile(sPattern_envvar)
+            sPlatformSystem = platform.system()
+            sPathModified = sPath
+            for sEnvVar in regex_envvar.findall(sPath):
+               sSearch = "${" + sEnvVar + "}"
+               if sPlatformSystem == "Windows":
+                  sReplace = "%" + sEnvVar + "%"
+                  sPathModified = sPathModified.replace(sSearch, sReplace)
+            # eof for sEnvVar in regex_envvar.findall(sPath):
+            sPath = os.path.expandvars(sPathModified)
 
          # --------------------------------------------------------------------------------------------------------------
          # consider internet addresses and local network resources
