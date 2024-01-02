@@ -41,19 +41,13 @@
    "COMPONENT" : "PythonExtensionsCollection",
 
 
-# Section "RELEASES" for RobotFramework_AIO:
+# Section "RELEASES" for RobotFramework AIO:
 # ------------------------------------------
 
    "RELEASES"  : {
-                   "0.9." : [
-                              "PythonExtensionsCollection change 0.9 A",
-                              "PythonExtensionsCollection change 0.9 B",
-                              "PythonExtensionsCollection change 0.9 X"
-                            ],
-                   "0.10." : [
-                               "PythonExtensionsCollection change 0.10 A",
-                               "PythonExtensionsCollection change 0.10 B",
-                               "PythonExtensionsCollection change 0.10 X"
+                   "0.x.y" : [
+                               "0.x.y",
+                               "0.x.y"
                              ]
                  }
 }
