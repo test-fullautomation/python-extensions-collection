@@ -2,7 +2,7 @@
 
 Checklist for implementation of self test cases for PythonExtensionsCollection
 
-XC-CT/ECA3-Queckenstedt
+XC-HWP/ESW3-Queckenstedt
 
 31.07.2023
 
