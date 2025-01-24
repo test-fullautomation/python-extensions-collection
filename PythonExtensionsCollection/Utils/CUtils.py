@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-#  Copyright 2020-2024 Robert Bosch GmbH
+#  Copyright 2020-2025 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 30.05.2023
+# 24.01.2025
 #
 # **************************************************************************************************************
 
@@ -293,7 +293,8 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
                del self.listGlobalPrefixes[-1]    # remove prefix count
             del self.listGlobalPrefixes[-1]       # remove prefix name
 
-      elif ( (type(oData) is dotdict) or (".DotDict'>" in str(type(oData))) ):
+      # previous version # elif ( (type(oData) is dotdict) or (".DotDict'>" in str(type(oData))) ):
+      elif ( (type(oData) is dotdict) or (str(type(oData)).upper().find("DOTDICT") != -1) ):
          nNrOfElements = len(oData)
          if nNrOfElements == 0:
             # -- indicate empty dot dictionary
