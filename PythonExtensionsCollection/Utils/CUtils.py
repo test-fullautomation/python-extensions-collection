@@ -333,6 +333,319 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
 
 
 # --------------------------------------------------------------------------------------------------------------
+# >>> temporary debug version 
+
+def PrettyPrintD(oData=None, hOutputFile=None, bToConsole=True, nIndent=0, sPrefix=None, bHexFormat=False):
+   """
+Wrapper function to create and use a ``CTypePrint`` object. This wrapper function is responsible for
+printing out the content to console and to a file (depending on input parameter).
+
+The content itself is prepared by the method ``TypePrint`` of class ``CTypePrint``. This happens ``PrettyPrint`` internally.
+
+The idea behind the ``PrettyPrint`` function is to resolve also the content of composite data types and provide for every parameter inside:
+
+* the type
+* the total number of elements inside (e.g. the number of keys inside a dictionary)
+* the counter number of the current element
+* the value
+
+**Arguments:**
+
+* ``oData``
+
+  / *Condition*: required / *Type*: (*any Python data type*) /
+
+  A variable of any Python data type.
+
+* ``hOutputFile``
+
+  / *Condition*: optional / *Type*: file handle / *Default*: None /
+
+  If handle is not ``None`` the content is written to this file, otherwise not.
+
+* ``bToConsole``
+
+  / *Condition*: optional / *Type*: bool / *Default*: True /
+
+  If ``True`` the content is written to console, otherwise not.
+
+* ``nIndent``
+
+  / *Condition*: optional / *Type*: int / *Default*: 0 /
+
+  Sets the number of additional blanks at the beginning of every line of output (indentation).
+
+* ``sPrefix``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  Sets a prefix string that is added at the beginning of every line of output.
+
+* ``bHexFormat``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  If ``True`` the output is printed in hexadecimal format (but valid for strings only).
+
+**Returns:**
+
+* ``listOutLines`` (*list*)
+
+  / *Type*: list /
+
+  List of lines containing the prepared output
+   """
+
+   oTypePrint   = CTypePrintD()
+   listOutLines = oTypePrint.TypePrintD(oData, bHexFormat)
+
+   listReturned = []
+   for sLine in listOutLines:
+      # if requested add indentation and prefix
+      sLineOut = ""
+      if sPrefix is not None:
+         sLineOut = nIndent*" " + sPrefix + " " + sLine
+      else:
+         sLineOut = nIndent*" " + sLine
+      listReturned.append(sLineOut)
+
+      if hOutputFile is not None:
+         hOutputFile.write(sLineOut + "\n")
+      if bToConsole is True:
+         print(sLineOut)
+
+   return listReturned
+
+# eof def PrettyPrint(oData=None, hOutputFile=None, bToConsole=True, nIndent=0, sPrefix=None, bHexFormat=False):
+
+# --------------------------------------------------------------------------------------------------------------
+# TM***
+
+class CTypePrintD(object):
+   """
+The class ``CTypePrint`` provides a method (``TypePrint``) to compute the following data:
+
+* the type
+* the total number of elements inside (e.g. the number of keys inside a dictionary)
+* the counter number of the current element
+* the value
+
+of simple and composite data types.
+
+The call of this method is encapsulated within the function ``PrettyPrint`` inside this module.
+   """
+   def __init__(self):
+      self.listGlobalPrefixes = []
+      self.listOutLines       = []
+
+   def __del__(self):
+      pass
+
+   def _ToHex(self, sString=None):
+      if ( (sString is None) or (sString == "") ):
+         return sString
+      listHex = []
+      for sChar in sString:
+         listHex.append(hex(ord(sChar)))
+      sStringHex = " ".join(listHex)
+      return sStringHex
+
+   def TypePrintD(self, oData=None, bHexFormat=False):
+      """
+The method ``TypePrint`` computes details about the input variable ``oData``.
+
+**Arguments:**
+
+* ``oData``
+
+  / *Condition*: required / *Type*: any Python data type /
+
+  Python variable of any data type.
+
+* ``bHexFormat``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  If ``True`` the output is provide in hexadecimal format.
+
+**Returns:**
+
+* ``listOutLines``
+
+  / *Type*: list /
+
+  List of lines containing the resolved content of ``oData``.
+      """
+
+      if oData is None:
+         sLocalPrefix = "[NONE]"
+         sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+         sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  " + str(oData)
+         self.listOutLines.append(sOut.strip())
+
+      elif type(oData) is int:
+         sLocalPrefix = "[INT]"
+         sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+         sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  " + str(oData)
+         self.listOutLines.append(sOut.strip())
+
+      elif type(oData) is float:
+         sLocalPrefix = "[FLOAT]"
+         sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+         sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  " + str(oData)
+         self.listOutLines.append(sOut.strip())
+
+      elif type(oData) is bool:
+         sLocalPrefix = "[BOOL]"
+         sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+         sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  " + str(oData)
+         self.listOutLines.append(sOut.strip())
+
+      elif type(oData) is str:
+         sLocalPrefix = "[STR]"
+         sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+         sData = str(oData)
+         if bHexFormat is True:
+            sData = self._ToHex(sData)
+         sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  '" + sData + "'"
+         self.listOutLines.append(sOut.strip())
+
+      elif type(oData) is list:
+         nNrOfElements = len(oData)
+         if nNrOfElements == 0:
+            # -- indicate empty list
+            sLocalPrefix = "[LIST]"
+            sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+            sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  []"
+            self.listOutLines.append(sOut.strip())
+         else:
+            # -- list elements of list
+            self.listGlobalPrefixes.append("[LIST]")
+            nCnt = 0
+            for oElement in oData:
+               nCnt = nCnt + 1
+               sCnt = "(" + str(nNrOfElements) + "/" + str(nCnt) + ") >"
+               self.listGlobalPrefixes.append(sCnt)
+               self.TypePrintD(oElement, bHexFormat) # >>>> recursion
+               del self.listGlobalPrefixes[-1]      # remove prefix count
+            del self.listGlobalPrefixes[-1]         # remove prefix name
+
+      elif type(oData) is tuple:
+         nNrOfElements = len(oData)
+         if nNrOfElements == 0:
+            # -- indicate empty tuple
+            sLocalPrefix = "[TUPLE]"
+            sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+            sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  ()"
+            self.listOutLines.append(sOut.strip())
+         else:
+            # -- list elements of tuple
+            self.listGlobalPrefixes.append("[TUPLE]")
+            nCnt = 0
+            for oElement in oData:
+               nCnt = nCnt + 1
+               sCnt = "(" + str(nNrOfElements) + "/" + str(nCnt) + ") >"
+               self.listGlobalPrefixes.append(sCnt)
+               self.TypePrintD(oElement, bHexFormat) # >>>> recursion
+               del self.listGlobalPrefixes[-1]      # remove prefix count
+            del self.listGlobalPrefixes[-1]         # remove prefix name
+
+      elif type(oData) is set:
+         nNrOfElements = len(oData)
+         if nNrOfElements == 0:
+            # -- indicate empty set
+            sLocalPrefix = "[SET]"
+            sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+            sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  ()"
+            self.listOutLines.append(sOut.strip())
+         else:
+            # -- list elements of set
+            self.listGlobalPrefixes.append("[SET]")
+            nCnt = 0
+            for oElement in oData:
+               nCnt = nCnt + 1
+               sCnt = "(" + str(nNrOfElements) + "/" + str(nCnt) + ") >"
+               self.listGlobalPrefixes.append(sCnt)
+               self.TypePrintD(oElement, bHexFormat) # >>>> recursion
+               del self.listGlobalPrefixes[-1]      # remove prefix count
+            del self.listGlobalPrefixes[-1]         # remove prefix name
+
+      elif type(oData) is dict:
+         nNrOfElements = len(oData)
+         if nNrOfElements == 0:
+            # -- indicate empty dictionary
+            sLocalPrefix = "[DICT]"
+            sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+            sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  {}"
+            self.listOutLines.append(sOut.strip())
+         else:
+            # -- list elements of dictionary
+            self.listGlobalPrefixes.append("[DICT]")
+            nCnt = 0
+            listKeys = list(oData.keys())
+            for sKey in listKeys:
+               nCnt = nCnt + 1
+               oValue = oData[sKey]
+               sCntAndKey = "(" + str(nNrOfElements) + "/" + str(nCnt) + ") > {" + str(sKey) + "}"
+               self.listGlobalPrefixes.append(sCntAndKey)
+               self.TypePrintD(oValue, bHexFormat) # >>>> recursion
+               del self.listGlobalPrefixes[-1]    # remove prefix count
+            del self.listGlobalPrefixes[-1]       # remove prefix name
+
+      # previous version # elif ( (type(oData) is dotdict) or (".DotDict'>" in str(type(oData))) ):
+      elif ( (type(oData) is dotdict) or (str(type(oData)).upper().find("DOTDICT") != -1) ):
+         self.listOutLines.append(f"===== dictionary detected")
+         nNrOfElements = len(oData)
+         self.listOutLines.append(f"===== nNrOfElements: {nNrOfElements}")
+         self.listOutLines.append(f"===== type(oData): {type(oData)}")
+         self.listOutLines.append(f"===== str(type(oData)): {str(type(oData))}")
+         self.listOutLines.append(f"===== oData: {oData}")
+
+         if nNrOfElements == 0:
+            # -- indicate empty dot dictionary
+            sLocalPrefix = "[DOTDICT]"
+            sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+            sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  {}"
+            self.listOutLines.append(sOut.strip())
+         else:
+            # -- list elements of dot dictionary
+            self.listGlobalPrefixes.append("[DOTDICT]")
+            nCnt = 0
+            listKeys = list(oData.keys())
+            for sKey in listKeys:
+               nCnt = nCnt + 1
+               oValue = oData[sKey]
+               sCntAndKey = "(" + str(nNrOfElements) + "/" + str(nCnt) + ") > {" + str(sKey) + "}"
+               self.listGlobalPrefixes.append(sCntAndKey)
+               self.TypePrintD(oValue, bHexFormat) # >>>> recursion
+               del self.listGlobalPrefixes[-1]    # remove prefix count
+            del self.listGlobalPrefixes[-1]       # remove prefix name
+
+      else:
+         self.listOutLines.append(f"===== final 'else' detected")
+         self.listOutLines.append(f"===== type(oData): {type(oData)}")
+         self.listOutLines.append(f"===== str(type(oData)): {str(type(oData))}")
+         self.listOutLines.append(f"===== oData: {oData}")
+         sLocalPrefix = "[" + str(type(oData)) + "]"
+         sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+         sData = str(oData)
+         if bHexFormat is True:
+            sData = self._ToHex(sData)
+         sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  '" + sData + "'"
+         self.listOutLines.append(sOut.strip())
+
+      return self.listOutLines
+
+   # eof def TypePrint(...):
+
+# eof class CTypePrintD():
+
+# <<< temporary debug version 
+# --------------------------------------------------------------------------------------------------------------
+
+
+
+# --------------------------------------------------------------------------------------------------------------
 # TM***
 
 class CUtils(object):
