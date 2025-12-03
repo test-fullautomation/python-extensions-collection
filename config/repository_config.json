@@ -7,7 +7,6 @@
    "LONGDESCRIPTIONCONTENTTYPE" : "text/markdown",
    "URL" : "https://github.com/test-fullautomation/python-extensions-collection",
    "PROGRAMMINGLANGUAGE" : "Programming Language :: Python :: 3",
-   "LICENCE" : "License :: OSI Approved :: Apache Software License",
    "OPERATINGSYSTEM" : "Operating System :: OS Independent",
    "PYTHONREQUIRES" : ">=3.0",
    "DEVELOPMENTSTATUS" : "Development Status :: 4 - Beta",
