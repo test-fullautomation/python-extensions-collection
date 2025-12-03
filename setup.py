@@ -185,34 +185,9 @@ print(COLBY + "Extended setup step 5/5: install.run(self)")
 print()
 
 setuptools.setup(
-    name         = str(oRepositoryConfig.Get('PACKAGENAME')),
-    version      = str(oRepositoryConfig.Get('PACKAGEVERSION')),
-    author       = str(oRepositoryConfig.Get('AUTHOR')),
-    author_email = str(oRepositoryConfig.Get('AUTHOREMAIL')),
-    description  = str(oRepositoryConfig.Get('DESCRIPTION')),
-    long_description = long_description,
-    long_description_content_type = str(oRepositoryConfig.Get('LONGDESCRIPTIONCONTENTTYPE')),
-    url = str(oRepositoryConfig.Get('URL')),
-    packages = [str(oRepositoryConfig.Get('PACKAGENAME')),
-                str(oRepositoryConfig.Get('PACKAGENAME')) + ".Comparison",
-                str(oRepositoryConfig.Get('PACKAGENAME')) + ".String",
-                str(oRepositoryConfig.Get('PACKAGENAME')) + ".Utils",
-                str(oRepositoryConfig.Get('PACKAGENAME')) + ".File",
-                str(oRepositoryConfig.Get('PACKAGENAME')) + ".Folder"],
-    classifiers = [
-        str(oRepositoryConfig.Get('PROGRAMMINGLANGUAGE')),
-        str(oRepositoryConfig.Get('LICENCE')),
-        str(oRepositoryConfig.Get('OPERATINGSYSTEM')),
-        str(oRepositoryConfig.Get('DEVELOPMENTSTATUS')),
-        str(oRepositoryConfig.Get('INTENDEDAUDIENCE')),
-        str(oRepositoryConfig.Get('TOPIC')),
-    ],
-    python_requires = str(oRepositoryConfig.Get('PYTHONREQUIRES')),
     cmdclass={
         'install': ExtendedInstallCommand,
     },
-    install_requires = oRepositoryConfig.Get('INSTALLREQUIRES'),
-    package_data={f"{oRepositoryConfig.Get('PACKAGENAME')}" : oRepositoryConfig.Get('PACKAGEDATA')},
 )
 
 # --------------------------------------------------------------------------------------------------------------

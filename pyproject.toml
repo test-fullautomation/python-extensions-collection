@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools==79.0.1", "wheel", "colorama==0.4.6", "pypandoc_binary==1.15", "PythonExtensionsCollection"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PythonExtensionsCollection"
+version = "0.16.0"
+description = "Additional Python functions"
+readme = "README.md"
+requires-python = ">=3.13"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "Holger Queckenstedt", email = "Holger.Queckenstedt@de.bosch.com"}
+]
+keywords = ["Python", "Extensions", "Utilities"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "dotdict",
+]
+
+[project.urls]
+Homepage = "https://github.com/test-fullautomation/python-extensions-collection"
+Repository = "https://github.com/test-fullautomation/python-extensions-collection"
+
+[tool.setuptools]
+packages = [
+    "PythonExtensionsCollection",
+    "PythonExtensionsCollection.Comparison",
+    "PythonExtensionsCollection.String",
+    "PythonExtensionsCollection.Utils",
+    "PythonExtensionsCollection.File",
+    "PythonExtensionsCollection.Folder"
+]
+
+[tool.setuptools.package-data]
+PythonExtensionsCollection = ["*.pdf"]
