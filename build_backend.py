@@ -61,7 +61,7 @@ ERROR   = 1
 
 class BuildManager:
     """
-Custom Build-Manager
+Custom Build Backend
     """
     
     def __init__(self):
@@ -139,7 +139,7 @@ Executes the documentation builder
     
     def run_pre_build_steps(self) -> None:
         """
-Custom build steps.
+Custom build steps
         """
         logger.info("Entering pre build process")
 
