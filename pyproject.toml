@@ -45,7 +45,7 @@ backend-path  = ["."] # the repository main folder
 [project]
 name            = "PythonExtensionsCollection" # the official PyPi packet name (must be unique worldwide), not necessarily the import name
 description     = "Additional Python functions"
-requires-python = ">=3.0"
+requires-python = ">=3.11"
 authors         = [{name = "Holger Queckenstedt", email = "Holger.Queckenstedt@de.bosch.com"}]
 readme          = "README.rst"
 license         = "Apache-2.0"

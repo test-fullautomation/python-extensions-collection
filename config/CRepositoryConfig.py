@@ -93,7 +93,7 @@ class CRepositoryConfig():
         with open(toml_file, "rb") as f:
             toml_data = tomllib.load(f)
         authors = toml_data["project"]["authors"]
-        author = authors[0]  # !!! index currently hard coded !!!
+        author = authors[0] if authors else "(not found)"
         self.__dictRepositoryConfig['AUTHOR'] = author['name']
         self.__dictRepositoryConfig['AUTHOREMAIL'] = author['email']
         self.__dictRepositoryConfig['PACKAGENAME'] = toml_data["project"]["name"]
