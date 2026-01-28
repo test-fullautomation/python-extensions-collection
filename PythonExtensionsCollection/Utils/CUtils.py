@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-#  Copyright 2020-2025 Robert Bosch GmbH
+#  Copyright 2020-2026 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 29.01.2025
+# 27.01.2026
 #
 # **************************************************************************************************************
 
@@ -30,8 +30,8 @@ from dotdict import dotdict
 
 from PythonExtensionsCollection.String.CString import CString
 from PythonExtensionsCollection.File.CFile import CFile
-from PythonExtensionsCollection.version import VERSION
-from PythonExtensionsCollection.version import VERSION_DATE
+from PythonExtensionsCollection.version import __version__
+from PythonExtensionsCollection.version import __versiondate__
 
 
 # **************************************************************************************************************
@@ -448,7 +448,7 @@ It is also possible to let the method dump the list to a text file.
 
   Full name of the component including the version and the version date.
       """
-      return f"PythonExtensionsCollection v. {VERSION}, {VERSION_DATE}"
+      return f"PythonExtensionsCollection v. {__version__}, {__versiondate__}"
 
    #eof def GetComponentName():
 

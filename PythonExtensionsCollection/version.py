@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-#  Copyright 2020-2024 Robert Bosch GmbH
+#  Copyright 2020-2026 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -18,6 +18,5 @@
 #
 # Version and date of PythonExtensionsCollection
 #
-VERSION      = "0.16.0"
-VERSION_DATE = "29.01.2025"
-
+__version__     = "0.17.0"
+__versiondate__ = "28.01.2026"

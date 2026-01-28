@@ -1,6 +1,6 @@
 ﻿# **************************************************************************************************************
 #
-#  Copyright 2020-2024 Robert Bosch GmbH
+#  Copyright 2020-2026 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-VERSION      = "0.9.0"
-VERSION_DATE = "06.10.2023"
+VERSION      = "0.9.1"
+VERSION_DATE = "28.01.2026"
 #
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -60,8 +60,8 @@ from PythonExtensionsCollection.Folder.CFolder import CFolder
 from PythonExtensionsCollection.File.CFile import CFile
 from PythonExtensionsCollection.Utils.CUtils import *
 
-from PythonExtensionsCollection.version import VERSION as SUT_VERSION
-from PythonExtensionsCollection.version import VERSION_DATE as SUT_VERSION_DATE
+from PythonExtensionsCollection.version import __version__ as SUT_VERSION
+from PythonExtensionsCollection.version import __versiondate__ as SUT_VERSION_DATE
 
 from libs.CConfig import CConfig
 from libs.CCodePatterns import CCodePatterns

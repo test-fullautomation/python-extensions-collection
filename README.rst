@@ -1,4 +1,4 @@
-.. Copyright 2020-2024 Robert Bosch GmbH
+.. Copyright 2020-2026 Robert Bosch GmbH
 
 .. Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -41,25 +41,14 @@ The **PythonExtensionsCollection** can be installed in two different ways.
 
      `PythonExtensionsCollection in GitHub <https://github.com/test-fullautomation/python-extensions-collection>`_
 
-   * Install dependencies
-
-     **PythonExtensionsCollection** requires some additional Python libraries. Before you install the cloned repository sources
-     you have to install the dependencies manually. The names of all related packages you can find in the file ``requirements.txt``
-     in the repository root folder. Use pip to install them:
-
-     .. code::
-
-        pip install -r ./requirements.txt
-
-     Additionally install **LaTeX** (recommended: TeX Live). This is used to render the documentation.
-
-   * Configure dependencies
+   * Install and configure dependencies
 
      The installation of **PythonExtensionsCollection** includes to generate the documentation in PDF format. This is done by
-     an application called **GenPackageDoc**, that is part of the installation dependencies (see ``requirements.txt``).
+     an application called **GenPackageDoc**, that is part of the installation dependencies.
 
-     **GenPackageDoc** uses **LaTeX** to generate the documentation in PDF format. Therefore **GenPackageDoc** needs to know where to find
-     **LaTeX**. This is defined in the **GenPackageDoc** configuration file
+     **GenPackageDoc** uses **LaTeX** to generate the documentation in PDF format. Therefore, **LaTeX** needs to be installed
+     (recommended: TeX Live). After this installation, **GenPackageDoc** needs to know where to find **LaTeX**.
+     This is defined in the **GenPackageDoc** configuration file
 
      .. code::
 
@@ -69,11 +58,12 @@ The **PythonExtensionsCollection** can be installed in two different ways.
 
      - ``GENDOC_LATEXPATH`` : path to ``pdflatex`` executable
 
-   * Use the following command to install the **PythonExtensionsCollection**:
+
+   * Use the following command to install **PythonExtensionsCollection** (executed in repository main folder):
 
      .. code::
 
-        setup.py install
+        python -m pip install .
 
 
 Package Documentation
@@ -107,7 +97,7 @@ Contributors
 License
 -------
 
-Copyright 2020-2024 Robert Bosch GmbH
+Copyright 2020-2026 Robert Bosch GmbH
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
