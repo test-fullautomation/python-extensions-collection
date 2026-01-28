@@ -73,6 +73,9 @@ except Exception as ex:
     print()
     sys.exit(ERROR)
 
+DOCBUILDERFULLNAME = oPackageDocConfig.Get("DOCBUILDERFULLNAME")
+print(f"\nThis is {DOCBUILDERFULLNAME}\n")
+
 # -- setting up and calling the doc builder
 try:
     oDocBuilder = CDocBuilder(oPackageDocConfig)
