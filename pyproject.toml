@@ -61,8 +61,7 @@ classifiers = [
 # 'dependencies' defines the dependencies required to run the application or library (runtime dependencies)
 dependencies = [
     "docutils",
-    "colorama",
-    "PythonExtensionsCollection",
+    "colorama"
 ]
 dynamic = ["version"]
 
