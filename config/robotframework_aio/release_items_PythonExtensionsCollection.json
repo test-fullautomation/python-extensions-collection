@@ -45,10 +45,10 @@
 # ------------------------------------------
 
    "RELEASES"  : {
-                   "0.14.4.;0.15.0." : [
+                   "1.0.0.;1.1.0." : [
 "
 * Usage of **Setuptools** replaced by usage of **PIP/TOML/Setuptools**.
 "
-                                       ]
+                                     ]
                  }
 }
