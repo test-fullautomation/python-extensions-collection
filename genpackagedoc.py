@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 31.05.2022
+# 29.06.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ except Exception as ex:
     sys.exit(ERROR)
 
 # -- setting up the GenPackageDoc configuration
-oGenPackageDocConfig = None
+oPackageDocConfig = None
 try:
     oPackageDocConfig = CPackageDocConfig(oRepositoryConfig)
 except Exception as ex:
