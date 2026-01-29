@@ -29,7 +29,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 27.01.2026
+# 29.01.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -121,7 +121,7 @@ class CRepositoryConfig():
         tool = toml_data.get("tool", {})
         setuptools = tool.get("setuptools", {})
         package_data = setuptools.get("package-data", {})
-        self.__dictRepositoryConfig['PACKAGE_DATA'] = package_data.get("PythonExtensionsCollection", {})
+        self.__dictRepositoryConfig['PACKAGE_DATA'] = package_data.get(self.__dictRepositoryConfig['PACKAGENAME'], {})
 
         # compute dynamic configuration values
         bSuccess, sResult = self.__InitConfig()
