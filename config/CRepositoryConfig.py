@@ -39,8 +39,8 @@ import tomllib
 
 from PythonExtensionsCollection.String.CString import CString
 
-from PythonExtensionsCollection.version import __version__     # ! here wee need the package name hard coded !
-from PythonExtensionsCollection.version import __versiondate__ # ! here wee need the package name hard coded !
+from PythonExtensionsCollection.version import __version__   # ! here wee need the package name hard coded !
+from PythonExtensionsCollection.version import _version_date # ! here wee need the package name hard coded !
 
 col.init(autoreset=True)
 COLBR = col.Style.BRIGHT + col.Fore.RED
@@ -81,7 +81,7 @@ class CRepositoryConfig():
 
         # add version and date of the package this repository configuration belongs to
         self.__dictRepositoryConfig['PACKAGEVERSION'] = __version__
-        self.__dictRepositoryConfig['PACKAGEDATE']    = __versiondate__
+        self.__dictRepositoryConfig['PACKAGEDATE']    = _version_date
 
         # make absolute path to package documentation
         self.__dictRepositoryConfig['PACKAGEDOC'] = CString.NormalizePath(sPath=self.__dictRepositoryConfig['PACKAGEDOC'], sReferencePathAbs=self.__sReferencePath)

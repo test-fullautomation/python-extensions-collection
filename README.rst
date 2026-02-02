@@ -65,6 +65,17 @@ The **PythonExtensionsCollection** can be installed in two different ways.
 
         python -m pip install .
 
+     In case you want to have a really clean installation (without any outdated or not used files left from previous installations),
+     extend the installation to:
+
+     .. code::
+
+        python "./cleanup_installation.py"
+        python -m pip install .
+
+     ``cleanup_installation.py`` explicitly deletes all files and folders within the component installation folder under
+     ``site-packages`` and also deletes local build artefacts.
+
 
 Package Documentation
 ---------------------

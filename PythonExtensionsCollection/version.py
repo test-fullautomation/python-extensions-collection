@@ -18,5 +18,5 @@
 #
 # Version and date of PythonExtensionsCollection
 #
-__version__     = "0.17.0"
-__versiondate__ = "28.01.2026"
+__version__   = "0.17.0"
+_version_date = "02.02.2026"

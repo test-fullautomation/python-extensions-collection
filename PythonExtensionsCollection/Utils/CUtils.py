@@ -20,7 +20,7 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 27.01.2026
+# 02.02.2026
 #
 # **************************************************************************************************************
 
@@ -31,7 +31,7 @@ from dotdict import dotdict
 from PythonExtensionsCollection.String.CString import CString
 from PythonExtensionsCollection.File.CFile import CFile
 from PythonExtensionsCollection.version import __version__
-from PythonExtensionsCollection.version import __versiondate__
+from PythonExtensionsCollection.version import _version_date
 
 
 # **************************************************************************************************************
@@ -448,7 +448,7 @@ It is also possible to let the method dump the list to a text file.
 
   Full name of the component including the version and the version date.
       """
-      return f"PythonExtensionsCollection v. {__version__}, {__versiondate__}"
+      return f"PythonExtensionsCollection v. {__version__}, {_version_date}"
 
    #eof def GetComponentName():
 

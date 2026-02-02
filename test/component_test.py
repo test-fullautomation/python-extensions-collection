@@ -61,7 +61,7 @@ from PythonExtensionsCollection.File.CFile import CFile
 from PythonExtensionsCollection.Utils.CUtils import *
 
 from PythonExtensionsCollection.version import __version__ as SUT_VERSION
-from PythonExtensionsCollection.version import __versiondate__ as SUT_VERSION_DATE
+from PythonExtensionsCollection.version import _version_date as SUT_VERSION_DATE
 
 from libs.CConfig import CConfig
 from libs.CCodePatterns import CCodePatterns
