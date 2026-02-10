@@ -18,7 +18,7 @@
 #
 # TOML file used for component installation
 #
-# Version 0.1.0 / 28.01.2026
+# Version 0.1.0 / 10.02.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -33,7 +33,7 @@
 #
 [build-system]
 # 'requires' specifies the dependencies necessary for the build process (meaning the conversion of source code into an installable distribution)
-requires      = ["setuptools>=80.9.0", "wheel", "docutils>=0.22.4", "dotdict", "colorama", "GenPackageDoc"] # need to be strengthened later to: "GenPackageDoc>=0.43.0"
+requires      = ["setuptools>=80.9.0", "wheel", "build", "docutils>=0.22.4", "dotdict", "colorama", "GenPackageDoc"] # need to be strengthened later to: "GenPackageDoc>=0.43.0"
 build-backend = "build_backend"
 backend-path  = ["."] # the repository main folder
 
@@ -61,7 +61,8 @@ classifiers = [
 # 'dependencies' defines the dependencies required to run the application or library (runtime dependencies)
 dependencies = [
     "docutils>=0.22.4",
-    "colorama"
+    "colorama",
+    "GenPackageDoc"
 ]
 dynamic = ["version"]
 
