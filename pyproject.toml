@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# Accordingly to the TOML specification:
+# According to the TOML specification:
 # * Names in square brackets (e.g. [build-system]) are called 'table'.
 # * Names located to the left of the equal sign (e.g. 'requires') are called 'key'.
 #
@@ -43,14 +43,14 @@ backend-path  = ["."] # the repository main folder
 # Status: Required
 #
 [project]
-name            = "PythonExtensionsCollection" # the official PyPi packet name (must be unique worldwide), not necessarily the import name
+name            = "PythonExtensionsCollection" # the official PyPi package name (must be unique worldwide), not necessarily the import name
 description     = "Additional Python functions"
 requires-python = ">=3.11"
 authors         = [{name = "Holger Queckenstedt", email = "Holger.Queckenstedt@de.bosch.com"}]
 readme          = "README.rst"
-license         = "Apache-2.0"
+license         = { text = "Apache-2.0" }
 keywords        = ["string", "file", "folder", "path"]
-# 'classifiers' need to be choosen accordingly to: https://pypi.org/classifiers/
+# 'classifiers' need to be choosen according to: https://pypi.org/classifiers/
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",

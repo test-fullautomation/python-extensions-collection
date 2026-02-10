@@ -64,7 +64,8 @@ Delete build artefacts in local application folder.
         """
         setup_build_folder = self.repository_config.Get('SETUPBUILDFOLDER')
         egginfo_folder     = self.repository_config.Get('EGGINFOFOLDER')
-        for folder in (setup_build_folder, egginfo_folder):
+        dist_folder        = self.repository_config.Get('SETUPDISTFOLDER')
+        for folder in (setup_build_folder, egginfo_folder, dist_folder):
             if os.path.isdir(folder) is True:
                 try:
                     shutil.rmtree(folder)

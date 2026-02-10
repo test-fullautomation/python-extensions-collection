@@ -101,7 +101,7 @@ class CRepositoryConfig():
         self.__dictRepositoryConfig['BUILDREQUIRES'] = toml_data["build-system"]["requires"]
         self.__dictRepositoryConfig['EXECUTIONREQUIRES'] = toml_data["project"]["dependencies"]
         self.__dictRepositoryConfig['PYTHON_REQUIRED'] = toml_data["project"]["requires-python"]
-        self.__dictRepositoryConfig['LICENSE'] = toml_data["project"]["license"]
+        self.__dictRepositoryConfig['LICENSE'] = toml_data["project"]["license"]["text"]
         self.__dictRepositoryConfig['KEYWORDS'] = toml_data["project"]["keywords"]
         # currently skipped because too much content for nice console output:
         # self.__dictRepositoryConfig['classifiers'] = toml_data["project"]["classifiers"]
@@ -121,7 +121,7 @@ class CRepositoryConfig():
         tool = toml_data.get("tool", {})
         setuptools = tool.get("setuptools", {})
         package_data = setuptools.get("package-data", {})
-        self.__dictRepositoryConfig['PACKAGE_DATA'] = package_data.get(self.__dictRepositoryConfig['PACKAGENAME'], {})
+        self.__dictRepositoryConfig['PACKAGE_DATA'] = package_data.get(self.__dictRepositoryConfig['PACKAGENAME'], [])
 
         # compute dynamic configuration values
         bSuccess, sResult = self.__InitConfig()
@@ -176,6 +176,7 @@ class CRepositoryConfig():
         self.__dictRepositoryConfig['SETUPBUILDFOLDER'] = CString.NormalizePath(f"{self.__sReferencePath}/build")
         EGGINFOFOLDER = self.__dictRepositoryConfig['PACKAGENAME'].replace('-', '_')
         self.__dictRepositoryConfig['EGGINFOFOLDER'] = CString.NormalizePath(f"{self.__sReferencePath}/{EGGINFOFOLDER}.egg-info")
+        self.__dictRepositoryConfig['SETUPDISTFOLDER'] = CString.NormalizePath(f"{self.__sReferencePath}/dist")
 
         print()
         print(f"Running under {sPlatformSystem} ({sOSName})")
