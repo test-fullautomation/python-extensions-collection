@@ -50,7 +50,7 @@ authors         = [{name = "Holger Queckenstedt", email = "Holger.Queckenstedt@d
 readme          = "README.rst"
 license         = { text = "Apache-2.0" }
 keywords        = ["string", "file", "folder", "path"]
-# 'classifiers' need to be choosen according to: https://pypi.org/classifiers/
+# 'classifiers' need to be chosen according to: https://pypi.org/classifiers/
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",

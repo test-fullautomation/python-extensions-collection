@@ -76,7 +76,7 @@ def build_wheel(
     logger.info("Entering build_wheel")
     returnval = build_backend.run_pre_build_steps()
     if returnval != SUCCESS:
-        raise Exception(f"Execution of pre_build_steps failed with error code {returnval}. Premature end of build_wheel.") 
+        raise Exception(f"Execution of pre_build_steps failed with error code {returnval}. Premature end of build_wheel.")
     build_wheel_return = _build_wheel(wheel_directory, config_settings, metadata_directory)
     logger.info("Leaving build_wheel")
     return build_wheel_return
@@ -89,7 +89,7 @@ def build_sdist(
     logger.info("Entering build_sdist")
     returnval = build_backend.run_pre_build_steps()
     if returnval != SUCCESS:
-        raise Exception(f"Execution of pre_build_steps failed with error code {returnval}. Premature end of build_sdist.") 
+        raise Exception(f"Execution of pre_build_steps failed with error code {returnval}. Premature end of build_sdist.")
     build_sdist_return = _build_sdist(sdist_directory, config_settings)
     logger.info("Leaving build_sdist")
     return build_sdist_return
