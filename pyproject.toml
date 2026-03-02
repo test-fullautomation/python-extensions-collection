@@ -18,7 +18,7 @@
 #
 # TOML file used for component installation
 #
-# Version 0.1.0 / 12.02.2026
+# Version 0.1.0 / 02.03.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -100,7 +100,13 @@ Issues        = "https://github.com/test-fullautomation/python-extensions-collec
 # Status: Optional
 #
 [tool.setuptools]
-packages = { find = {} } # automatic search for all packages and all sub-packages
+packages = [
+    "PythonExtensionsCollection",
+    "PythonExtensionsCollection.Comparison",
+    "PythonExtensionsCollection.File",
+    "PythonExtensionsCollection.Folder",
+    "PythonExtensionsCollection.String",
+    "PythonExtensionsCollection.Utils"]
 
 # [tool.setuptools.package-data]
 # Specifies additional non-Python files (e.g., data) to be included in the package.
