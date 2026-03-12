@@ -122,5 +122,5 @@ packages = [
 # Status: Optional (but required if 'dynamic' is used within the [project] block!)
 #
 [tool.setuptools.dynamic]
-version = {attr = "PythonExtensionsCollection.version.__version__"} # not defined here; we take the version from source code
+version = {attr = "PythonExtensionsCollection.version.VERSION"} # not defined here; we take the version from source code
 
