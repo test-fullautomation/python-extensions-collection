@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-#  Copyright 2020-2024 Robert Bosch GmbH
+#  Copyright 2020-2026 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 31.05.2022
+# 24.04.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ except Exception as ex:
     sys.exit(ERROR)
 
 # -- setting up the GenPackageDoc configuration
-oGenPackageDocConfig = None
+oPackageDocConfig = None
 try:
     oPackageDocConfig = CPackageDocConfig(oRepositoryConfig)
 except Exception as ex:
@@ -72,6 +72,9 @@ except Exception as ex:
     printexception(str(ex))
     print()
     sys.exit(ERROR)
+
+DOCBUILDERFULLNAME = oPackageDocConfig.Get("DOCBUILDERFULLNAME")
+print(f"\nThis is {DOCBUILDERFULLNAME}\n")
 
 # -- setting up and calling the doc builder
 try:
@@ -94,9 +97,7 @@ elif bSuccess is False:
     print()
     sys.exit(ERROR)
 else:
-   print(COLBY + sResult)
-   print()
-   print(COLBG + "genpackagedoc done")
+   print(COLBG + sResult)
    print()
    sys.exit(SUCCESS)
 

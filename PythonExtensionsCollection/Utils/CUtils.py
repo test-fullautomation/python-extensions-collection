@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-#  Copyright 2020-2025 Robert Bosch GmbH
+#  Copyright 2020-2026 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 29.01.2025
+# 12.03.2026
 #
 # **************************************************************************************************************
 
@@ -379,38 +379,28 @@ It is also possible to let the method dump the list to a text file.
       bSuccess = None
       sResult  = "UNKNOWN"
 
-      listofTuplesPackages = []
-
-      sFreezeData = None
+      sListData = None
       try:
-         sFreezeData = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze'], encoding="utf-8", text=True)
+         sListData = subprocess.run([sys.executable, '-m', 'pip', 'list', '--format=columns'], capture_output=True, text=True)
+         sListLines = sListData.stdout.strip().split('\n')
       except Exception as reason:
          bSuccess = None
          sResult  = str(reason)
          sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
          return listofTuplesPackages, bSuccess, sResult
 
-      if sFreezeData is None:
+      if sListData is None:
          bSuccess = None
-         sResult  = "sFreezeData is None"
+         sResult  = "sListData is None"
          sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
          return listofTuplesPackages, bSuccess, sResult
 
-      sFreezeData = str(sFreezeData) # to make the content 'split()' save
-
-      for sPackage in sFreezeData.split():
-         sName    = None
-         sVersion = None
-         listParts = sPackage.split('==')
-         if len(listParts) != 2:
-            sName    = sPackage
-            sVersion = "UNKNOWN"
-            # but I really would not expect this
-         else:
-            sName    = listParts[0]
-            sVersion = listParts[1]
-         listofTuplesPackages.append((sName, sVersion))
-      # eof for sPackage in sFreezeData.split():
+      listofTuplesPackages = []
+      # lines[2:] => skip headline of 'pip list'
+      for sLine in sListLines[2:]:
+          parts = sLine.split()
+          if len(parts) >= 2:
+              listofTuplesPackages.append((parts[0], parts[1]))
 
       nNrOfPackages = len(listofTuplesPackages)
 
