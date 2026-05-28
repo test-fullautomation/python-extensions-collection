@@ -36,7 +36,7 @@
 
     *Removed:*
 
-    * Computation of obsolete ``dotdict`` class from method ``CUtils::TypePrint``
+    * Computation of obsolete ``dotdict`` class from method ``CUtils.CTypePrint.TypePrint``
 
 **Version 0.13.0 (03.04.2023)**
 
