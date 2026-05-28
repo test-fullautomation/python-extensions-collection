@@ -5,7 +5,7 @@
 # With the help of a LaTeX compiler the TEX files can be converted into a PDF file.
 # This json file contains the required settings.
 #
-# 24.04.2026
+# 28.05.2026
 #
 # **************************************************************************************************************
 # Format: extended JSON format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -59,7 +59,7 @@
             "description"   : "./additional_docs/Description.tex",
             "INTERFACE"     : "../###PACKAGENAME###",
             "appendix"      : "./additional_docs/Appendix.rst",
-            "history"       : "./additional_docs/History.tex",
+            "history"       : "../History.rst",
             "DOCUMENTPARTS" : ["introduction","description","INTERFACE","appendix","history"]
            },
 
