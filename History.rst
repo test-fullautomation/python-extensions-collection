@@ -13,6 +13,12 @@
    limitations under the License.
 
 
+**Version 0.17.1 (22.06.2026)**
+
+    *Maintenance:*
+
+    * Updated the package dependencies to add missing **dotdict** package.
+
 **Version 0.17.0 (28.05.2026)**
 
     *Maintenance:*
@@ -122,4 +128,3 @@
 `PythonExtensionsCollection in GitHub <https://github.com/test-fullautomation/python-extensions-collection>`__
 
 `PythonExtensionsCollection in PyPi <https://pypi.org/project/PythonExtensionsCollection/>`__
-
