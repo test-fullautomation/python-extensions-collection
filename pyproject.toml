@@ -62,7 +62,8 @@ classifiers = [
 dependencies = [
     "docutils>=0.22.4",
     "colorama",
-    "GenPackageDoc"
+    "GenPackageDoc",
+    "dotdict"
 ]
 dynamic = ["version"]
 
@@ -123,4 +124,3 @@ packages = [
 #
 [tool.setuptools.dynamic]
 version = {attr = "PythonExtensionsCollection.version.VERSION"} # not defined here; we take the version from source code
-
