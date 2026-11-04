@@ -16,7 +16,9 @@ bazel_dep(name = "python", version = "0.1.0")
 
 local_path_override(
     module_name = "python",
-    path = "../python",
+    # "python" now physically lives under C:\BZL\product-tools\python
+    # instead of as a sibling top-level directory.
+    path = "../product-tools/python",
 )
 
 # Shared pip_install.bzl rules (pip_install_dir, pip_install_from_source) -
@@ -25,7 +27,8 @@ bazel_dep(name = "pip_utils", version = "0.1.0")
 
 local_path_override(
     module_name = "pip_utils",
-    path = "../pip_utils",
+    # "pip_utils" now physically lives under C:\BZL\product-tools\pip_utils.
+    path = "../product-tools/pip_utils",
 )
 
 # Shared variant_git_repository.bzl rule (Tag vs. Branch selection) - see
@@ -40,7 +43,7 @@ bazel_dep(name = "repo_rules", version = "0.1.0")
 
 local_path_override(
     module_name = "repo_rules",
-    path = "../tools/repo_rules",
+    path = "../build/tools/repo_rules",
 )
 
 # =============================================================================
