@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 19.10.2023
+# 05.11.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -36,8 +36,10 @@
 # --------------------------------------------------------------------------------------------------------------
 
 import os, sys, platform, stat, shutil
-from dotdict import dotdict
 import colorama as col
+
+# obsolete # from dotdict import dotdict
+from pydotdict.pydotdict import DotDict as PyDotDict
 
 from PythonExtensionsCollection.String.CString import CString
 from PythonExtensionsCollection.File.CFile import CFile
@@ -579,7 +581,7 @@ def PEC_0009(oConfig):
                                 (listLines[2], "kV___3 : Val3")))
    oResults.Results(sResult)
    if bSuccess is not True: del oFile; return bSuccess, oResults.Results()
-   dotdictValues = dotdict(dictValues)
+   dotdictValues = PyDotDict(dictValues)
    bSuccess, sResult = oFile.Write(dictValues)
    oResults.Results(sResult)
    if bSuccess is not True: del oFile; return bSuccess, oResults.Results()
@@ -673,7 +675,7 @@ def PEC_0010(oConfig):
    oResults.Results(sResult)
    if bSuccess is not True: del oFile; return bSuccess, oResults.Results()
    dictValues = {'kV_1' : 'Val1', 'kV__2' : 'Val2', 'kV___3' : 'Val3'}
-   dotdictValues = dotdict(dictValues)
+   dotdictValues = PyDotDict(dictValues)
    bSuccess, sResult = oFile.Write(dotdictValues, nVSpaceAfter=2, sPrefix=" == ")
    oResults.Results(sResult)
    if bSuccess is not True: del oFile; return bSuccess, oResults.Results()
@@ -4154,7 +4156,7 @@ def PEC_0709(oConfig):
    dData['K3'] = "ABC"
    dData['K4'] = True
    dData['K5'] = None
-   oData = dotdict(dData)
+   oData = PyDotDict(dData)
    listOutLines = PrettyPrint(oData)
    print()
    sRet = "\n".join(listOutLines)
@@ -4182,7 +4184,7 @@ def PEC_0710(oConfig):
    dictData = {}
    dictData['K1'] = 2
    dictData['K2'] = [3, 'B', (4.5, 'X', False, None)]
-   dotdictData = dotdict(dictData)
+   dotdictData = PyDotDict(dictData)
    oData = [6, listData, dictData, dotdictData, None]
    listOutLines = PrettyPrint(oData)
    print()

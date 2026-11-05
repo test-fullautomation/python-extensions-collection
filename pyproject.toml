@@ -61,7 +61,8 @@ classifiers = [
 # 'dependencies' defines the dependencies required to run the application or library (runtime dependencies)
 dependencies = [
     "docutils>=0.22.4",
-    "colorama"
+    "colorama",
+    "pydotdict" # selftest only
 ]
 dynamic = ["version"]
 
