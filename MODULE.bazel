@@ -14,6 +14,14 @@ module(
 
 bazel_dep(name = "python", version = "0.1.0")
 
+# Needed for py_binary (used by the "update_requirements_lock"/
+# "update_requirements_lock_linux" bazel-run targets in this module's own
+# BUILD.bazel - see pip_utils/update_requirements_lock.py). Bzlmod requires
+# each module to declare its own direct dependencies even though the root
+# module ("build") already declares rules_python - same rationale as
+# build/config/MODULE.bazel's identical bazel_dep.
+bazel_dep(name = "rules_python", version = "1.7.0")
+
 local_path_override(
     module_name = "python",
     # "python" now physically lives under C:\BZL\product-tools\python

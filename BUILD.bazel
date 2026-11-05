@@ -14,6 +14,7 @@
 # =============================================================================
 
 load("@pip_utils//:pip_install.bzl", "pip_install_from_source")
+load("@rules_python//python:defs.bzl", "py_binary")
 
 # Build/install PythonExtensionsCollection from the GitHub source tree
 # fetched via git_repository (see MODULE.bazel), together with its
@@ -33,4 +34,71 @@ pip_install_from_source(
     # bazel_dep's this module, creating a circular dependency. Access control
     # is enforced via the one-directional bazel_dep graph instead.
     visibility = ["//visibility:public"],
+)
+
+# Linux counterpart of the target above, for debian_package-based installer variants.
+# Same source tree and requirements_lock.txt, just resolved/installed
+# against the Linux Python runtime instead of the Windows one.
+pip_install_from_source(
+    name         = "python_extensions_collection_linux",
+    source       = "@python_extensions_collection_src//:src",
+    requirements = "requirements_lock.txt",
+    interpreter  = "@python//:python_interpreter_linux",
+    runtime      = "@python//:python_runtime_linux",
+    visibility = ["//visibility:public"],
+)
+
+# =============================================================================
+# requirements_lock.txt maintenance ("bazel run", NOT part of "bazel build")
+# =============================================================================
+# Regenerates this component's hash-pinned lock file via pip-compile
+# (pip-tools) - see python-jsonpreprocessor/BUILD.bazel's identical target
+# for the full rationale (pip-compile needs network access and is
+# therefore deliberately a "bazel run" py_binary, not a build action).
+#
+#   bazel run //:update_requirements_lock          # Windows lock file
+#   bazel run //:update_requirements_lock_linux     # Linux lock file -
+#                                                    # run this ON A LINUX
+#                                                    # HOST.
+#
+py_binary(
+    name = "update_requirements_lock",
+    srcs = ["@pip_utils//:update_requirements_lock.py"],
+    main = "@pip_utils//:update_requirements_lock.py",
+    # See python-jsonpreprocessor/BUILD.bazel's identical comment for why
+    # precompilation is disabled here.
+    precompile = "disabled",
+    data = [
+        "@python//:python_interpreter",
+        "pyproject.toml",
+        "requirements_build_extras.txt",
+    ],
+    args = [
+        "--interpreter=$(location @python//:python_interpreter)",
+        "--component-dir=python-extensions-collection",
+        "--output=requirements_lock.txt",
+        "pyproject.toml",
+        "requirements_build_extras.txt",
+    ],
+)
+
+py_binary(
+    name = "update_requirements_lock_linux",
+    srcs = ["@pip_utils//:update_requirements_lock.py"],
+    main = "@pip_utils//:update_requirements_lock.py",
+    # See update_requirements_lock's identical comment above.
+    precompile = "disabled",
+    data = [
+        "@python//:python_interpreter_linux",
+        "pyproject.toml",
+        "requirements_build_extras.txt",
+    ],
+    args = [
+        "--interpreter=$(location @python//:python_interpreter_linux)",
+        "--component-dir=python-extensions-collection",
+        "--output=requirements_lock.txt",
+        "pyproject.toml",
+        "requirements_build_extras.txt",
+    ],
+    target_compatible_with = ["@platforms//os:linux"],
 )

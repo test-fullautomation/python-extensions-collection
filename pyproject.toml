@@ -61,8 +61,7 @@ classifiers = [
 # 'dependencies' defines the dependencies required to run the application or library (runtime dependencies)
 dependencies = [
     "docutils>=0.22.4",
-    "colorama",
-    "pydotdict"
+    "colorama"
 ]
 dynamic = ["version"]
 
@@ -73,8 +72,8 @@ dynamic = ["version"]
 #
 [project.optional-dependencies]
 dev = [
-    "pytest>=6.0",
-    "pytest-cov>=3.0",
+    "pytest>=6.0",          # !to be verified !
+    "pytest-cov>=3.0",      # !to be verified !
 ]
 
 docs = [

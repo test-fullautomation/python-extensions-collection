@@ -20,18 +20,64 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 12.03.2026
+# 04.11.2026
 #
 # **************************************************************************************************************
 
 # -- import standard Python modules
 import os, sys, subprocess
-from dotdict import dotdict
+import collections.abc
 
 from PythonExtensionsCollection.String.CString import CString
 from PythonExtensionsCollection.File.CFile import CFile
 from PythonExtensionsCollection.version import VERSION
 from PythonExtensionsCollection.version import VERSION_DATE
+
+
+def _IsDotDictLike(oData):
+   """
+Duck-typed detection of a "dot dictionary" (a dict-like object that, in
+addition to the usual bracket notation, also supports attribute access on its
+own keys, e.g. ``oData.key`` instead of only ``oData["key"]``).
+
+Several, mutually unrelated "dotdict" implementations exist in the wild
+(``dotdict.dotdict``, ``pydotdict.pydotdict.DotDict``,
+``robot.utils.dotdict.DotDict``, ...), with no common base class between
+them. Rather than importing and special-casing each one of them by name/type
+(which breaks for any further, unknown implementation), this function
+recognizes the behavior itself: Mapping protocol + attribute access on keys.
+
+**Arguments:**
+
+* ``oData``
+
+  / *Condition*: required / *Type*: any Python data type /
+
+  The value to classify.
+
+**Returns:**
+
+* ``bIsDotDictLike``
+
+  / *Type*: bool /
+
+  ``True`` if ``oData`` behaves like a dot dictionary, ``False`` otherwise
+  (this includes plain ``dict`` instances, which are handled by their own,
+  separate branch in ``TypePrint``).
+   """
+
+   if type(oData) is dict:
+      return False  # a plain dict is handled by its own branch, not this one
+   if not isinstance(oData, collections.abc.Mapping):
+      return False
+   for sKey in oData:
+      if isinstance(sKey, str) and sKey.isidentifier():
+         return hasattr(oData, sKey)
+   # empty mapping, or none of its keys are valid attribute names: the
+   # defining "dotdict" trait (attribute access on a key) can't be verified -
+   # conservatively treat this as "not a dotdict" (the plain [DICT]/{}
+   # fallback output is harmless for an empty mapping anyway).
+   return False
 
 
 # **************************************************************************************************************
@@ -295,8 +341,7 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
                del self.listGlobalPrefixes[-1]    # remove prefix count
             del self.listGlobalPrefixes[-1]       # remove prefix name
 
-      # previous version # elif ( (type(oData) is dotdict) or (".DotDict'>" in str(type(oData))) ):
-      elif ( (type(oData) is dotdict) or (str(type(oData)).upper().find("DOTDICT") != -1) ):
+      elif _IsDotDictLike(oData):
          nNrOfElements = len(oData)
          if nNrOfElements == 0:
             # -- indicate empty dot dictionary
