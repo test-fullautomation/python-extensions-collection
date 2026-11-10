@@ -70,15 +70,20 @@ recognizes the behavior itself: Mapping protocol + attribute access on keys.
       return False  # a plain dict is handled by its own branch, not this one
    if not isinstance(oData, collections.abc.Mapping):
       return False
-   for sKey in oData:
-      if isinstance(sKey, str) and sKey.isidentifier():
-         return hasattr(oData, sKey)
-   # empty mapping, or none of its keys are valid attribute names: the
-   # defining "dotdict" trait (attribute access on a key) can't be verified -
-   # conservatively treat this as "not a dotdict" (the plain [DICT]/{}
-   # fallback output is harmless for an empty mapping anyway).
-   return False
-
+   # The defining trait is checked on the *class*, not on a sample key of
+   # the concrete instance: every known "dotdict" implementation makes
+   # attribute access on its keys work by overriding __getattr__ at the
+   # class level (pydotdict.pydotdict.DotDict.__getattr__,
+   # robot.utils.dotdict.DotDict.__getattr__, the legacy
+   # dotdict.dotdict.__getattr__ = dict.__getitem__, ...). Checking for
+   # this override directly - instead of picking one identifier-shaped key
+   # of oData and probing hasattr(oData, thatKey) - correctly classifies a
+   # dotdict regardless of its actual key content: purely numeric keys
+   # ({0: "a"}), keys containing spaces ({"user name": "Bob"}), or even an
+   # empty mapping all still correctly report True, since none of them can
+   # ever be valid Python attribute names in the first place (a language
+   # rule, not a property of the class).
+   return hasattr(type(oData), "__getattr__")
 
 # **************************************************************************************************************
 # wrapper
@@ -352,6 +357,34 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
          else:
             # -- list elements of dot dictionary
             self.listGlobalPrefixes.append("[DOTDICT]")
+            nCnt = 0
+            listKeys = list(oData.keys())
+            for sKey in listKeys:
+               nCnt = nCnt + 1
+               oValue = oData[sKey]
+               sCntAndKey = "(" + str(nNrOfElements) + "/" + str(nCnt) + ") > {" + str(sKey) + "}"
+               self.listGlobalPrefixes.append(sCntAndKey)
+               self.TypePrint(oValue, bHexFormat) # >>>> recursion
+               del self.listGlobalPrefixes[-1]    # remove prefix count
+            del self.listGlobalPrefixes[-1]       # remove prefix name
+
+      elif isinstance(oData, collections.abc.Mapping):
+         # Catch-all for every other dict-like object that is neither a
+         # plain dict nor "dotdict-like" (e.g. OrderedDict, Counter,
+         # ChainMap, a custom Mapping subclass without __getattr__
+         # forwarding, ...). Resolved key-by-key just like [DICT]/
+         # [DOTDICT], instead of being dumped as one opaque, unresolved
+         # string by the generic else-branch below.
+         nNrOfElements = len(oData)
+         if nNrOfElements == 0:
+            # -- indicate empty mapping
+            sLocalPrefix = "[MAPPING]"
+            sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+            sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  {}"
+            self.listOutLines.append(sOut.strip())
+         else:
+            # -- list elements of mapping
+            self.listGlobalPrefixes.append("[MAPPING]")
             nCnt = 0
             listKeys = list(oData.keys())
             for sKey in listKeys:
