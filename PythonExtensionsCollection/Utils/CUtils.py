@@ -109,8 +109,29 @@ one of ``oData``'s own keys really return that key's value?
                     # "doesn't forward" signal, so it is not a usable probe
                     # either way; try the next key instead.
       oProbed = getattr(oData, sKey, _SENTINEL)
-      return (oProbed is not _SENTINEL) and (oProbed == oData[sKey])
-      # the first usable (string, non-colliding) key fully decides the
+      if oProbed is _SENTINEL:
+         return False
+      oExpected = oData[sKey]
+      if oProbed is oExpected:
+         # identity check first: this alone already proves forwarding,
+         # independent of the value's own equality semantics - and it is
+         # the ONLY safe check for values like float('nan') (which is
+         # never equal to itself) or Decimal('sNaN') (whose "==" raises
+         # decimal.InvalidOperation instead of returning a bool). Without
+         # this identity short-circuit, probing such a value would either
+         # misclassify a genuine dotdict as [MAPPING] (NaN case) or abort
+         # PrettyPrint entirely with an unrelated exception (sNaN case).
+         return True
+      try:
+         return bool(oProbed == oExpected)
+      except Exception:
+         # the value's own "==" implementation is broken/unreliable
+         # (e.g. decimal.InvalidOperation for a signaling NaN) - identity
+         # already failed above, so this key's equality truly can't decide
+         # the question; inspecting a value must never abort printing, so
+         # treat this as "not decidable" and fall through to the next key.
+         continue
+      # the first DECIDABLE (string, non-colliding) key settles the
       # result: either this key demonstrably forwards to its value (a
       # genuine dotdict trait), or it doesn't (a plain Mapping that merely
       # happens to also be a Mapping subclass, not a dotdict).
