@@ -43,9 +43,14 @@ own keys, e.g. ``oData.key`` instead of only ``oData["key"]``).
 Several, mutually unrelated "dotdict" implementations exist in the wild
 (``dotdict.dotdict``, ``pydotdict.pydotdict.DotDict``,
 ``robot.utils.dotdict.DotDict``, ...), with no common base class between
-them. Rather than importing and special-casing each one of them by name/type
-(which breaks for any further, unknown implementation), this function
-recognizes the behavior itself: Mapping protocol + attribute access on keys.
+them, and no single shared implementation mechanism either: some override
+``__getattr__`` at the class level, others (e.g. a constructor doing
+``self.__dict__ = self``) forward attribute access through the ordinary,
+default ``__getattribute__`` mechanism without defining ``__getattr__`` at
+all. Rather than importing and special-casing each one of them by
+name/type, or assuming one particular implementation mechanism, this
+function probes the actually observable behavior: does attribute access on
+one of ``oData``'s own keys really return that key's value?
 
 **Arguments:**
 
@@ -70,19 +75,55 @@ recognizes the behavior itself: Mapping protocol + attribute access on keys.
       return False  # a plain dict is handled by its own branch, not this one
    if not isinstance(oData, collections.abc.Mapping):
       return False
-   # The defining trait is checked on the *class*, not on a sample key of
-   # the concrete instance: every known "dotdict" implementation makes
-   # attribute access on its keys work by overriding __getattr__ at the
-   # class level (pydotdict.pydotdict.DotDict.__getattr__,
-   # robot.utils.dotdict.DotDict.__getattr__, the legacy
-   # dotdict.dotdict.__getattr__ = dict.__getitem__, ...). Checking for
-   # this override directly - instead of picking one identifier-shaped key
-   # of oData and probing hasattr(oData, thatKey) - correctly classifies a
-   # dotdict regardless of its actual key content: purely numeric keys
-   # ({0: "a"}), keys containing spaces ({"user name": "Bob"}), or even an
-   # empty mapping all still correctly report True, since none of them can
-   # ever be valid Python attribute names in the first place (a language
-   # rule, not a property of the class).
+
+   # -- primary check: behaviorally probe actual key-to-attribute
+   #    forwarding, instead of assuming one particular implementation
+   #    mechanism (e.g. a class-level __getattr__ override - see module
+   #    history for why that assumption is insufficient: a DotDict whose
+   #    constructor does "self.__dict__ = self" forwards attribute access
+   #    through the default __getattribute__ mechanism and never defines
+   #    __getattr__ at all, yet "obj.key == obj['key']" still holds).
+   #
+   #    NOTE: unlike attribute *syntax* (obj.key), getattr()/hasattr() do
+   #    NOT require the name to be a valid Python identifier - "user name"
+   #    is a perfectly legal argument to getattr(). Restricting the probe
+   #    to identifier-shaped keys (as an earlier version of this function
+   #    did) was an unnecessary restriction copied over from attribute-
+   #    access *syntax*, not an actual constraint of the attribute-access
+   #    *protocol* - so every string key is a usable probe candidate here.
+   _SENTINEL = object()
+   for sKey in oData:
+      if not isinstance(sKey, str):
+         continue  # attribute names are always strings; a purely numeric
+                    # key can never be forwarded to attribute access by ANY
+                    # implementation - skip it, it's simply not testable,
+                    # not negative evidence against being a dotdict.
+      if sKey in dir(type(oData)):
+         continue  # this key's name is already a class-level attribute/
+                    # method of oData's own type (e.g. a key literally
+                    # named "keys", "items", "update", ...). Even a true
+                    # dotdict would resolve such a name to the existing
+                    # class attribute first (normal attribute lookup wins
+                    # before any key-forwarding mechanism ever gets a
+                    # chance to run) - this key would give a false
+                    # "doesn't forward" signal, so it is not a usable probe
+                    # either way; try the next key instead.
+      oProbed = getattr(oData, sKey, _SENTINEL)
+      return (oProbed is not _SENTINEL) and (oProbed == oData[sKey])
+      # the first usable (string, non-colliding) key fully decides the
+      # result: either this key demonstrably forwards to its value (a
+      # genuine dotdict trait), or it doesn't (a plain Mapping that merely
+      # happens to also be a Mapping subclass, not a dotdict).
+
+   # -- fallback: no usable key could be probed (empty mapping, or every
+   #    key is non-string/colliding). Attribute-based forwarding can't be
+   #    verified without a representative key, so fall back to the
+   #    class-level __getattr__-override heuristic as a best-effort
+   #    classification for this edge case only (it does NOT catch the
+   #    "self.__dict__ = self" style, but there is no key left to probe
+   #    behaviorally anyway, and some answer is still better than always
+   #    defaulting to the plain [DICT]/{} fallback for every empty
+   #    dotdict).
    return hasattr(type(oData), "__getattr__")
 
 # **************************************************************************************************************
