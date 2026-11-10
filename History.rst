@@ -13,6 +13,12 @@
    limitations under the License.
 
 
+**Version 0.18.0 (10.11.2026)**
+
+    *Maintenance:*
+
+    * Type detection extended (``PrettyPrint``)
+
 **Version 0.17.2 (04.11.2026)**
 
     *Maintenance:*
