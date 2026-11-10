@@ -20,19 +20,70 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 12.03.2026
+# 04.11.2026
 #
 # **************************************************************************************************************
 
 # -- import standard Python modules
 import os, sys, subprocess
-from dotdict import dotdict
+import collections.abc
 
 from PythonExtensionsCollection.String.CString import CString
 from PythonExtensionsCollection.File.CFile import CFile
 from PythonExtensionsCollection.version import VERSION
 from PythonExtensionsCollection.version import VERSION_DATE
 
+
+def _IsDotDictLike(oData):
+   """
+Duck-typed detection of a "dot dictionary" (a dict-like object that, in
+addition to the usual bracket notation, also supports attribute access on its
+own keys, e.g. ``oData.key`` instead of only ``oData["key"]``).
+
+Several, mutually unrelated "dotdict" implementations exist in the wild
+(``dotdict.dotdict``, ``pydotdict.pydotdict.DotDict``,
+``robot.utils.dotdict.DotDict``, ...), with no common base class between
+them. Rather than importing and special-casing each one of them by name/type
+(which breaks for any further, unknown implementation), this function
+recognizes the behavior itself: Mapping protocol + attribute access on keys.
+
+**Arguments:**
+
+* ``oData``
+
+  / *Condition*: required / *Type*: any Python data type /
+
+  The value to classify.
+
+**Returns:**
+
+* ``bIsDotDictLike``
+
+  / *Type*: bool /
+
+  ``True`` if ``oData`` behaves like a dot dictionary, ``False`` otherwise
+  (this includes plain ``dict`` instances, which are handled by their own,
+  separate branch in ``TypePrint``).
+   """
+
+   if type(oData) is dict:
+      return False  # a plain dict is handled by its own branch, not this one
+   if not isinstance(oData, collections.abc.Mapping):
+      return False
+   # The defining trait is checked on the *class*, not on a sample key of
+   # the concrete instance: every known "dotdict" implementation makes
+   # attribute access on its keys work by overriding __getattr__ at the
+   # class level (pydotdict.pydotdict.DotDict.__getattr__,
+   # robot.utils.dotdict.DotDict.__getattr__, the legacy
+   # dotdict.dotdict.__getattr__ = dict.__getitem__, ...). Checking for
+   # this override directly - instead of picking one identifier-shaped key
+   # of oData and probing hasattr(oData, thatKey) - correctly classifies a
+   # dotdict regardless of its actual key content: purely numeric keys
+   # ({0: "a"}), keys containing spaces ({"user name": "Bob"}), or even an
+   # empty mapping all still correctly report True, since none of them can
+   # ever be valid Python attribute names in the first place (a language
+   # rule, not a property of the class).
+   return hasattr(type(oData), "__getattr__")
 
 # **************************************************************************************************************
 # wrapper
@@ -295,8 +346,7 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
                del self.listGlobalPrefixes[-1]    # remove prefix count
             del self.listGlobalPrefixes[-1]       # remove prefix name
 
-      # previous version # elif ( (type(oData) is dotdict) or (".DotDict'>" in str(type(oData))) ):
-      elif ( (type(oData) is dotdict) or (str(type(oData)).upper().find("DOTDICT") != -1) ):
+      elif _IsDotDictLike(oData):
          nNrOfElements = len(oData)
          if nNrOfElements == 0:
             # -- indicate empty dot dictionary
@@ -307,6 +357,34 @@ The method ``TypePrint`` computes details about the input variable ``oData``.
          else:
             # -- list elements of dot dictionary
             self.listGlobalPrefixes.append("[DOTDICT]")
+            nCnt = 0
+            listKeys = list(oData.keys())
+            for sKey in listKeys:
+               nCnt = nCnt + 1
+               oValue = oData[sKey]
+               sCntAndKey = "(" + str(nNrOfElements) + "/" + str(nCnt) + ") > {" + str(sKey) + "}"
+               self.listGlobalPrefixes.append(sCntAndKey)
+               self.TypePrint(oValue, bHexFormat) # >>>> recursion
+               del self.listGlobalPrefixes[-1]    # remove prefix count
+            del self.listGlobalPrefixes[-1]       # remove prefix name
+
+      elif isinstance(oData, collections.abc.Mapping):
+         # Catch-all for every other dict-like object that is neither a
+         # plain dict nor "dotdict-like" (e.g. OrderedDict, Counter,
+         # ChainMap, a custom Mapping subclass without __getattr__
+         # forwarding, ...). Resolved key-by-key just like [DICT]/
+         # [DOTDICT], instead of being dumped as one opaque, unresolved
+         # string by the generic else-branch below.
+         nNrOfElements = len(oData)
+         if nNrOfElements == 0:
+            # -- indicate empty mapping
+            sLocalPrefix = "[MAPPING]"
+            sGlobalPrefix = " ".join(self.listGlobalPrefixes)
+            sOut = sGlobalPrefix + " " + sLocalPrefix + "  :  {}"
+            self.listOutLines.append(sOut.strip())
+         else:
+            # -- list elements of mapping
+            self.listGlobalPrefixes.append("[MAPPING]")
             nCnt = 0
             listKeys = list(oData.keys())
             for sKey in listKeys:

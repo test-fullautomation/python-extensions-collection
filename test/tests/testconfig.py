@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 08.09.2023
+# 05.11.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -1353,7 +1353,7 @@ del dictUsecase
 # --------------------------------------------------------------------------------------------------------------
 dictUsecase = {}
 dictUsecase['TESTID']            = "PEC_0709"
-dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'dotdict'"
+dictUsecase['DESCRIPTION']       = "PrettyPrint: Input parameter of type 'dotdict' (pydotdict)"
 dictUsecase['EXPECTATION']       = "Input parameter is pretty printed"
 dictUsecase['SECTION']           = "CUTILS"
 dictUsecase['SUBSECTION']        = "GOODCASE"

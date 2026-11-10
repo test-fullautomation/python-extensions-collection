@@ -13,6 +13,12 @@
    limitations under the License.
 
 
+**Version 0.17.2 (04.11.2026)**
+
+    *Maintenance:*
+
+    * **dotdict** handling reworked.
+
 **Version 0.17.1 (22.06.2026)**
 
     *Maintenance:*

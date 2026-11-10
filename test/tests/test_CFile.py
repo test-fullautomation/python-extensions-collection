@@ -17,13 +17,15 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 07.06.2023
+# 05.11.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 
 # -- import standard Python modules
 import os, sys, time, platform, pytest
-from dotdict import dotdict
+
+# obsolete # from dotdict import dotdict
+from pydotdict.pydotdict import DotDict as PyDotDict
 
 # -- import own Python modules (containing the code to be tested)
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))) # to make sure to hit the package relative to this file at first
@@ -376,7 +378,7 @@ class Test_CFile:
       assert listLines[1] == " kV__2 : Val2"
       assert listLines[2] == "kV___3 : Val3"
 
-      dotdictValues = dotdict(dictValues)
+      dotdictValues = PyDotDict(dictValues)
       bSuccess, sResult = oFile.Write(dictValues)
       assert bSuccess is True
       listLines, bSuccess, sResult = oFile.ReadLines()
@@ -453,7 +455,7 @@ class Test_CFile:
       assert listLines[3] == ""
       assert listLines[4] == ""
 
-      dotdictValues = dotdict(dictValues)
+      dotdictValues = PyDotDict(dictValues)
       bSuccess, sResult = oFile.Write(dotdictValues, nVSpaceAfter=2, sPrefix=" == ")
       assert bSuccess is True
       listLines, bSuccess, sResult = oFile.ReadLines()
