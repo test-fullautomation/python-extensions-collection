@@ -481,7 +481,7 @@ Description: PrettyPrint: Input parameter of type 'dict'
 Expectation: Input parameter is pretty printed
 ------------------------------------------------------------------------------------------------------------------------
 Test PEC_0709 / CUTILS / GOODCASE
-Description: PrettyPrint: Input parameter of type 'dotdict'
+Description: PrettyPrint: Input parameter of type 'dotdict' (pydotdict)
 Expectation: Input parameter is pretty printed
 ------------------------------------------------------------------------------------------------------------------------
 Test PEC_0710 / CUTILS / GOODCASE
@@ -510,5 +510,5 @@ Description: GetInstalledPackages: List written to output file
 Expectation: List of installed Python packages created and written to output file
 Hint.......: This sometimes some time
 ------------------------------------------------------------------------------------------------------------------------
-Generated: 28.01.2026 - 14:53:21
+Generated: 10.11.2026 - 15:49:21
 

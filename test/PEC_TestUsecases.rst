@@ -1181,7 +1181,7 @@ Test Use Cases
 
   [CUTILS / GOODCASE]
 
-   **PrettyPrint: Input parameter of type 'dotdict'**
+   **PrettyPrint: Input parameter of type 'dotdict' (pydotdict)**
 
    Expected: Input parameter is pretty printed
 
@@ -1251,5 +1251,5 @@ Test Use Cases
 
 ----
 
-Generated: 28.01.2026 - 14:53:21
+Generated: 10.11.2026 - 15:49:21
 

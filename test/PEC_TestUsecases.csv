@@ -116,7 +116,7 @@ PEC_0705|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'list'
 PEC_0706|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'tuple'
 PEC_0707|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'set'
 PEC_0708|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'dict'
-PEC_0709|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'dotdict'
+PEC_0709|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'dotdict' (pydotdict)
 PEC_0710|CUTILS|GOODCASE|PrettyPrint: Input parameter of nested types
 PEC_0711|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'list'; output indented by 5 blanks
 PEC_0712|CUTILS|GOODCASE|PrettyPrint: Input parameter of type 'list'; output indented by 2 blanks and with prefix

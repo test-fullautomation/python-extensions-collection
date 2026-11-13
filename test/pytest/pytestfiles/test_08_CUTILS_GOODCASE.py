@@ -18,7 +18,7 @@
 #
 # XC-HWP/ESW3-Queckenstedt
 #
-# 28.01.2026 - 14:53:21
+# 10.11.2026 - 15:49:21
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -104,7 +104,7 @@ class Test_CUTILS_GOODCASE:
 # --------------------------------------------------------------------------------------------------------------
    # Expected: Input parameter is pretty printed
    @pytest.mark.parametrize(
-      "Description", ["PrettyPrint: Input parameter of type 'dotdict'",]
+      "Description", ["PrettyPrint: Input parameter of type 'dotdict' (pydotdict)",]
    )
    def test_PEC_0709(self, Description):
       nReturn = CExecute.Execute("PEC_0709")
